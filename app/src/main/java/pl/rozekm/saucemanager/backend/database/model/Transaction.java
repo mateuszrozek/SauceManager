@@ -3,6 +3,7 @@ package pl.rozekm.saucemanager.backend.database.model;
 import java.time.LocalDateTime;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
@@ -17,13 +18,24 @@ public class Transaction {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
+    @ColumnInfo(name = "id")
     private Long id;
+
+    @ColumnInfo(name = "amount")
     private Double amount;
+
+    @ColumnInfo(name = "title")
     private String title;
+
+    @ColumnInfo(name = "date")
     @TypeConverters(LocalDateTimeConverter.class)
     private LocalDateTime date;
+
+    @ColumnInfo(name = "transaction_category")
     @TypeConverters(TransactionCategoryConverter.class)
     private TransactionCategory category;
+
+    @ColumnInfo(name = "transaction_type")
     @TypeConverters(TransactionTypeConverter.class)
     private TransactionType type;
 

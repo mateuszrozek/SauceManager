@@ -2,8 +2,6 @@ package pl.rozekm.saucemanager.frontend.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -15,9 +13,9 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        int[] colors = new int[]{Color.BLUE, Color.CYAN, Color.RED};
+        int[] colors = new int[]{Color.BLUE, Color.CYAN, Color.RED, Color.YELLOW, Color.MAGENTA, Color.GREEN};
 
         transactionViewModel = ViewModelProviders.of(this).get(TransactionViewModel.class);
-        transactionViewModel.getAllTransactions().observe(this, transactions -> {
+        transactionViewModel.getAllIncomeTransactions().observe(this, transactions -> {
 
             barEntry = addBarEntries(transactions);
 
@@ -69,24 +67,37 @@ public class MainActivity extends AppCompatActivity {
             chart.notifyDataSetChanged();
             chart.invalidate();
         });
+//        transactionViewModel.getAllTransactions().observe(this, transactions -> {
+//
+//            barEntry = addBarEntries(transactions);
+//
+//            barDataSet = new BarDataSet(barEntry, "Bar Set");
+//            barDataSet.setColors(colors);
+//            barDataSet.setDrawValues(false);
+//
+//            barData = new BarData(barDataSet);
+//            barData.notifyDataChanged();
+//            chart.setData(barData);
+//            barDataSet.notifyDataSetChanged();
+//            chart.notifyDataSetChanged();
+//            chart.invalidate();
+//        });
 
-        initializeBarChart();
+        applyChartSettings();
 
         addTransactionImageButton.setOnClickListener(view -> {
-            Transaction transaction = new Transaction(21.2, LocalDateTime.now(), TransactionCategory.CLOTHES, TransactionType.INCOME);
+            Transaction transaction = new Transaction((10 + (50 - 10) * new Random().nextDouble()), LocalDateTime.now(), TransactionCategory.CLOTHES, TransactionType.INCOME);
+            Transaction transaction2 = new Transaction((10 + (50 - 10) * new Random().nextDouble()), LocalDateTime.now(), TransactionCategory.CLOTHES, TransactionType.OUTCOME);
+
             transactionViewModel.insert(transaction);
+            transactionViewModel.insert(transaction2);
             System.out.println("Added!!");
         });
     }
 
-    private void initializeBarChart() {
-
-        applySettings();
-    }
-
-    private void applySettings() {
+    private void applyChartSettings() {
         chart.setNoDataText("No data available");
-        chart.animateY(1800, Easing.Linear);
+        chart.animateY(850, Easing.Linear);
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
 

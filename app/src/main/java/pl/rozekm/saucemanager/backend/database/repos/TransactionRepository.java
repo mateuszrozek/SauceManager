@@ -13,16 +13,29 @@ import pl.rozekm.saucemanager.backend.database.model.Transaction;
 public class TransactionRepository {
 
     private TransactionDao transactionDao;
+
     private LiveData<List<Transaction>> allTransactions;
+    private LiveData<List<Transaction>> allOutcomeTransactions;
+    private LiveData<List<Transaction>> allIncomeTransactions;
 
     public TransactionRepository(Application application) {
         TransactionRoomDatabase database = TransactionRoomDatabase.getDatabase(application);
         transactionDao = database.transactionDao();
         allTransactions = transactionDao.getAllTransactions();
+        allOutcomeTransactions = transactionDao.getAllOutcomeTransactions();
+        allIncomeTransactions = transactionDao.getAllIncomeTransactions();
     }
 
     public LiveData<List<Transaction>> getAllTransactions() {
         return allTransactions;
+    }
+
+    public LiveData<List<Transaction>> getAllOutcomeTransactions() {
+        return allOutcomeTransactions;
+    }
+
+    public LiveData<List<Transaction>> getAllIncomeTransactions() {
+        return allIncomeTransactions;
     }
 
     public void insertTransaction(Transaction transaction) {
