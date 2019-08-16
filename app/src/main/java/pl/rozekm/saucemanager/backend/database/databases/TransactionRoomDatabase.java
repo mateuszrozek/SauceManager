@@ -54,9 +54,9 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
         private final TransactionDao transactionDao;
 
         List<Transaction> transactions = Arrays.asList(
-                new Transaction(1L, 25.7, LocalDateTime.now(), TransactionCategory.FOOD, TransactionType.INCOME),
-                new Transaction(2L, 12.6, LocalDateTime.now(), TransactionCategory.CLOTHES, TransactionType.OUTCOME),
-                new Transaction(3L, 14.2, LocalDateTime.now(), TransactionCategory.OTHER, TransactionType.OUTCOME)
+                new Transaction(25.7, LocalDateTime.now(), TransactionCategory.FOOD, TransactionType.INCOME),
+                new Transaction(12.6, LocalDateTime.now(), TransactionCategory.CLOTHES, TransactionType.OUTCOME),
+                new Transaction(14.2, LocalDateTime.now(), TransactionCategory.OTHER, TransactionType.OUTCOME)
         );
 
         PopulateDatabaseAsync(TransactionRoomDatabase database) {

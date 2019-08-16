@@ -27,9 +27,9 @@ public class Transaction {
     @TypeConverters(TransactionTypeConverter.class)
     private TransactionType type;
 
-    public Transaction(@NonNull Long id, Double amount, LocalDateTime date, TransactionCategory category, TransactionType type) {
-        this.id = id;
+    public Transaction(Double amount, LocalDateTime date, TransactionCategory category, TransactionType type) {
         this.amount = amount;
+        title = "";
         this.date = date;
         this.category = category;
         this.type = type;
