@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.database.repos;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
+import pl.rozekm.saucemanager.backend.database.databases.TransactionRoomDatabase;
+import pl.rozekm.saucemanager.backend.database.model.Transaction;
 
 public class TransactionRepository {
 

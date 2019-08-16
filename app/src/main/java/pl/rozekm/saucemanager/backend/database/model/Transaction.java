@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.database.model;
 
 import java.time.LocalDateTime;
 
@@ -6,6 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.backend.utils.converters.LocalDateTimeConverter;
+import pl.rozekm.saucemanager.backend.utils.converters.TransactionCategoryConverter;
+import pl.rozekm.saucemanager.backend.utils.converters.TransactionTypeConverter;
 
 @Entity(tableName = "transaction")
 public class Transaction {

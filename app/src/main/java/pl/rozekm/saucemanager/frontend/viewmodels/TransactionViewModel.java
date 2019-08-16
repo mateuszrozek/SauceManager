@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.frontend;
+package pl.rozekm.saucemanager.frontend.viewmodels;
 
 import android.app.Application;
 
@@ -7,8 +7,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import pl.rozekm.saucemanager.backend.Transaction;
-import pl.rozekm.saucemanager.backend.TransactionRepository;
+import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.repos.TransactionRepository;
 
 public class TransactionViewModel extends AndroidViewModel {
 

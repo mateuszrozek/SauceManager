@@ -1,6 +1,6 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.database.model.enums;
 
-enum TransactionType {
+public enum TransactionType {
     INCOME(1),
     OUTCOME(0);
 

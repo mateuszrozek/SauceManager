@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.frontend;
+package pl.rozekm.saucemanager.frontend.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,12 +12,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import pl.rozekm.saucemanager.R;
-import pl.rozekm.saucemanager.backend.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.frontend.viewmodels.TransactionViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity {
                 barDataSet.notifyDataSetChanged();
             }
         });
-
-
 
         initializeBarChart();
     }
@@ -91,5 +89,4 @@ public class MainActivity extends AppCompatActivity {
         entries.add(new BarEntry(0, arr));
         return entries;
     }
-
 }

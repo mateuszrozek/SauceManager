@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.utils.converters;
 
 import java.time.LocalDateTime;
 

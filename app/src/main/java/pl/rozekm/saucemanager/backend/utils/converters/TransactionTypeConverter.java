@@ -1,9 +1,10 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.utils.converters;
 
 import androidx.room.TypeConverter;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 
-import static pl.rozekm.saucemanager.backend.TransactionType.INCOME;
-import static pl.rozekm.saucemanager.backend.TransactionType.OUTCOME;
+import static pl.rozekm.saucemanager.backend.database.model.enums.TransactionType.INCOME;
+import static pl.rozekm.saucemanager.backend.database.model.enums.TransactionType.OUTCOME;
 
 public class TransactionTypeConverter {
 

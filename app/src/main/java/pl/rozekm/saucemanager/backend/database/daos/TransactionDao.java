@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.database.daos;
 
 import java.util.List;
 
@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import pl.rozekm.saucemanager.backend.database.model.Transaction;
 
 @Dao
 public interface TransactionDao {

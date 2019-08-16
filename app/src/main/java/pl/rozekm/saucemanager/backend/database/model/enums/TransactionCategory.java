@@ -1,6 +1,6 @@
-package pl.rozekm.saucemanager.backend;
+package pl.rozekm.saucemanager.backend.database.model.enums;
 
-enum TransactionCategory {
+public enum TransactionCategory {
     CLOTHES(1),
     ENTERTAINMENT(2),
     FOOD(3),
@@ -11,7 +11,7 @@ enum TransactionCategory {
 
     private int code;
 
-    TransactionCategory(int code){
+    TransactionCategory(int code) {
         this.code = code;
     }
 
