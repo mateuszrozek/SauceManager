@@ -15,7 +15,9 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         addTransactionImageButton.setOnClickListener(view -> {
             Transaction transaction = new Transaction((10 + (50 - 10) * new Random().nextDouble()), TransactionCategory.CLOTHES, TransactionType.INCOME);
-            Transaction transaction2 = new Transaction((10 + (50 - 10) * new Random().nextDouble()), TransactionCategory.CLOTHES, TransactionType.OUTCOME);
+            Transaction transaction2 = new Transaction((10 + (50 - 10) * new Random().nextDouble()), TransactionCategory.FOOD, TransactionType.OUTCOME);
 
             transactionViewModel.insert(transaction);
             transactionViewModel.insert(transaction2);
@@ -129,7 +131,11 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<BarEntry> addBarEntries(List<Transaction> transactions) {
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<Float> values = new ArrayList<>();
-        transactions.forEach(transaction -> values.add(Float.valueOf(String.valueOf(transaction.getAmount()))));
+
+        Map<TransactionCategory, List<Transaction>> transactionsGrouped =
+                transactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
+
+        transactionsGrouped.forEach((k, v) -> values.add(calculateSum(v)));
 
         float[] arr = new float[values.size()];
         for (int i = 0; i < arr.length; i++) {
@@ -138,6 +144,14 @@ public class MainActivity extends AppCompatActivity {
 
         entries.add(new BarEntry(0, arr));
         return entries;
+    }
+
+    private Float calculateSum(List<Transaction> transactions) {
+        Float sum = 0f;
+        for (Transaction trans: transactions) {
+            sum += Float.valueOf(String.valueOf(trans.getAmount()));
+        }
+        return sum;
     }
 
     public void transactionCategorySelected(View view) {
