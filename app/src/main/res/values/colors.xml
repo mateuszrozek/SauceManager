@@ -6,11 +6,26 @@
 
 
 
-    <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryLight">#64b5f6</color>
-    <color name="colorPrimaryDark">#1976D2</color>
+    <!--<color name="colorPrimary">#2196F3</color>-->
+    <!--<color name="colorPrimaryLight">#64b5f6</color>-->
+    <!--<color name="colorPrimaryDark">#1976D2</color>-->
+    <color name="colorPrimary">#444b6e</color>
+    <color name="colorPrimaryLight">#95a3b3</color>
+    <color name="colorPrimaryDark">#3d315b</color>
     <color name="colorAccent">#FFFF9800</color>
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorScreenBackground">#fff3e0</color>
     <color name="colorTextHint">#E0E0E0</color>
+
+    <color name="colorButtonBackground">#FFF4F2</color>
+
+
+
+    <color name="cornsilk">#fff3e0</color>
+    <color name="deep_koamaru">#3d315b</color>
+    <color name="independence_1">#4b4e6d</color>
+    <color name="independence_2">#444b6e</color>
+    <color name="cadet_grey">#95a3b3</color>
+    <color name="seashell">#FFF4F2</color>
+
 </resources>

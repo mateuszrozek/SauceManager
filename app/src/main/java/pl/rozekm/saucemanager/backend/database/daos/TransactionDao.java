@@ -17,15 +17,15 @@ public interface TransactionDao {
     @Query("DELETE FROM `transaction`")
     void deleteAllTransactions();
 
-    @Query("SELECT * FROM `transaction` ORDER BY id ASC")
+    @Query("SELECT * FROM `transaction`")
     LiveData<List<Transaction>> getAllTransactions();
 
-//    @Query("SELECT * FROM `transaction` WHERE transaction_type=:transactionType ORDER BY id ASC")
-//    LiveData<List<Transaction>> getAllTransactionsByTransactionType(TransactionType transactionType);
+    @Query("SELECT * FROM `transaction` WHERE transaction_type=:transactionType")
+    LiveData<List<Transaction>> getAllTransactionsByTransactionType(int transactionType);
 
-    @Query("SELECT * FROM `transaction` WHERE transaction_type=1 ORDER BY id ASC")
+    @Query("SELECT * FROM `transaction` WHERE transaction_type=1")
     LiveData<List<Transaction>> getAllIncomeTransactions();
 
-    @Query("SELECT * FROM `transaction` WHERE transaction_type='OUTCOME' ORDER BY id ASC")
+    @Query("SELECT * FROM `transaction` WHERE transaction_type=0")
     LiveData<List<Transaction>> getAllOutcomeTransactions();
 }
