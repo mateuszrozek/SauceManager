@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     BarData barData;
 
-    Transaction transaction = new Transaction();
+    Transaction classTransaction = new Transaction();
 
     Integer[] imageViewsOutcomeTransactions = new Integer[]{
             R.id.imageViewClothes,
@@ -94,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        transactionViewModel = ViewModelProviders.of(this, new TransactionViewModelFactory(this.getApplication(), transaction)).get(TransactionViewModel.class);
+        transactionViewModel = ViewModelProviders.of(this, new TransactionViewModelFactory(this.getApplication(), classTransaction)).get(TransactionViewModel.class);
 
-        setChart(transaction.getType());
+        setChart(classTransaction.getType());
 
         applyChartSettings();
 
@@ -213,11 +213,11 @@ public class MainActivity extends AppCompatActivity {
         setLayoutWeightForView(imageView, 3.0f);
 
         if (imageView == R.id.imageViewInvestments || imageView == R.id.imageViewSalary || imageView == R.id.imageViewSavings) {
-            transaction.setType(TransactionType.INCOME);
-            setChart(transaction.getType());
+            classTransaction.setType(TransactionType.INCOME);
+            setChart(classTransaction.getType());
         } else {
-            transaction.setType(TransactionType.OUTCOME);
-            setChart(transaction.getType());
+            classTransaction.setType(TransactionType.OUTCOME);
+            setChart(classTransaction.getType());
         }
     }
 
@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             barEntry = addBarEntries(transactions);
 
             barDataSet = new BarDataSet(barEntry, "Bar Set");
-            if (transaction.getType() == TransactionType.OUTCOME)
+            if (classTransaction.getType() == TransactionType.OUTCOME)
                 barDataSet.setColors(outcomeColors);
             else barDataSet.setColors(incomeColors);
             barDataSet.setDrawValues(false);
