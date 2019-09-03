@@ -66,9 +66,9 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 //                new Transaction(34.2, TransactionCategory.OTHER, TransactionType.OUTCOME),
 //                new Transaction(9.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
 //                new Transaction(19.2, TransactionCategory.OTHER, TransactionType.OUTCOME)
+                new Transaction(12.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
                 new Transaction(25.7, TransactionCategory.FOOD, TransactionType.OUTCOME),
                 new Transaction(4.3, TransactionCategory.FOOD, TransactionType.OUTCOME),
-                new Transaction(12.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
                 new Transaction(14.2, TransactionCategory.OTHER, TransactionType.OUTCOME)
         );
 

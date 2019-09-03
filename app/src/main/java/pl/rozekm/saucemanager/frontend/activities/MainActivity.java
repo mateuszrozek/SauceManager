@@ -12,11 +12,12 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import androidx.appcompat.app.ActionBar;
@@ -38,9 +39,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.addTransactionImageButton)
     public Button addTransactionImageButton;
 
-
     @BindView(R.id.chart)
     public BarChart chart;
+
+    @BindView(R.id.editTextAmount)
+    TextInputLayout editTextAmount;
+
+    @BindView(R.id.editTextTitle)
+    TextInputLayout editTextTitle;
 
     ArrayList<BarEntry> barEntry = new ArrayList<>();
 
@@ -50,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     Transaction classTransaction = new Transaction();
 
-    Integer[] imageViewsOutcomeTransactions = new Integer[]{
+    int[] imageViewsOutcomeTransactions = new int[]{
             R.id.imageViewClothes,
             R.id.imageViewEntertaiment,
             R.id.imageViewFood,
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             R.id.imageViewOther
     };
 
-    Integer[] imageViewsIncomeTransactions = new Integer[]{
+    int[] imageViewsIncomeTransactions = new int[]{
             R.id.imageViewInvestments,
             R.id.imageViewSalary,
             R.id.imageViewSavings,
@@ -101,13 +107,31 @@ public class MainActivity extends AppCompatActivity {
         applyChartSettings();
 
         addTransactionImageButton.setOnClickListener(view -> {
-            Transaction transaction = new Transaction((10 + (50 - 10) * new Random().nextDouble()), TransactionCategory.CLOTHES, TransactionType.INCOME);
-            Transaction transaction2 = new Transaction((10 + (50 - 10) * new Random().nextDouble()), TransactionCategory.FOOD, TransactionType.OUTCOME);
-
-            transactionViewModel.insert(transaction);
-            transactionViewModel.insert(transaction2);
-            System.out.println("Added!!");
+            if (validateAmount() && validateCategory()) {
+                Transaction newTransaction = new Transaction(
+                        Double.valueOf(editTextAmount.getEditText().getText().toString()),
+                        classTransaction.getCategory(),
+                        classTransaction.getType()
+                );
+                if (validateTitle()) {
+                    newTransaction.setTitle(editTextTitle.getEditText().toString());
+                }
+                transactionViewModel.insert(newTransaction);
+                System.out.println(newTransaction);
+            }
         });
+    }
+
+    private boolean validateTitle() {
+        return editTextTitle.getEditText().getText() != null;
+    }
+
+    private boolean validateCategory() {
+        return classTransaction.getCategory() != null;
+    }
+
+    private boolean validateAmount() {
+        return Objects.requireNonNull(editTextAmount.getEditText()).getText() != null;
     }
 
     private void applyChartSettings() {
@@ -128,16 +152,24 @@ public class MainActivity extends AppCompatActivity {
         chart.setTouchEnabled(false);
     }
 
-    private ArrayList<BarEntry> addBarEntries(List<Transaction> transactions) {
+    private ArrayList<BarEntry> addBarEntries(List<Transaction> transactions, TransactionType transactionType) {
         ArrayList<BarEntry> entries = new ArrayList<>();
-        ArrayList<Float> values = new ArrayList<>();
+        ArrayList<Float> values;
 
-        Map<TransactionCategory, List<Transaction>> transactionsGrouped =
+        Map<TransactionCategory, List<Transaction>> groupedTransactions =
                 transactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
 
-        transactionsGrouped.forEach((k, v) -> values.add(calculateSum(v)));
+        values = processGroupedTransactions(groupedTransactions, transactionType);
 
-        float[] arr = new float[values.size()];
+        int numberOfCategories;
+
+        if (transactionType == TransactionType.OUTCOME) {
+            numberOfCategories = 8;
+        } else {
+            numberOfCategories = 3;
+        }
+
+        float[] arr = new float[numberOfCategories];
         for (int i = 0; i < arr.length; i++) {
             arr[i] = values.get(i);
         }
@@ -146,9 +178,41 @@ public class MainActivity extends AppCompatActivity {
         return entries;
     }
 
+    private ArrayList<Float> processGroupedTransactions(
+            Map<TransactionCategory, List<Transaction>> groupedTransactions,
+            TransactionType transactionType) {
+
+        ArrayList<Float> result = new ArrayList<>();
+        ArrayList<TransactionCategory> transactionCategories = new ArrayList<>();
+
+        if (transactionType == TransactionType.OUTCOME) {
+            transactionCategories.add(TransactionCategory.OTHER);
+            transactionCategories.add(TransactionCategory.TRANSPORT);
+            transactionCategories.add(TransactionCategory.SPORT);
+            transactionCategories.add(TransactionCategory.HOUSE);
+            transactionCategories.add(TransactionCategory.HEALTH);
+            transactionCategories.add(TransactionCategory.FOOD);
+            transactionCategories.add(TransactionCategory.ENTERTAINMENT);
+            transactionCategories.add(TransactionCategory.CLOTHES);
+        } else {
+            transactionCategories.add(TransactionCategory.SAVINGS);
+            transactionCategories.add(TransactionCategory.SALARY);
+            transactionCategories.add(TransactionCategory.INVESTMENT);
+        }
+
+        for (TransactionCategory transactionCategory : transactionCategories) {
+            if (groupedTransactions.containsKey(transactionCategory)) {
+                result.add(calculateSum(groupedTransactions.get(transactionCategory)));
+            } else {
+                result.add(0F);
+            }
+        }
+        return result;
+    }
+
     private Float calculateSum(List<Transaction> transactions) {
         Float sum = 0f;
-        for (Transaction trans: transactions) {
+        for (Transaction trans : transactions) {
             sum += Float.valueOf(String.valueOf(trans.getAmount()));
         }
         return sum;
@@ -225,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
 
         transactionViewModel.getAllTransactionsByTransactionType(transactionType.getCode()).observe(this, transactions -> {
 
-            barEntry = addBarEntries(transactions);
+            barEntry = addBarEntries(transactions, transactionType);
 
             barDataSet = new BarDataSet(barEntry, "Bar Set");
             if (classTransaction.getType() == TransactionType.OUTCOME)

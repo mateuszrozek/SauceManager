@@ -105,4 +105,16 @@ public class Transaction {
     public void setType(TransactionType type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", title='" + title + '\'' +
+                ", date=" + date +
+                ", category=" + category +
+                ", type=" + type +
+                '}';
+    }
 }
