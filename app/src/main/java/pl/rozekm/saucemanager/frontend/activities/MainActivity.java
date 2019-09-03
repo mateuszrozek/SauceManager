@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.editTextTitle)
     TextInputLayout editTextTitle;
+
+    @BindView(R.id.textViewChartTitle)
+    TextView textViewChartTitle;
 
     ArrayList<BarEntry> barEntry = new ArrayList<>();
 
@@ -278,11 +282,63 @@ public class MainActivity extends AppCompatActivity {
 
         if (imageView == R.id.imageViewInvestments || imageView == R.id.imageViewSalary || imageView == R.id.imageViewSavings) {
             classTransaction.setType(TransactionType.INCOME);
-            setChart(classTransaction.getType());
         } else {
             classTransaction.setType(TransactionType.OUTCOME);
-            setChart(classTransaction.getType());
         }
+        classTransaction.setCategory(translateImageViewToTransactionCategory(imageView));
+        setChart(classTransaction.getType());
+    }
+
+    private TransactionCategory translateImageViewToTransactionCategory(int imageView) {
+
+        TransactionCategory transactionCategory = TransactionCategory.OTHER;
+
+        switch (imageView) {
+            case R.id.imageViewClothes:
+                transactionCategory = TransactionCategory.CLOTHES;
+                break;
+
+            case R.id.imageViewEntertaiment:
+                transactionCategory = TransactionCategory.ENTERTAINMENT;
+                break;
+
+            case R.id.imageViewFood:
+                transactionCategory = TransactionCategory.FOOD;
+                break;
+
+            case R.id.imageViewHealth:
+                transactionCategory = TransactionCategory.HEALTH;
+                break;
+
+            case R.id.imageViewHouse:
+                transactionCategory = TransactionCategory.HOUSE;
+                break;
+
+            case R.id.imageViewSport:
+                transactionCategory = TransactionCategory.SPORT;
+                break;
+
+            case R.id.imageViewTransport:
+                transactionCategory = TransactionCategory.TRANSPORT;
+                break;
+
+            case R.id.imageViewOther:
+                transactionCategory = TransactionCategory.OTHER;
+                break;
+
+            case R.id.imageViewInvestments:
+                transactionCategory = TransactionCategory.INVESTMENT;
+                break;
+
+            case R.id.imageViewSalary:
+                transactionCategory = TransactionCategory.SALARY;
+                break;
+
+            case R.id.imageViewSavings:
+                transactionCategory = TransactionCategory.SAVINGS;
+                break;
+        }
+        return transactionCategory;
     }
 
     private void setChart(TransactionType transactionType) {
@@ -304,6 +360,12 @@ public class MainActivity extends AppCompatActivity {
             chart.notifyDataSetChanged();
             chart.invalidate();
         });
+        textViewChartTitle.setText(printTransactionType(transactionType));
+    }
+
+    private String printTransactionType(TransactionType transactionType) {
+        if (transactionType == TransactionType.OUTCOME) return "OUTCOMES";
+        else return "INCOMES";
     }
 
     private void setLayoutWeightForView(int view, float weight) {
