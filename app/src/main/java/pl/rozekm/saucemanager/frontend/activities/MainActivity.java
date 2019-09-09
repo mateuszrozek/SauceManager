@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.addTransactionImageButton)
     public Button addTransactionImageButton;
 
-    @BindView(R.id.chart)
-    public BarChart chart;
+    @BindView(R.id.chartOutcome)
+    public BarChart chartOutcome;
+
+    @BindView(R.id.chartIncome)
+    public BarChart chartIncome;
 
     @BindView(R.id.editTextAmount)
     TextInputLayout editTextAmount;
@@ -49,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.editTextTitle)
     TextInputLayout editTextTitle;
 
-    @BindView(R.id.textViewChartTitle)
-    TextView textViewChartTitle;
+    @BindView(R.id.textViewOutcomeChartTitle)
+    TextView textViewOutcomeChartTitle;
+
+    @BindView(R.id.textViewIncomeChartTitle)
+    TextView textViewIncomeChartTitle;
 
     ArrayList<BarEntry> barEntry = new ArrayList<>();
 
@@ -105,9 +111,8 @@ public class MainActivity extends AppCompatActivity {
 
         transactionViewModel = ViewModelProviders.of(this, new TransactionViewModelFactory(this.getApplication(), classTransaction)).get(TransactionViewModel.class);
 
-        setChart(classTransaction.getType());
-
-        applyChartSettings();
+        setChart(chartOutcome, TransactionType.OUTCOME);
+        setChart(chartIncome, TransactionType.INCOME);
 
         addTransactionImageButton.setOnClickListener(view -> {
             if (validateAmount() && validateCategory()) {
@@ -120,13 +125,12 @@ public class MainActivity extends AppCompatActivity {
                     newTransaction.setTitle(editTextTitle.getEditText().toString());
                 }
                 transactionViewModel.insert(newTransaction);
-                System.out.println(newTransaction);
             }
         });
     }
 
     private boolean validateTitle() {
-        return editTextTitle.getEditText().getText() != null;
+        return !editTextTitle.getEditText().getText().toString().equals("");
     }
 
     private boolean validateCategory() {
@@ -137,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
         return Objects.requireNonNull(editTextAmount.getEditText()).getText() != null;
     }
 
-    private void applyChartSettings() {
-        chart.setNoDataText("No data available");
+    private void applyChartSettings(BarChart chart) {
+        chart.setNoDataText("No data available yet");
         chart.animateY(850, Easing.Linear);
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
@@ -285,7 +289,6 @@ public class MainActivity extends AppCompatActivity {
             classTransaction.setType(TransactionType.OUTCOME);
         }
         classTransaction.setCategory(translateImageViewToTransactionCategory(imageView));
-        setChart(classTransaction.getType());
     }
 
     private TransactionCategory translateImageViewToTransactionCategory(int imageView) {
@@ -340,17 +343,17 @@ public class MainActivity extends AppCompatActivity {
         return transactionCategory;
     }
 
-    private void setChart(TransactionType transactionType) {
+    private void setChart(BarChart chart, TransactionType transactionType) {
 
         if (transactionType == TransactionType.OUTCOME) {
-            transactionViewModel.getAllOutcomeTransactions().observe(this, transactions -> setTypedChart(transactionType, transactions));
+            transactionViewModel.getAllOutcomeTransactions().observe(this, transactions -> setTypedChart(chart, transactionType, transactions));
         } else {
-            transactionViewModel.getAllIncomeTransactions().observe(this, transactions -> setTypedChart(transactionType, transactions));
+            transactionViewModel.getAllIncomeTransactions().observe(this, transactions -> setTypedChart(chart, transactionType, transactions));
         }
-        textViewChartTitle.setText(printTransactionType(transactionType));
+        applyChartSettings(chart);
     }
 
-    private void setTypedChart(TransactionType transactionType, List<Transaction> transactions) {
+    private void setTypedChart(BarChart chart, TransactionType transactionType, List<Transaction> transactions) {
         barEntry = addBarEntries(transactions, transactionType);
         barDataSet = new BarDataSet(barEntry, "Bar Set");
         if (transactionType == TransactionType.OUTCOME) {
@@ -365,11 +368,6 @@ public class MainActivity extends AppCompatActivity {
         barDataSet.notifyDataSetChanged();
         chart.notifyDataSetChanged();
         chart.invalidate();
-    }
-
-    private String printTransactionType(TransactionType transactionType) {
-        if (transactionType == TransactionType.OUTCOME) return "OUTCOMES";
-        else return "INCOMES";
     }
 
     private void setLayoutWeightForView(int view, float weight) {
