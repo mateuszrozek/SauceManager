@@ -89,11 +89,10 @@ public class MainActivity extends AppCompatActivity {
     };
 
     int[] incomeColors = new int[]{
-            Color.parseColor("#B2FF66"),
+            Color.parseColor("#4C9900"),
             Color.parseColor("#80FF00"),
-            Color.parseColor("#4C9900")
+            Color.parseColor("#B2FF66")
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -343,24 +342,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void setChart(TransactionType transactionType) {
 
-        transactionViewModel.getAllTransactionsByTransactionType(transactionType.getCode()).observe(this, transactions -> {
-
-            barEntry = addBarEntries(transactions, transactionType);
-
-            barDataSet = new BarDataSet(barEntry, "Bar Set");
-            if (classTransaction.getType() == TransactionType.OUTCOME)
-                barDataSet.setColors(outcomeColors);
-            else barDataSet.setColors(incomeColors);
-            barDataSet.setDrawValues(false);
-
-            barData = new BarData(barDataSet);
-            barData.notifyDataChanged();
-            chart.setData(barData);
-            barDataSet.notifyDataSetChanged();
-            chart.notifyDataSetChanged();
-            chart.invalidate();
-        });
+        if (transactionType == TransactionType.OUTCOME) {
+            transactionViewModel.getAllOutcomeTransactions().observe(this, transactions -> setTypedChart(transactionType, transactions));
+        } else {
+            transactionViewModel.getAllIncomeTransactions().observe(this, transactions -> setTypedChart(transactionType, transactions));
+        }
         textViewChartTitle.setText(printTransactionType(transactionType));
+    }
+
+    private void setTypedChart(TransactionType transactionType, List<Transaction> transactions) {
+        barEntry = addBarEntries(transactions, transactionType);
+        barDataSet = new BarDataSet(barEntry, "Bar Set");
+        if (transactionType == TransactionType.OUTCOME) {
+            barDataSet.setColors(outcomeColors);
+        } else {
+            barDataSet.setColors(incomeColors);
+        }
+        barDataSet.setDrawValues(false);
+        barData = new BarData(barDataSet);
+        barData.notifyDataChanged();
+        chart.setData(barData);
+        barDataSet.notifyDataSetChanged();
+        chart.notifyDataSetChanged();
+        chart.invalidate();
     }
 
     private String printTransactionType(TransactionType transactionType) {
