@@ -2,6 +2,7 @@ package pl.rozekm.saucemanager.frontend.activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,7 +19,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import androidx.appcompat.app.ActionBar;
@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
         setChart(chartIncome, TransactionType.INCOME);
 
         addTransactionImageButton.setOnClickListener(view -> {
-            if (validateAmount() && validateCategory()) {
+            if (isAmountValid() && isCategoryValid()) {
                 Transaction newTransaction = new Transaction(
                         Double.valueOf(editTextAmount.getEditText().getText().toString()),
                         classTransaction.getCategory(),
                         classTransaction.getType()
                 );
-                if (validateTitle()) {
+                if (isTitleValid()) {
                     newTransaction.setTitle(editTextTitle.getEditText().toString());
                 }
                 transactionViewModel.insert(newTransaction);
@@ -129,16 +129,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean validateTitle() {
-        return !editTextTitle.getEditText().getText().toString().equals("");
+    private boolean isTitleValid() {
+        boolean result = false;
+        if (editTextTitle.getEditText() != null) {
+            result = !TextUtils.isEmpty(editTextTitle.getEditText().getText());
+        }
+        return result;
     }
 
-    private boolean validateCategory() {
+    private boolean isCategoryValid() {
         return classTransaction.getCategory() != null;
     }
 
-    private boolean validateAmount() {
-        return Objects.requireNonNull(editTextAmount.getEditText()).getText() != null;
+    private boolean isAmountValid() {
+        boolean result = false;
+        if (editTextAmount.getEditText() != null) {
+            result = !TextUtils.isEmpty(editTextAmount.getEditText().getText());
+        }
+        return result;
     }
 
     private void applyChartSettings(BarChart chart) {
@@ -270,6 +278,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.imageViewSavings:
                 setFocus(R.id.imageViewSavings);
                 break;
+            default:
+                break;
         }
     }
 
@@ -293,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TransactionCategory translateImageViewToTransactionCategory(int imageView) {
 
-        TransactionCategory transactionCategory = TransactionCategory.OTHER;
+        TransactionCategory transactionCategory = null;
 
         switch (imageView) {
             case R.id.imageViewClothes:
@@ -338,6 +348,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.imageViewSavings:
                 transactionCategory = TransactionCategory.SAVINGS;
+                break;
+            default:
                 break;
         }
         return transactionCategory;
