@@ -25,7 +25,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/clothessvg" />
+            app:srcCompat="@drawable/clothessvg"
+            android:contentDescription="@string/this_is_an_image_of_category" />
 
         <ImageView
             android:id="@+id/imageViewEntertaiment"
@@ -33,7 +34,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/entertainmentsvg" />
+            app:srcCompat="@drawable/entertainmentsvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewFood"
@@ -41,7 +43,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/foodsvg" />
+            app:srcCompat="@drawable/foodsvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewHealth"
@@ -49,7 +52,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/healthsvg" />
+            app:srcCompat="@drawable/healthsvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewHouse"
@@ -57,7 +61,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/housesvg" />
+            app:srcCompat="@drawable/housesvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewSport"
@@ -65,7 +70,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/sportsvg" />
+            app:srcCompat="@drawable/sportsvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewTransport"
@@ -74,7 +80,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:elevation="5dp"
-            app:srcCompat="@drawable/transportsvg" />
+            app:srcCompat="@drawable/transportsvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewOther"
@@ -83,7 +90,8 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:elevation="5dp"
-            app:srcCompat="@drawable/othersvg" />
+            app:srcCompat="@drawable/othersvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
     </LinearLayout>
 
@@ -111,7 +119,7 @@
                 android:id="@+id/textViewOutcomeChartTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Outcomes"
+                android:text="@string/outcomes"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +148,7 @@
                 android:id="@+id/textViewIncomeChartTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Incomes"
+                android:text="@string/incomes"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +191,7 @@
                 android:background="@drawable/myradiobuttonbackground"
                 android:button="@android:color/transparent"
                 android:checked="true"
-                android:text="Day"
+                android:text="@string/day"
                 android:textAlignment="center" />
 
             <RadioButton
@@ -197,7 +205,7 @@
                 android:background="@drawable/myradiobuttonbackground"
                 android:button="@android:color/transparent"
                 android:checked="true"
-                android:text="Week"
+                android:text="@string/week"
                 android:textAlignment="center" />
 
             <RadioButton
@@ -211,7 +219,7 @@
                 android:background="@drawable/myradiobuttonbackground"
                 android:button="@android:color/transparent"
                 android:checked="true"
-                android:text="Month"
+                android:text="@string/month"
                 android:textAlignment="center" />
 
             <RadioButton
@@ -225,7 +233,7 @@
                 android:background="@drawable/myradiobuttonbackground"
                 android:button="@android:color/transparent"
                 android:checked="true"
-                android:text="Year"
+                android:text="@string/year"
                 android:textAlignment="center" />
         </RadioGroup>
     </LinearLayout>
@@ -246,7 +254,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Amount"
+            android:hint="@string/amount"
             android:inputType="numberDecimal"
             android:textSize="26sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -267,7 +275,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title (optional)"
+            android:hint="@string/title_optional"
             android:inputType="text"
             android:textSize="20sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -288,7 +296,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/investmentsvg" />
+            app:srcCompat="@drawable/investmentsvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewSalary"
@@ -296,7 +305,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/salarysvg" />
+            app:srcCompat="@drawable/salarysvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
         <ImageView
             android:id="@+id/imageViewSavings"
@@ -304,7 +314,8 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            app:srcCompat="@drawable/savingssvg" />
+            app:srcCompat="@drawable/savingssvg"
+            android:contentDescription="@string/this_is_an_image_of_category"/>
 
     </LinearLayout>
 
@@ -317,7 +328,7 @@
         android:drawableEnd="@drawable/addsvg"
         android:drawablePadding="10dp"
         android:padding="15dp"
-        android:text="Add transaction"
+        android:text="@string/add_transaction"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
