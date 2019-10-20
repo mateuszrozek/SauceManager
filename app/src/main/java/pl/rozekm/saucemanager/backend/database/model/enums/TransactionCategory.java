@@ -9,6 +9,8 @@ public enum TransactionCategory {
     SPORT(6),
     TRANSPORT(7),
     OTHER(0),
+    //chemia spożywcza()
+    //wyposażenie domu()
 
     INVESTMENT(91),
     SALARY(92),

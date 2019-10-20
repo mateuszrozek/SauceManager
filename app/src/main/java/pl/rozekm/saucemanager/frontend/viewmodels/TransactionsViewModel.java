@@ -10,7 +10,9 @@ import androidx.lifecycle.LiveData;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.repos.TransactionRepository;
 
-public class TransactionViewModel extends AndroidViewModel {
+public class TransactionsViewModel extends AndroidViewModel {
+
+
 
     private TransactionRepository transactionRepository;
     private LiveData<List<Transaction>> allTransactions;
@@ -18,7 +20,7 @@ public class TransactionViewModel extends AndroidViewModel {
     private LiveData<List<Transaction>> allIncomeTransactions;
     private LiveData<List<Transaction>> allTransactionsByTransactionType;
 
-    public TransactionViewModel(@NonNull Application application, Transaction transaction) {
+    public TransactionsViewModel(@NonNull Application application, Transaction transaction) {
         super(application);
         transactionRepository = new TransactionRepository(application, transaction);
         allTransactions = transactionRepository.getAllTransactions();
@@ -45,5 +47,4 @@ public class TransactionViewModel extends AndroidViewModel {
 
     public void insert(Transaction transaction) {
         transactionRepository.insertTransaction(transaction);
-    }
-}
+    }}
