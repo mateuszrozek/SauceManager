@@ -12,13 +12,12 @@ import pl.rozekm.saucemanager.backend.database.repos.TransactionRepository;
 
 public class TransactionsViewModel extends AndroidViewModel {
 
-
-
     private TransactionRepository transactionRepository;
     private LiveData<List<Transaction>> allTransactions;
     private LiveData<List<Transaction>> allOutcomeTransactions;
     private LiveData<List<Transaction>> allIncomeTransactions;
     private LiveData<List<Transaction>> allTransactionsByTransactionType;
+    private LiveData<List<Transaction>> limitOutcomeTransactions;
 
     public TransactionsViewModel(@NonNull Application application, Transaction transaction) {
         super(application);
@@ -27,6 +26,7 @@ public class TransactionsViewModel extends AndroidViewModel {
         allOutcomeTransactions = transactionRepository.getAllOutcomeTransactions();
         allIncomeTransactions = transactionRepository.getAllIncomeTransactions();
         allTransactionsByTransactionType = transactionRepository.getAllTransactionsByTransactionType(transaction.getType().getCode());
+        limitOutcomeTransactions = transactionRepository.getLimitOutcomeTransactions();
     }
 
     public LiveData<List<Transaction>> getAllTransactions() {
@@ -43,6 +43,10 @@ public class TransactionsViewModel extends AndroidViewModel {
 
     public LiveData<List<Transaction>> getAllTransactionsByTransactionType(int transactionType) {
         return allTransactionsByTransactionType;
+    }
+
+    public LiveData<List<Transaction>> getLimitOutcomeTransactions(){
+        return limitOutcomeTransactions;
     }
 
     public void insert(Transaction transaction) {

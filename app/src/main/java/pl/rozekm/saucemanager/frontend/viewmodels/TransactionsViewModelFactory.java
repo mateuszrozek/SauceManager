@@ -13,7 +13,6 @@ public class TransactionsViewModelFactory implements ViewModelProvider.Factory {
     private Application application;
     private Transaction transaction;
 
-
     public TransactionsViewModelFactory(Application application, Transaction transaction){
         this.application = application;
         this.transaction = transaction;

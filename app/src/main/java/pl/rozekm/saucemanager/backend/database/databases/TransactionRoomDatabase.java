@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,9 +55,21 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
         private final TransactionDao transactionDao;
 
         List<Transaction> transactions = Arrays.asList(
-                new Transaction(25.7, TransactionCategory.SALARY, TransactionType.INCOME),
-                new Transaction(4.3, TransactionCategory.INVESTMENT, TransactionType.INCOME),
-                new Transaction(12.6, TransactionCategory.SAVINGS, TransactionType.INCOME),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 1)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 2)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 3)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 4)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 5)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 6)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 7)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 8)),
+                new Transaction(LocalDateTime.of(2019, 10, 21, 19, 9))
+        );
+
+//        List<Transaction> transactions = Arrays.asList(
+//                new Transaction(25.7, TransactionCategory.SALARY, TransactionType.INCOME),
+//                new Transaction(4.3, TransactionCategory.INVESTMENT, TransactionType.INCOME),
+//                new Transaction(12.6, TransactionCategory.SAVINGS, TransactionType.INCOME),
 //                new Transaction(14.2, TransactionCategory.OTHER, TransactionType.INCOME),
 //                new Transaction(22.7, TransactionCategory.FOOD, TransactionType.OUTCOME),
 //                new Transaction(11.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
@@ -65,12 +78,23 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 //                new Transaction(32.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
 //                new Transaction(34.2, TransactionCategory.OTHER, TransactionType.OUTCOME),
 //                new Transaction(9.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
-//                new Transaction(19.2, TransactionCategory.OTHER, TransactionType.OUTCOME)
-                new Transaction(12.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
-                new Transaction(25.7, TransactionCategory.FOOD, TransactionType.OUTCOME),
-                new Transaction(4.3, TransactionCategory.FOOD, TransactionType.OUTCOME),
-                new Transaction(14.2, TransactionCategory.OTHER, TransactionType.OUTCOME)
-        );
+//                new Transaction(19.2, TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(12.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
+//                new Transaction(25.7, TransactionCategory.FOOD, TransactionType.OUTCOME),
+//                new Transaction(4.3, TransactionCategory.FOOD, TransactionType.OUTCOME),
+//                new Transaction(14.2, TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(22.7, TransactionCategory.FOOD, TransactionType.OUTCOME),
+//                new Transaction(11.6, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
+//                new Transaction(1.1, TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(2.2, TransactionCategory.FOOD, TransactionType.OUTCOME),
+//                new Transaction(3.3, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
+//                new Transaction(4.4, TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(5.5, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
+//                new Transaction(6.6, TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(7.7, TransactionCategory.CLOTHES, TransactionType.OUTCOME),
+//                new Transaction(8.8, TransactionCategory.FOOD, TransactionType.OUTCOME),
+//                new Transaction(9.9, TransactionCategory.FOOD, TransactionType.OUTCOME)
+//        );
 
         PopulateDatabaseAsync(TransactionRoomDatabase database) {
             transactionDao = database.transactionDao();

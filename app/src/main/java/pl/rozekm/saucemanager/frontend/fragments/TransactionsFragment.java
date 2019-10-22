@@ -26,13 +26,18 @@ import java.util.stream.Collectors;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.frontend.utils.TransactionsAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 
@@ -74,7 +79,7 @@ public class TransactionsFragment extends Fragment {
     ImageView imageViewClothes;
 
     @BindView(R.id.imageViewEntertaiment)
-    ImageView imageViewEntertaiment;
+    ImageView imageViewEntertainment;
 
     @BindView(R.id.imageViewFood)
     ImageView imageViewFood;
@@ -103,7 +108,12 @@ public class TransactionsFragment extends Fragment {
     @BindView(R.id.imageViewSavings)
     ImageView imageViewSavings;
 
-    int[] imageViewsOutcomeTransactions = new int[]{
+    @BindView(R.id.transactionsRecyclerView)
+    RecyclerView transactionsRecyclerView;
+
+    private TransactionsAdapter transactionsAdapter;
+
+    private int[] imageViewsOutcomeTransactions = new int[]{
             R.id.imageViewClothes,
             R.id.imageViewEntertaiment,
             R.id.imageViewFood,
@@ -154,7 +164,7 @@ public class TransactionsFragment extends Fragment {
         setChart(chartIncome, TransactionType.INCOME);
 
         imageViewClothes.setOnClickListener(this::transactionCategorySelected);
-        imageViewEntertaiment.setOnClickListener(this::transactionCategorySelected);
+        imageViewEntertainment.setOnClickListener(this::transactionCategorySelected);
         imageViewFood.setOnClickListener(this::transactionCategorySelected);
         imageViewHealth.setOnClickListener(this::transactionCategorySelected);
         imageViewHouse.setOnClickListener(this::transactionCategorySelected);
@@ -164,7 +174,27 @@ public class TransactionsFragment extends Fragment {
         imageViewInvestments.setOnClickListener(this::transactionCategorySelected);
         imageViewSalary.setOnClickListener(this::transactionCategorySelected);
         imageViewSavings.setOnClickListener(this::transactionCategorySelected);
+
+
+        transactionsRecyclerView.setHasFixedSize(true);
+        transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        transactionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        transactionsAdapter = new TransactionsAdapter();
+        transactionsRecyclerView.setAdapter(transactionsAdapter);
+        getRecentTransactions();
+
+
         return view;
+    }
+
+    private void getRecentTransactions(){
+        transactionsViewModel.getLimitOutcomeTransactions().observe(getViewLifecycleOwner(), new Observer<List<Transaction>>() {
+//        transactionsViewModel.getAllOutcomeTransactions().observe(this, new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> transactions) {
+                transactionsAdapter.setTransactions((ArrayList<Transaction>)transactions);
+            }
+        });
     }
 
     @Override

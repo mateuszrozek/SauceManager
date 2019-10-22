@@ -28,4 +28,7 @@ public interface TransactionDao {
 
     @Query("SELECT * FROM `transaction` WHERE transaction_type=0")
     LiveData<List<Transaction>> getAllOutcomeTransactions();
+
+    @Query("SELECT * FROM `transaction` WHERE transaction_type=0 ORDER BY date DESC LIMIT 5")
+    LiveData<List<Transaction>> getLimitOutcomeTransactions();
 }

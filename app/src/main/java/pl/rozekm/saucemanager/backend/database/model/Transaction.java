@@ -47,6 +47,14 @@ public class Transaction {
         this.category = category;
         this.type = type;
     }
+    @Ignore
+    public Transaction(LocalDateTime date) {
+        this.amount = 1.1;
+        title = "";
+        this.date = date;
+        this.category = TransactionCategory.OTHER;
+        this.type = TransactionType.OUTCOME;
+    }
 
     @Ignore
     public Transaction(){

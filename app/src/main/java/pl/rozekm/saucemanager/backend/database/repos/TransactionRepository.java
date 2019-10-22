@@ -18,6 +18,7 @@ public class TransactionRepository {
     private LiveData<List<Transaction>> allOutcomeTransactions;
     private LiveData<List<Transaction>> allIncomeTransactions;
     private LiveData<List<Transaction>> allTransactionsByTransactionType;
+    private LiveData<List<Transaction>> limitOutcomeTransactions;
 
     public TransactionRepository(Application application, Transaction transaction) {
         TransactionRoomDatabase database = TransactionRoomDatabase.getDatabase(application);
@@ -26,6 +27,7 @@ public class TransactionRepository {
         allOutcomeTransactions = transactionDao.getAllOutcomeTransactions();
         allIncomeTransactions = transactionDao.getAllIncomeTransactions();
         allTransactionsByTransactionType = transactionDao.getAllTransactionsByTransactionType(transaction.getType().getCode());
+        limitOutcomeTransactions = transactionDao.getLimitOutcomeTransactions();
     }
 
     public LiveData<List<Transaction>> getAllTransactions() {
@@ -42,6 +44,10 @@ public class TransactionRepository {
 
     public LiveData<List<Transaction>> getAllTransactionsByTransactionType(int transactionType) {
         return allTransactionsByTransactionType;
+    }
+
+    public LiveData<List<Transaction>> getLimitOutcomeTransactions(){
+        return limitOutcomeTransactions;
     }
 
     public void insertTransaction(Transaction transaction) {
