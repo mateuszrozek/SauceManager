@@ -12,13 +12,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import pl.rozekm.saucemanager.backend.database.daos.ReminderDao;
 import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
+import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 
-@Database(entities = {Transaction.class}, version = 1, exportSchema = false)
+@Database(entities = {Transaction.class, Reminder.class}, version = 2, exportSchema = false)
 public abstract class TransactionRoomDatabase extends RoomDatabase {
 
     public abstract TransactionDao transactionDao();
+    public abstract ReminderDao reminderDao();
 
     private static TransactionRoomDatabase INSTANCE;
 
@@ -47,6 +50,8 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
     private static class PopulateDatabaseAsync extends AsyncTask<Void, Void, Void> {
 
         private final TransactionDao transactionDao;
+        private final ReminderDao reminderDao;
+
 
         List<Transaction> transactions = Arrays.asList(
                 new Transaction(LocalDateTime.of(2019, 10, 21, 19, 1)),
@@ -92,6 +97,7 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 
         PopulateDatabaseAsync(TransactionRoomDatabase database) {
             transactionDao = database.transactionDao();
+            reminderDao = database.reminderDao();
         }
 
         @Override

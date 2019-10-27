@@ -52,4 +52,5 @@ public class TransactionsViewModel extends AndroidViewModel {
 
     public void insert(Transaction transaction) {
         transactionRepository.insertTransaction(transaction);
-    }}
+    }
+}
