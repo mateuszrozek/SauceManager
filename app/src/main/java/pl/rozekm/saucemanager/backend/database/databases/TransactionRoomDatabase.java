@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 
 @Database(entities = {Transaction.class}, version = 1, exportSchema = false)
 public abstract class TransactionRoomDatabase extends RoomDatabase {
@@ -25,19 +22,16 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 
     private static TransactionRoomDatabase INSTANCE;
 
-    public static TransactionRoomDatabase getDatabase(final Context context) {
+    public synchronized static TransactionRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (TransactionRoomDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                            context.getApplicationContext(),
-                            TransactionRoomDatabase.class,
-                            "transaction_database")
-                            .fallbackToDestructiveMigration()
-                            .addCallback(roomDatabaseCallback)
-                            .build();
-                }
-            }
+            INSTANCE = Room.databaseBuilder(
+                    context.getApplicationContext(),
+                    TransactionRoomDatabase.class,
+                    "transaction_database")
+                    .fallbackToDestructiveMigration()
+                    .addCallback(roomDatabaseCallback)
+//                            .allowMainThreadQueries()
+                    .build();
         }
         return INSTANCE;
     }

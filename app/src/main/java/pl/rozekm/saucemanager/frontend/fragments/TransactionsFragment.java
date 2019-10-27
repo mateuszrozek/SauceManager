@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amitshekhar.DebugDB;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -25,18 +26,22 @@ import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.RoomDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
+import pl.rozekm.saucemanager.backend.database.databases.TransactionRoomDatabase;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.databinding.TransactionsFragmentBinding;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
@@ -155,7 +160,9 @@ public class TransactionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.transactions_fragment, container, false);
+        TransactionsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.transactions_fragment, container, false);
+        View view = binding.getRoot();
+
         ButterKnife.bind(this, view);
 
         transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), classTransaction)).get(TransactionsViewModel.class);
@@ -175,21 +182,24 @@ public class TransactionsFragment extends Fragment {
         imageViewSalary.setOnClickListener(this::transactionCategorySelected);
         imageViewSavings.setOnClickListener(this::transactionCategorySelected);
 
-
         transactionsRecyclerView.setHasFixedSize(true);
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         transactionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         transactionsAdapter = new TransactionsAdapter();
-        transactionsRecyclerView.setAdapter(transactionsAdapter);
-        getRecentTransactions();
+//        transactionsViewModel.getLimitOutcomeTransactions().observe(TransactionsFragment.this, transactionsAdapter::setTransactions);
+//        transactionsRecyclerView.setAdapter(transactionsAdapter);
 
+        getRecentTransactions();
+        binding.setAdapter(transactionsAdapter);
 
         return view;
     }
 
     private void getRecentTransactions(){
-        transactionsViewModel.getLimitOutcomeTransactions().observe(getViewLifecycleOwner(), new Observer<List<Transaction>>() {
-//        transactionsViewModel.getAllOutcomeTransactions().observe(this, new Observer<List<Transaction>>() {
+
+
+
+        transactionsViewModel.getLimitOutcomeTransactions().observe(TransactionsFragment.this, new Observer<List<Transaction>>() {
             @Override
             public void onChanged(List<Transaction> transactions) {
                 transactionsAdapter.setTransactions((ArrayList<Transaction>)transactions);
@@ -211,6 +221,7 @@ public class TransactionsFragment extends Fragment {
                 if (isTitleValid()) {
                     newTransaction.setTitle(editTextTitle.getEditText().toString());
                 }
+                System.out.println(DebugDB.getAddressLog());
                 transactionsViewModel.insert(newTransaction);
             }
         });

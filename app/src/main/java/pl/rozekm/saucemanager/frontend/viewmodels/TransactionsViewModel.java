@@ -13,6 +13,7 @@ import pl.rozekm.saucemanager.backend.database.repos.TransactionRepository;
 public class TransactionsViewModel extends AndroidViewModel {
 
     private TransactionRepository transactionRepository;
+
     private LiveData<List<Transaction>> allTransactions;
     private LiveData<List<Transaction>> allOutcomeTransactions;
     private LiveData<List<Transaction>> allIncomeTransactions;

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.cardview.widget.CardView;
@@ -14,7 +15,7 @@ import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder> {
-    private ArrayList<Transaction> transactions;
+    private List<Transaction> transactions;
 
     public static class TransactionsViewHolder extends RecyclerView.ViewHolder {
         public CardView cardView;
@@ -32,7 +33,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         }
     }
 
-    public TransactionsAdapter(ArrayList<Transaction> transactions) {
+    public TransactionsAdapter(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 
@@ -40,7 +41,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     }
 
-    public void setTransactions(ArrayList<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 

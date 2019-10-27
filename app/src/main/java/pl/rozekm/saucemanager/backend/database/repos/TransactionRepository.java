@@ -51,14 +51,15 @@ public class TransactionRepository {
     }
 
     public void insertTransaction(Transaction transaction) {
-        new InsertAsyncTask(transactionDao).execute(transaction);
+//        transactionDao.insertTransaction(transaction);
+        new insertAsyncTask(transactionDao).execute(transaction);
     }
 
-    private static class InsertAsyncTask extends AsyncTask<Transaction, Void, Void> {
+    private static class insertAsyncTask extends AsyncTask<Transaction, Void, Void> {
 
         private TransactionDao transactionDao;
 
-        InsertAsyncTask(TransactionDao transactionDao) {
+        insertAsyncTask(TransactionDao transactionDao) {
             this.transactionDao = transactionDao;
         }
 
