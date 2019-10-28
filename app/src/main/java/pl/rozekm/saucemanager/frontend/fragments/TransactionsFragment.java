@@ -113,7 +113,7 @@ public class TransactionsFragment extends Fragment {
     @BindView(R.id.imageViewSavings)
     ImageView imageViewSavings;
 
-    @BindView(R.id.transactionsRecyclerView)
+//    @BindView(R.id.transactionsRecyclerView)
     RecyclerView transactionsRecyclerView;
 
     private TransactionsAdapter transactionsAdapter;
@@ -157,6 +157,17 @@ public class TransactionsFragment extends Fragment {
         return new TransactionsFragment();
     }
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), classTransaction)).get(TransactionsViewModel.class);
+        transactionsAdapter = new TransactionsAdapter();
+        getRecentTransactions();
+    }
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -165,7 +176,6 @@ public class TransactionsFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), classTransaction)).get(TransactionsViewModel.class);
 
         setChart(chartOutcome, TransactionType.OUTCOME);
         setChart(chartIncome, TransactionType.INCOME);
@@ -182,27 +192,22 @@ public class TransactionsFragment extends Fragment {
         imageViewSalary.setOnClickListener(this::transactionCategorySelected);
         imageViewSavings.setOnClickListener(this::transactionCategorySelected);
 
+        transactionsRecyclerView = view.findViewById(R.id.transactionsRecyclerView);
+        transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsRecyclerView.setHasFixedSize(true);
-        transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         transactionsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        transactionsAdapter = new TransactionsAdapter();
-//        transactionsViewModel.getLimitOutcomeTransactions().observe(TransactionsFragment.this, transactionsAdapter::setTransactions);
-//        transactionsRecyclerView.setAdapter(transactionsAdapter);
-
-        getRecentTransactions();
-        binding.setAdapter(transactionsAdapter);
+        transactionsRecyclerView.setAdapter(transactionsAdapter);
 
         return view;
     }
 
     private void getRecentTransactions(){
 
-
-
         transactionsViewModel.getLimitOutcomeTransactions().observe(TransactionsFragment.this, new Observer<List<Transaction>>() {
             @Override
             public void onChanged(List<Transaction> transactions) {
-                transactionsAdapter.setTransactions((ArrayList<Transaction>)transactions);
+                transactionsAdapter.setTransactions(transactions);
+                transactionsAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -17,6 +17,9 @@ public interface ReminderDao {
     @Delete
     void deleteReminder(Reminder reminder);
 
-    @Query("SELECT * FROM `transaction`")
+    @Query("SELECT * FROM `reminder`")
     LiveData<List<Reminder>> getAllReminders();
+
+    @Query("DELETE FROM `reminder`")
+    void deleteAllReminders();
 }

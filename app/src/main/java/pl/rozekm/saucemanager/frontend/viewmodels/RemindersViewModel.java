@@ -8,20 +8,20 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
-import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.repos.ReminderRepository;
 
 public class RemindersViewModel extends AndroidViewModel {
     private ReminderRepository reminderRepository;
 
-    private LiveData<List<Transaction>> allReminders;
+    private LiveData<List<Reminder>> allReminders;
 
     public RemindersViewModel(@NonNull Application application) {
         super(application);
         reminderRepository = new ReminderRepository(application);
+        allReminders = reminderRepository.getAllReminders();
     }
 
-    public LiveData<List<Transaction>> getAllReminders() {
+    public LiveData<List<Reminder>> getAllReminders() {
         return allReminders;
     }
 

@@ -16,8 +16,9 @@ import pl.rozekm.saucemanager.backend.database.daos.ReminderDao;
 import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 
-@Database(entities = {Transaction.class, Reminder.class}, version = 2, exportSchema = false)
+@Database(entities = {Transaction.class, Reminder.class}, version = 3, exportSchema = false)
 public abstract class TransactionRoomDatabase extends RoomDatabase {
 
     public abstract TransactionDao transactionDao();
@@ -65,6 +66,15 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
                 new Transaction(LocalDateTime.of(2019, 10, 21, 19, 9))
         );
 
+        List<Reminder> reminders = Arrays.asList(
+                new Reminder("Gaz"),
+                new Reminder("WODA"),
+                new Reminder("PODATKI")
+//                new Reminder("Gaz", Frequency.MONTHLY, LocalDateTime.of(2019, 10, 21, 19, 9)),
+//                new Reminder("Woda", Frequency.MONTHLY, LocalDateTime.of(2019, 7, 1, 0, 0)),
+//                new Reminder("Podatki", Frequency.YEARLY, LocalDateTime.of(2019, 3, 12, 4, 9))
+        );
+
 //        List<Transaction> transactions = Arrays.asList(
 //                new Transaction(25.7, TransactionCategory.SALARY, TransactionType.INCOME),
 //                new Transaction(4.3, TransactionCategory.INVESTMENT, TransactionType.INCOME),
@@ -103,7 +113,9 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             transactionDao.deleteAllTransactions();
+            reminderDao.deleteAllReminders();
             transactions.forEach(transactionDao::insertTransaction);
+            reminders.forEach(reminderDao::insertReminder);
             return null;
         }
     }
