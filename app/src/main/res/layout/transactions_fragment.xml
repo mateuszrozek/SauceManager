@@ -9,7 +9,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/colorScreenBackground"
             android:minWidth="80dp">
 
@@ -18,7 +18,7 @@
                 android:layout_width="60dp"
                 android:layout_height="450dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="24dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -105,6 +105,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:orientation="horizontal"
+                android:baselineAligned="false"
                 app:layout_constraintBottom_toBottomOf="@+id/linearLayoutOutcomes"
                 app:layout_constraintEnd_toStartOf="@+id/linearLayoutIncomes"
                 app:layout_constraintStart_toEndOf="@+id/linearLayoutOutcomes"
@@ -242,6 +243,16 @@
                 </RadioGroup>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/textViewClickInfoChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/click_chart_to_see_detailed_statistics"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutOutcomes" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextAmount"
@@ -253,7 +264,7 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutOutcomes">
+                app:layout_constraintTop_toBottomOf="@+id/textViewClickInfoChart">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -288,11 +299,10 @@
                 android:id="@+id/linearLayoutIncomes"
                 android:layout_width="60dp"
                 android:layout_height="225dp"
-                android:layout_marginTop="60dp"
                 android:layout_marginEnd="8dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="@+id/linearLayoutOutcomes">
 
                 <ImageView
                     android:id="@+id/imageViewInvestments"
@@ -320,7 +330,6 @@
                     android:layout_weight="1"
                     android:contentDescription="@string/this_is_an_image_of_category"
                     app:srcCompat="@drawable/savingssvg" />
-
             </LinearLayout>
 
             <Button
@@ -337,20 +346,45 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
 
-            <TextView
-                android:id="@+id/lastOperationsTextView"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintsLayoutTitle"
+                android:padding="5dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="65dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/last_operations"
-                android:textSize="26sp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorPrimaryLight"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addTransactionImageButton" />
+                app:layout_constraintTop_toBottomOf="@+id/addTransactionImageButton">
 
+                <TextView
+                    android:id="@+id/lastOperationsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:text="@string/last_operations"
+                    android:textColor="@color/sauceColor"
+                    android:textSize="26sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/seeAllTransactionImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/b"
+                    android:drawableEnd="@android:drawable/arrow_down_float"
+                    android:drawablePadding="5dp"
+                    android:padding="10dp"
+                    android:text="@string/see_all"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/transactionsRecyclerView"
@@ -360,11 +394,9 @@
                 android:layout_marginEnd="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastOperationsTextView">
+                app:layout_constraintTop_toBottomOf="@+id/constraintsLayoutTitle">
 
             </androidx.recyclerview.widget.RecyclerView>
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

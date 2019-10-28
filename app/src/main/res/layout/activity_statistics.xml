@@ -1,20 +1,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="handler"
-            type="pl.rozekm.saucemanager.frontend.activities.MainActivity" />
-
-        <variable
-            name="manager"
-            type="androidx.fragment.app.FragmentManager" />
-    </data>
-
     <LinearLayout
+        android:background="@color/colorScreenBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -64,25 +52,16 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:textColor="@color/colorScreenBackground"
-            app:tabTextColor="@color/colorScreenBackground"
-            app:tabSelectedTextColor="@color/sauceColor"
-            android:background="@color/colorPrimaryLight"
-            app:tabIndicator="@color/sauceColor"
-            app:tabIconTint="@color/sauceColor"
+        <TextView
+            android:id="@+id/textViewStats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:pager="@{(pager)}">
-        </com.google.android.material.tabs.TabLayout>
+            android:text="Statistics" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+        <Button
+            android:id="@+id/buttonBackStats"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:handler="@{handler}" />
-
+            android:layout_height="wrap_content"
+            android:text="@string/back_to_main" />
     </LinearLayout>
-
 </layout>

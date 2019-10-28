@@ -26,4 +26,7 @@
     <string name="dummy_1">1228,25 zł</string>
     <string name="future_balance">Future balance</string>
     <string name="dummy_2">5216,23 zł</string>
+    <string name="click_chart_to_see_detailed_statistics">Click chart to see detailed statistics</string>
+    <string name="see_all">See all</string>
+    <string name="back_to_main">Back to main</string>
 </resources>

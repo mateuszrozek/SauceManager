@@ -1,5 +1,6 @@
 package pl.rozekm.saucemanager.frontend.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,15 +34,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.RoomDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
-import pl.rozekm.saucemanager.backend.database.databases.TransactionRoomDatabase;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.TransactionsFragmentBinding;
+import pl.rozekm.saucemanager.frontend.activities.AllTransactionsActivity;
+import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
@@ -113,7 +114,13 @@ public class TransactionsFragment extends Fragment {
     @BindView(R.id.imageViewSavings)
     ImageView imageViewSavings;
 
-//    @BindView(R.id.transactionsRecyclerView)
+    @BindView(R.id.linearLayout)
+    LinearLayout linearLayout;
+
+    @BindView(R.id.seeAllTransactionImageButton)
+    Button seeAllTransactionImageButton;
+
+    //    @BindView(R.id.transactionsRecyclerView)
     RecyclerView transactionsRecyclerView;
 
     private TransactionsAdapter transactionsAdapter;
@@ -179,6 +186,14 @@ public class TransactionsFragment extends Fragment {
 
         setChart(chartOutcome, TransactionType.OUTCOME);
         setChart(chartIncome, TransactionType.INCOME);
+        linearLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), StatisticsActivity.class);
+            startActivity(intent);
+        });
+        seeAllTransactionImageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AllTransactionsActivity.class);
+            startActivity(intent);
+        });
 
         imageViewClothes.setOnClickListener(this::transactionCategorySelected);
         imageViewEntertainment.setOnClickListener(this::transactionCategorySelected);
@@ -201,7 +216,7 @@ public class TransactionsFragment extends Fragment {
         return view;
     }
 
-    private void getRecentTransactions(){
+    private void getRecentTransactions() {
 
         transactionsViewModel.getLimitOutcomeTransactions().observe(TransactionsFragment.this, new Observer<List<Transaction>>() {
             @Override
