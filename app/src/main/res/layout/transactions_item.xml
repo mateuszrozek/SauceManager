@@ -15,14 +15,6 @@
         android:padding="5dp">
 
         <TextView
-            android:id="@+id/transaction_item_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            android:textColor="#333"
-            android:textSize="20sp" />
-
-        <TextView
             android:id="@+id/transaction_item_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,12 +23,32 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/transaction_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textColor="#333"
+            android:textSize="16sp" />
+
+
+
+        <TextView
+            android:id="@+id/transaction_item_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:textColor="#333"
+            android:textSize="16sp" />
+
+
+
+        <TextView
             android:id="@+id/transaction_item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Date"
             android:textColor="#333"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

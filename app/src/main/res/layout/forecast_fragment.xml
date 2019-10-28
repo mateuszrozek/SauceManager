@@ -128,7 +128,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
             <TableLayout
-                android:layout_width="395dp"
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
                 android:layout_height="397dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"

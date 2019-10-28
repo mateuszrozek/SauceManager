@@ -1,6 +1,7 @@
 package pl.rozekm.saucemanager.backend.database.model;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -47,6 +48,7 @@ public class Transaction {
         this.category = category;
         this.type = type;
     }
+
     @Ignore
     public Transaction(LocalDateTime date) {
         this.amount = 1.1;
@@ -54,6 +56,33 @@ public class Transaction {
         this.date = date;
         this.category = TransactionCategory.OTHER;
         this.type = TransactionType.OUTCOME;
+    }
+
+    @Ignore
+    public Transaction(LocalDateTime date, Double amount) {
+        this.amount = amount;
+        title = "";
+        this.date = date;
+        this.category = TransactionCategory.OTHER;
+        this.type = TransactionType.OUTCOME;
+    }
+
+    @Ignore
+    public Transaction(LocalDateTime date, Double amount, TransactionCategory category) {
+        this.amount = amount;
+        title = "";
+        this.date = date;
+        this.category = category;
+        this.type = TransactionType.OUTCOME;
+    }
+
+    @Ignore
+    public Transaction(LocalDateTime date, Double amount, TransactionCategory category, TransactionType type) {
+        this.amount = amount;
+        title = "";
+        this.date = date;
+        this.category = category;
+        this.type = type;
     }
 
     @Ignore
@@ -112,6 +141,10 @@ public class Transaction {
 
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    public Month getMonth(){
+        return getDate().getMonth();
     }
 
     @Override
