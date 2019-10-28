@@ -17,4 +17,13 @@
     <string name="title_optional">Title (optional)</string>
     <string name="add_transaction">Add transaction</string>
     <string name="this_is_an_image_of_category">This is an image of category</string>
+    <string name="last_operations">Last Operations</string>
+    <string name="your_reminders">Your Reminders</string>
+    <string name="forecast_small">Forecast</string>
+    <string name="calculate_forecast">Calculate Forecast</string>
+    <string name="spendings_this_month">Spendings this month</string>
+    <string name="your_balance">Your balance</string>
+    <string name="dummy_1">1228,25 zł</string>
+    <string name="future_balance">Future balance</string>
+    <string name="dummy_2">5216,23 zł</string>
 </resources>
