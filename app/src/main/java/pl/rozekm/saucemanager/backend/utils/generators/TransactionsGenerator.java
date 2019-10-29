@@ -83,27 +83,38 @@ public class TransactionsGenerator {
         switch (category) {
             case OTHER:
                 randomTransactions(0.5, 10, 2, 300, category, month, TransactionType.OUTCOME);
+                break;
             case TRANSPORT:
                 randomTransactions(0.2, 2, 70, 200, category, month, TransactionType.OUTCOME);
+                break;
             case SPORT:
                 randomTransactions(0.3, 2, 30, 250, category, month, TransactionType.OUTCOME);
+                break;
             case HOUSE:
                 randomTransactions(0.15, 2, 350, 700, category, month, TransactionType.OUTCOME);
+                break;
             case HEALTH:
                 randomTransactions(0.2, 2, 250, 450, category, month, TransactionType.OUTCOME);
+                break;
             case FOOD:
                 randomTransactions(0.97, 12, 10, 35, category, month, TransactionType.OUTCOME);
+                break;
             case ENTERTAINMENT:
                 randomTransactions(0.7, 5, 35, 100, category, month, TransactionType.OUTCOME);
+                break;
             case CLOTHES:
                 randomTransactions(0.2, 2, 120, 650, category, month, TransactionType.OUTCOME);
+                break;
 
             case SAVINGS:
                 randomTransactions(1, 1, 3, 7, category, month, TransactionType.INCOME);
+                break;
             case SALARY:
                 randomTransactions(1, 1, 5500, 6100, category, month, TransactionType.INCOME);
+                break;
             case INVESTMENT:
                 randomTransactions(0.1, 2, 200, 20000, category, month, TransactionType.INCOME);
+                break;
         }
     }
 
