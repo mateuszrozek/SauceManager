@@ -1,6 +1,8 @@
 package pl.rozekm.saucemanager.backend.database.model.enums;
 
-public enum TransactionType {
+import java.io.Serializable;
+
+public enum TransactionType implements Serializable {
     INCOME(1),
     OUTCOME(0);
 

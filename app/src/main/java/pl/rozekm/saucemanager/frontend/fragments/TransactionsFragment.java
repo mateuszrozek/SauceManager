@@ -170,7 +170,7 @@ public class TransactionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), classTransaction)).get(TransactionsViewModel.class);
-        transactionsAdapter = new TransactionsAdapter();
+        transactionsAdapter = new TransactionsAdapter(getContext());
         getRecentTransactions();
     }
 

@@ -4,8 +4,10 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 
 @Dao
@@ -13,6 +15,12 @@ public interface TransactionDao {
 
     @Insert
     void insertTransaction(Transaction transaction);
+
+    @Update
+    void updateTransaction(Transaction...transactions);
+
+    @Delete
+    void deleteTransaction(Transaction transaction);
 
     @Query("DELETE FROM `transaction`")
     void deleteAllTransactions();

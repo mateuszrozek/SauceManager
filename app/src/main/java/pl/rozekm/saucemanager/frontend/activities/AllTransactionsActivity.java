@@ -38,7 +38,7 @@ public class AllTransactionsActivity extends AppCompatActivity {
         buttonBackAllTrans.setOnClickListener(v -> onBackPressed());
 
         transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getApplication(), new Transaction())).get(TransactionsViewModel.class);
-        transactionsAdapter = new TransactionsAdapter();
+        transactionsAdapter = new TransactionsAdapter(AllTransactionsActivity.this);
         getAllTransactions();
 
         allTransactionsRecyclerView = findViewById(R.id.allTransactionsRecyclerView);

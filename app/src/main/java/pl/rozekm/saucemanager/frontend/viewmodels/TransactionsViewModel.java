@@ -53,4 +53,12 @@ public class TransactionsViewModel extends AndroidViewModel {
     public void insert(Transaction transaction) {
         transactionRepository.insertTransaction(transaction);
     }
+
+    public void update(Transaction transaction){
+        transactionRepository.update(transaction);
+    }
+
+    public void delete(Transaction transaction){
+        transactionRepository.delete(transaction);
+    }
 }

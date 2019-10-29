@@ -1,6 +1,8 @@
 package pl.rozekm.saucemanager.backend.database.model.enums;
 
-public enum TransactionCategory {
+import java.io.Serializable;
+
+public enum TransactionCategory implements Serializable {
     CLOTHES(1),
     ENTERTAINMENT(2),
     FOOD(3),

@@ -1,5 +1,6 @@
 package pl.rozekm.saucemanager.backend.database.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -16,7 +17,7 @@ import pl.rozekm.saucemanager.backend.utils.converters.TransactionCategoryConver
 import pl.rozekm.saucemanager.backend.utils.converters.TransactionTypeConverter;
 
 @Entity(tableName = "transaction")
-public class Transaction {
+public class Transaction implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull

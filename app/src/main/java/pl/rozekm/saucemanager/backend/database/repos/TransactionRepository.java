@@ -51,8 +51,15 @@ public class TransactionRepository {
     }
 
     public void insertTransaction(Transaction transaction) {
-//        transactionDao.insertTransaction(transaction);
         new insertAsyncTask(transactionDao).execute(transaction);
+    }
+
+    public void update(Transaction transaction){
+        new updateAsyncTask(transactionDao).execute(transaction);
+    }
+
+    public void delete(Transaction transaction){
+        new deleteAsyncTask(transactionDao).execute(transaction);
     }
 
     private static class insertAsyncTask extends AsyncTask<Transaction, Void, Void> {
@@ -69,4 +76,33 @@ public class TransactionRepository {
             return null;
         }
     }
+
+    private static class deleteAsyncTask extends AsyncTask<Transaction, Void, Void> {
+        private TransactionDao transactionDao;
+
+        deleteAsyncTask(TransactionDao transactionDao) {
+            this.transactionDao = transactionDao;
+        }
+
+        @Override
+        protected Void doInBackground(final Transaction... params) {
+            transactionDao.deleteTransaction(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateAsyncTask extends AsyncTask<Transaction, Void, Void> {
+        private TransactionDao transactionDao;
+
+        updateAsyncTask(TransactionDao transactionDao) {
+            this.transactionDao = transactionDao;
+        }
+
+        @Override
+        protected Void doInBackground(final Transaction... params) {
+            transactionDao.updateTransaction(params[0]);
+            return null;
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 package pl.rozekm.saucemanager.frontend.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,9 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.frontend.activities.TransactionCRUDActivity;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder> {
     private List<Transaction> transactions;
+    Context context;
 
     public static class TransactionsViewHolder extends RecyclerView.ViewHolder {
         public CardView cardView;
@@ -40,8 +44,8 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         this.transactions = transactions;
     }
 
-    public TransactionsAdapter() {
-
+    public TransactionsAdapter(Context context) {
+        this.context = context;
     }
 
     public void setTransactions(List<Transaction> transactions) {
@@ -51,6 +55,15 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     @Override
     public TransactionsAdapter.TransactionsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.transactions_item, parent, false);
+
+//        Transaction transaction = transactions.get(viewType);
+//
+//        v.setOnClickListener(v1 -> {
+//            Intent intent = new Intent(v1.getContext(), TransactionCRUDActivity.class);
+//            intent.putExtra("id", transaction.getId());
+//            intent.putExtra("trans", transaction);
+//            v1.getContext().startActivity(intent);
+//        });
         TransactionsViewHolder vh = new TransactionsViewHolder(v);
         return vh;
     }
@@ -62,13 +75,19 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
         holder.category.setText(trans.getCategory().toString());
         holder.category.setTextColor(chooseColor(trans));
-        holder.amount.setText(String.format(Locale.forLanguageTag("PL"), "%5.2f", trans.getAmount()) + " zł");
+        holder.amount.setText(String.format(Locale.forLanguageTag("PL"), "%7.2f", trans.getAmount()) + " zł");
         holder.date.setText(trans.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
         if (trans.getTitle() == null || trans.getTitle().isEmpty()) {
             holder.title.setText("No title provided");
         } else {
             holder.title.setText(trans.getTitle());
         }
+
+        holder.cardView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TransactionCRUDActivity.class);
+            intent.putExtra("trans", trans);
+            context.startActivity(intent);
+        });
     }
 
     private int chooseColor(Transaction transaction) {
