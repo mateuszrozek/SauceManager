@@ -86,7 +86,16 @@ public class Transaction {
     }
 
     @Ignore
-    public Transaction(){
+    public Transaction(LocalDateTime date, Double amount, String title, TransactionCategory category, TransactionType type) {
+        this.amount = amount;
+        this.title = title;
+        this.date = date;
+        this.category = category;
+        this.type = type;
+    }
+
+    @Ignore
+    public Transaction() {
         this.amount = 0.0;
         title = "";
         this.date = LocalDateTime.now();
@@ -143,7 +152,7 @@ public class Transaction {
         this.type = type;
     }
 
-    public Month getMonth(){
+    public Month getMonth() {
         return getDate().getMonth();
     }
 
