@@ -11,7 +11,6 @@ import android.widget.TextView;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -27,7 +26,6 @@ import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
 import pl.rozekm.saucemanager.frontend.viewmodels.ForecastViewModel;
@@ -181,10 +179,10 @@ public class ForecastFragment extends Fragment {
         List<List<Transaction>> transactionsGroupedByCatList = new ArrayList<>(transactionsGroupedByCat.values());
 
         for (List<Transaction> transactionsByCat : transactionsGroupedByCatList) {
-            
+
             Map<Month, List<Transaction>> transactionsGroupedByCatAndMonths =
                     transactionsByCat.stream().collect(Collectors.groupingBy(Transaction::getMonth));
-            
+
             List<List<Transaction>> transactionsGroupedByCatAndMon = new ArrayList<>(transactionsGroupedByCatAndMonths.values());
 
             ArrayList<Double> sumForEachMonth = new ArrayList<>();
@@ -193,31 +191,30 @@ public class ForecastFragment extends Fragment {
             Double typically = 0.0;
             Double remaining = 0.0;
 
-            for (List<Transaction> transactionsInMonth: transactionsGroupedByCatAndMon) {
+            for (List<Transaction> transactionsInMonth : transactionsGroupedByCatAndMon) {
 
                 double sum = 0.0;
                 double thisMonth = 0.0;
 
                 boolean previousMonth = false;
                 LocalDateTime localDateTime = LocalDateTime.now();
-                for (Transaction transaction: transactionsInMonth) {
-                    if (transaction.getMonth() != localDateTime.getMonth()){
+                for (Transaction transaction : transactionsInMonth) {
+                    if (transaction.getMonth() != localDateTime.getMonth()) {
                         sum = sum + transaction.getAmount();
                         previousMonth = true;
-                    }
-                    else {
+                    } else {
                         thisMonth = thisMonth + transaction.getAmount();
                         previousMonth = false;
                     }
                 }
-                if (!previousMonth){
+                if (!previousMonth) {
                     soFar = thisMonth;
                 }
-                if (previousMonth){
+                if (previousMonth) {
                     sumForEachMonth.add(sum);
                 }
             }
-            for (Double monthlyOutcome: sumForEachMonth) {
+            for (Double monthlyOutcome : sumForEachMonth) {
                 totalSum = totalSum + monthlyOutcome;
             }
             typically = totalSum / sumForEachMonth.size();
