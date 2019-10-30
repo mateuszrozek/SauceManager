@@ -83,6 +83,21 @@ public class ForecastFragment extends Fragment {
             t3.setTextSize(20);
             t4.setTextSize(20);
 
+            t1.setPadding(2, 2, 2, 2);
+            t2.setPadding(2, 2, 2, 2);
+            t3.setPadding(2, 2, 2, 2);
+            t4.setPadding(2, 2, 2, 2);
+
+            t1.setGravity(2);
+            t2.setGravity(3);
+            t3.setGravity(3);
+            t4.setGravity(3);
+
+            t1.setTextColor(getResources().getColor(R.color.sauceColor));
+            t2.setTextColor(getResources().getColor(R.color.sauceColor));
+            t3.setTextColor(getResources().getColor(R.color.sauceColor));
+            t4.setTextColor(getResources().getColor(R.color.sauceColor));
+
             row.addView(t1);
             row.addView(t2);
             row.addView(t3);
@@ -118,6 +133,21 @@ public class ForecastFragment extends Fragment {
                 t3.setTextSize(16);
                 t4.setTextSize(16);
 
+                t1.setPadding(0, 2, 2, 2);
+                t2.setPadding(2, 2, 2, 2);
+                t3.setPadding(2, 2, 2, 2);
+                t4.setPadding(2, 2, 2, 2);
+
+                t1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+                t2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+                t3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+                t4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+
+                t1.setGravity(2);
+                t2.setGravity(5);
+                t3.setGravity(5);
+                t4.setGravity(5);
+
                 row.addView(t1);
                 row.addView(t2);
                 row.addView(t3);
@@ -133,10 +163,13 @@ public class ForecastFragment extends Fragment {
 
     private void styleHeader(TableRow row) {
         row.setPadding(5, 5, 5, 5);
+        row.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
     }
 
     private void styleRow(TableRow row) {
         row.setPadding(5, 5, 5, 5);
+        row.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
     }
 
     private ArrayList<Forecast> processTransactions(List<Transaction> transactions) {

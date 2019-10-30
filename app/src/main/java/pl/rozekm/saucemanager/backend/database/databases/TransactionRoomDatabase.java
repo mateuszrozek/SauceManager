@@ -56,15 +56,15 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
         private final TransactionDao transactionDao;
         private final ReminderDao reminderDao;
 
-//        TransactionsGenerator generator = new TransactionsGenerator(6);
-//        List<Transaction> transactions = generator.getTransactions();
+        TransactionsGenerator generator = new TransactionsGenerator(6);
+        List<Transaction> transactions = generator.getTransactions();
 
-        List<Transaction> transactions = Arrays.asList(
-                new Transaction(LocalDateTime.now(), 1.1, "Zakupy nr 1", TransactionCategory.OTHER, TransactionType.OUTCOME),
-                new Transaction(LocalDateTime.now(), 2.2, "Zakupy nr 2", TransactionCategory.OTHER, TransactionType.OUTCOME),
-                new Transaction(LocalDateTime.now(), 3.3, "Zakupy nr 3", TransactionCategory.OTHER, TransactionType.OUTCOME),
-                new Transaction(LocalDateTime.now(), 4.4, "Zakupy nr 4", TransactionCategory.OTHER, TransactionType.OUTCOME)
-        );
+//        List<Transaction> transactions = Arrays.asList(
+//                new Transaction(LocalDateTime.now(), 1.1, "Zakupy nr 1", TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(LocalDateTime.now(), 2.2, "Zakupy nr 2", TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(LocalDateTime.now(), 3.3, "Zakupy nr 3", TransactionCategory.OTHER, TransactionType.OUTCOME),
+//                new Transaction(LocalDateTime.now(), 4.4, "Zakupy nr 4", TransactionCategory.OTHER, TransactionType.OUTCOME)
+//        );
 
 
 
