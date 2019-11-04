@@ -2,13 +2,10 @@ package pl.rozekm.saucemanager.frontend.activities;
 
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
-import android.text.style.StyleSpan;
 import android.widget.Button;
 import android.widget.TableLayout;
 
@@ -39,14 +36,24 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
+import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.charts.MyMarkerView;
 import pl.rozekm.saucemanager.frontend.utils.charts.MyValueFormatter;
+import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -69,23 +76,47 @@ public class StatisticsActivity extends AppCompatActivity {
     TableLayout tabularStatistics;
 
     protected final String[] categories = new String[]{
-            "CLOTHES", "ENTERTAINMENT", "FOOD", "HEALTH", "OTHER"
+            "CLOTHES", "ENTERTAINMENT", "FOOD", "HEALTH", "OTHER", "DUPA1", "DUPA2", "DUPA3", "DUPA4", "DUPA5"
     };
+
+    List<Transaction> allTransactions = new ArrayList<>();
+    private TransactionsViewModel transactionsViewModel;
+
+    private TransactionsSorter transactionsSorter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         ButterKnife.bind(this);
+        transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getApplication(), new Transaction())).get(TransactionsViewModel.class);
 
         buttonBackStats.setOnClickListener(v -> onBackPressed());
 
-        setPolylinePieChart(pieChartOutcomes);
-        setPolylinePieChart(pieChartIncomes);
+        transactionsViewModel.getAllTransactions().observe(this, new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> transactions) {
 
-        setLineChart(lineChartAccount);
+                allTransactions = transactions;
+                transactionsSorter = new TransactionsSorter(allTransactions);
 
-        setBarChart(barChartCashFlow);
+                setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME);
+                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME);
+
+                setLineChart(lineChartAccount);
+
+                setBarChart(barChartCashFlow);
+
+            }
+        });
+
+//        setPolylinePieChart(pieChartOutcomes);
+//        setPolylinePieChart(pieChartIncomes);
+
+
+//        setLineChart(lineChartAccount);
+//
+//        setBarChart(barChartCashFlow);
     }
 
     private void setBarChart(BarChart chart) {
@@ -356,23 +387,36 @@ public class StatisticsActivity extends AppCompatActivity {
 
     }
 
-    private void setPolylinePieChart(PieChart pieChartOutcomes) {
-        setPolylinePieChartProperties(pieChartOutcomes);
-        setPolylinePieChartData(pieChartOutcomes);
+    private void setPolylinePieChart(PieChart pieChart, TransactionType type) {
+        setPolylinePieChartProperties(pieChart, type);
+        setPolylinePieChartData(pieChart, type);
     }
 
-    private void setPolylinePieChartData(PieChart chart) {
+    private void setPolylinePieChartData(PieChart chart, TransactionType type) {
+        List<Transaction> transactions = transactionsSorter.sortByType(allTransactions, type);
         ArrayList<PieEntry> entries = new ArrayList<>();
         int count = 5;
         float range = 2.3f;
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
-        for (int i = 0; i < count; i++) {
-            entries.add(new PieEntry((float) (Math.random() * range) + range / 5, categories[i % categories.length]));
+        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactions);
+
+        for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
+            entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Election Results");
+//        for (int i = 0; i < valueOfEachCategory.size(); i++) {
+//            entries.add(new PieEntry((float) (Math.random() * range) + range / 5, categories[i % categories.length]));
+//        }
+
+//        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
+//        // the chart.
+//        for (int i = 0; i < transactionsSorter.numberOfCategories(transactions); i++) {
+//            entries.add(new PieEntry((float) (Math.random() * range) + range / 5, categories[i % categories.length]));
+//        }
+
+        PieDataSet dataSet = new PieDataSet(entries, "List of operations");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
@@ -422,14 +466,14 @@ public class StatisticsActivity extends AppCompatActivity {
 
     }
 
-    private void setPolylinePieChartProperties(PieChart chart) {
+    private void setPolylinePieChartProperties(PieChart chart, TransactionType type) {
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
         chart.setExtraOffsets(5, 10, 5, 5);
 
         chart.setDragDecelerationFrictionCoef(0.95f);
 
-        chart.setCenterText(generateCenterSpannableText());
+        chart.setCenterText(generateCenterSpannableText(type));
 
         chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
 
@@ -466,15 +510,17 @@ public class StatisticsActivity extends AppCompatActivity {
         l.setEnabled(false);
     }
 
-    private SpannableString generateCenterSpannableText() {
+    private SpannableString generateCenterSpannableText(TransactionType type) {
+        String text;
+        if (type == TransactionType.OUTCOME) {
+            text = "Outcomes";
+        } else {
+            text = "Incomes";
+        }
+        SpannableString s = new SpannableString(text);
 
-        SpannableString s = new SpannableString("MPAndroidChart\ndeveloped by Philipp Jahoda");
-        s.setSpan(new RelativeSizeSpan(1.5f), 0, 14, 0);
-        s.setSpan(new StyleSpan(Typeface.NORMAL), 14, s.length() - 15, 0);
-        s.setSpan(new ForegroundColorSpan(Color.GRAY), 14, s.length() - 15, 0);
-        s.setSpan(new RelativeSizeSpan(.65f), 14, s.length() - 15, 0);
-        s.setSpan(new StyleSpan(Typeface.ITALIC), s.length() - 14, s.length(), 0);
-        s.setSpan(new ForegroundColorSpan(ColorTemplate.getHoloBlue()), s.length() - 14, s.length(), 0);
+        s.setSpan(new RelativeSizeSpan(2f), 0, text.length(), 0);
+
         return s;
     }
 

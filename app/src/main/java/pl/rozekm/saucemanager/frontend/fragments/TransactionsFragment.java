@@ -20,6 +20,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,8 @@ public class TransactionsFragment extends Fragment {
     private BarData barData;
 
     private Transaction classTransaction = new Transaction();
+
+    private List<Transaction> allTransactions = new ArrayList<>();
 
     @BindView(R.id.addTransactionImageButton)
     public Button addTransactionImageButton;
@@ -188,6 +191,8 @@ public class TransactionsFragment extends Fragment {
         setChart(chartIncome, TransactionType.INCOME);
         linearLayout.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), StatisticsActivity.class);
+
+            intent.putExtra("transactions", (Serializable) transactionsViewModel.getAllTransactions().getValue());
             startActivity(intent);
         });
         seeAllTransactionImageButton.setOnClickListener(v -> {
