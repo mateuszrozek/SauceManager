@@ -27,7 +27,7 @@ import pl.rozekm.saucemanager.frontend.utils.adapters.TypesAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 
-public class TransactionCRUDActivity extends AppCompatActivity {
+public class TransactionCrudActivity extends AppCompatActivity {
 
     @BindView(R.id.textInputLayoutTitle)
     TextInputLayout textInputLayoutTitle;
@@ -94,11 +94,11 @@ public class TransactionCRUDActivity extends AppCompatActivity {
         incomes.add(TransactionCategory.SALARY);
         incomes.add(TransactionCategory.SAVINGS);
 
-        typesAdapter = new TypesAdapter(TransactionCRUDActivity.this, android.R.layout.simple_spinner_dropdown_item, types);
+        typesAdapter = new TypesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, types);
         spinnerType.setAdapter(typesAdapter);
 
-        outcomesAdapter = new CategoriesAdapter(TransactionCRUDActivity.this, android.R.layout.simple_spinner_dropdown_item, outcomes);
-        incomesAdapter = new CategoriesAdapter(TransactionCRUDActivity.this, android.R.layout.simple_spinner_dropdown_item, incomes);
+        outcomesAdapter = new CategoriesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, outcomes);
+        incomesAdapter = new CategoriesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, incomes);
 
         int spinnerTypePosition = typesAdapter.getPosition(type);
         spinnerType.setSelection(spinnerTypePosition);
@@ -118,7 +118,7 @@ public class TransactionCRUDActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 transaction.setType(typesAdapter.getItem(position));
 
-                Toast.makeText(TransactionCRUDActivity.this, "type: " + transaction.getType().toString(),
+                Toast.makeText(TransactionCrudActivity.this, "type: " + transaction.getType().toString(),
                         Toast.LENGTH_SHORT).show();
 
                 if (typesAdapter.getItem(position) == TransactionType.OUTCOME) {
@@ -139,10 +139,10 @@ public class TransactionCRUDActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (transaction.getType() == TransactionType.OUTCOME) {
                     transaction.setCategory(outcomesAdapter.getItem(position));
-                    Toast.makeText(TransactionCRUDActivity.this, "cat: " + transaction.getCategory().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionCrudActivity.this, "cat: " + transaction.getCategory().toString(), Toast.LENGTH_SHORT).show();
                 } else {
                     transaction.setCategory(incomesAdapter.getItem(position));
-                    Toast.makeText(TransactionCRUDActivity.this, "cat: " + transaction.getCategory().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransactionCrudActivity.this, "cat: " + transaction.getCategory().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -156,13 +156,13 @@ public class TransactionCRUDActivity extends AppCompatActivity {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
             transaction.setAmount(Double.parseDouble(textInputLayoutAmount.getEditText().getText().toString()));
             transactionsViewModel.update(transaction);
-            Toast.makeText(TransactionCRUDActivity.this, "updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransactionCrudActivity.this, "updated", Toast.LENGTH_SHORT).show();
         });
 
         buttonDelete.setOnClickListener(v -> {
             transactionsViewModel.delete(transaction);
             onBackPressed();
-            Toast.makeText(TransactionCRUDActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransactionCrudActivity.this, "deleted", Toast.LENGTH_SHORT).show();
         });
     }
 }

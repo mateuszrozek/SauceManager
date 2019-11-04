@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
-import pl.rozekm.saucemanager.frontend.activities.TransactionCRUDActivity;
+import pl.rozekm.saucemanager.frontend.activities.TransactionCrudActivity;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder> {
     private List<Transaction> transactions;
@@ -59,7 +59,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 //        Transaction transaction = transactions.get(viewType);
 //
 //        v.setOnClickListener(v1 -> {
-//            Intent intent = new Intent(v1.getContext(), TransactionCRUDActivity.class);
+//            Intent intent = new Intent(v1.getContext(), TransactionCrudActivity.class);
 //            intent.putExtra("id", transaction.getId());
 //            intent.putExtra("trans", transaction);
 //            v1.getContext().startActivity(intent);
@@ -84,7 +84,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
         }
 
         holder.cardView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TransactionCRUDActivity.class);
+            Intent intent = new Intent(context, TransactionCrudActivity.class);
             intent.putExtra("trans", trans);
             context.startActivity(intent);
         });
