@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.frontend.utils;
+package pl.rozekm.saucemanager.frontend.utils.charts;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.formatter.ValueFormatter;

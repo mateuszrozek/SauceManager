@@ -22,8 +22,8 @@ import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
-import pl.rozekm.saucemanager.frontend.utils.CategoriesAdapter;
-import pl.rozekm.saucemanager.frontend.utils.TypesAdapter;
+import pl.rozekm.saucemanager.frontend.utils.adapters.CategoriesAdapter;
+import pl.rozekm.saucemanager.frontend.utils.adapters.TypesAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 

@@ -1,10 +1,9 @@
-package pl.rozekm.saucemanager.frontend.utils;
+package pl.rozekm.saucemanager.frontend.utils.adapters;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import androidx.cardview.widget.CardView;

@@ -43,7 +43,7 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.TransactionsFragmentBinding;
 import pl.rozekm.saucemanager.frontend.activities.AllTransactionsActivity;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
-import pl.rozekm.saucemanager.frontend.utils.TransactionsAdapter;
+import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 

@@ -11,7 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.databinding.ActivityMainBinding;
-import pl.rozekm.saucemanager.frontend.utils.MainSectionsAdapter;
+import pl.rozekm.saucemanager.frontend.utils.adapters.MainSectionsAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

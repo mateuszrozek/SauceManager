@@ -45,8 +45,8 @@ import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
-import pl.rozekm.saucemanager.frontend.utils.MyMarkerView;
-import pl.rozekm.saucemanager.frontend.utils.MyValueFormatter;
+import pl.rozekm.saucemanager.frontend.utils.charts.MyMarkerView;
+import pl.rozekm.saucemanager.frontend.utils.charts.MyValueFormatter;
 
 public class StatisticsActivity extends AppCompatActivity {
 

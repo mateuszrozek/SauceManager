@@ -1,27 +1,33 @@
-package pl.rozekm.saucemanager.frontend.utils;
+package pl.rozekm.saucemanager.frontend.utils.charts;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;
-import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Utils;
+
+import java.text.DecimalFormat;
 
 import pl.rozekm.saucemanager.R;
 
 @SuppressLint("ViewConstructor")
-public class MyMarkerView extends MarkerView {
+public class XYMarkerView extends MarkerView {
 
     private final TextView tvContent;
+    private final ValueFormatter xAxisValueFormatter;
 
-    public MyMarkerView(Context context, int layoutResource) {
-        super(context, layoutResource);
+    private final DecimalFormat format;
 
+    public XYMarkerView(Context context, ValueFormatter xAxisValueFormatter) {
+        super(context, R.layout.custom_marker_view);
+
+        this.xAxisValueFormatter = xAxisValueFormatter;
         tvContent = findViewById(R.id.tvContent);
+        format = new DecimalFormat("###.0");
     }
 
     // runs every time the MarkerView is redrawn, can be used to update the
@@ -29,15 +35,7 @@ public class MyMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
 
-        if (e instanceof CandleEntry) {
-
-            CandleEntry ce = (CandleEntry) e;
-
-            tvContent.setText(Utils.formatNumber(ce.getHigh(), 0, true));
-        } else {
-
-            tvContent.setText(Utils.formatNumber(e.getY(), 0, true));
-        }
+        tvContent.setText(String.format("x: %s, y: %s", xAxisValueFormatter.getFormattedValue(e.getX()), format.format(e.getY())));
 
         super.refreshContent(e, highlight);
     }

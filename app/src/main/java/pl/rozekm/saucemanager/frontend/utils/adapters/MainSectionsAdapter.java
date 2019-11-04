@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.frontend.utils;
+package pl.rozekm.saucemanager.frontend.utils.adapters;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.frontend.utils;
+package pl.rozekm.saucemanager.frontend.utils.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 
-public class CategoriesAdapter extends ArrayAdapter<TransactionCategory> {
+public class TypesAdapter extends ArrayAdapter<TransactionType> {
 
     // Your sent context
     private Context context;
     // Your custom values for the spinner (User)
-    private ArrayList<TransactionCategory> values;
+    private ArrayList<TransactionType> values;
 
-    public CategoriesAdapter(Context context, int textViewResourceId, ArrayList<TransactionCategory> values) {
+    public TypesAdapter(Context context, int textViewResourceId, ArrayList<TransactionType> values) {
         super(context, textViewResourceId, values);
         this.context = context;
         this.values = values;
@@ -30,7 +30,7 @@ public class CategoriesAdapter extends ArrayAdapter<TransactionCategory> {
     }
 
     @Override
-    public TransactionCategory getItem(int position) {
+    public TransactionType getItem(int position) {
         return values.get(position);
     }
 

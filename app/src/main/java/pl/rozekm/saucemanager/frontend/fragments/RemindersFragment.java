@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.databinding.RemindersFragmentBinding;
-import pl.rozekm.saucemanager.frontend.utils.RemindersAdapter;
+import pl.rozekm.saucemanager.frontend.utils.adapters.RemindersAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.RemindersViewModel;
 
 public class RemindersFragment extends Fragment {
