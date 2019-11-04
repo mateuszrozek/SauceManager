@@ -47,6 +47,37 @@ public class TransactionsSorter {
         return result;
     }
 
+    public List<Float> accountState(List<Transaction> transactions, float initialValue) {
+        ArrayList<Float> result = new ArrayList<>();
+
+        result.add(initialValue);
+
+        for (int i = 1; i < transactions.size(); i++) {
+
+            float val;
+            if (transactions.get(i).getType() == TransactionType.OUTCOME) {
+                val = (float) ((double) transactions.get(i).getAmount()) - result.get(i - 1);
+            } else {
+                val = (float) ((double) transactions.get(i).getAmount()) + result.get(i - 1);
+            }
+            result.add(val);
+        }
+
+//        for (int i = 1; i < transactions.size(); i++) {
+//
+//            float val;
+//            if (transactions.get(i).getType()==TransactionType.OUTCOME)
+//            {
+//                val = initialValue - (float)((double)transactions.get(i).getAmount());
+//            }
+//            else {
+//                val = initialValue + (float)((double)transactions.get(i).getAmount());
+//            }
+//            result.add(val);
+//        }
+        return result;
+    }
+
 //    private ArrayList<BarEntry> addBarEntries(List<Transaction> transactions, TransactionType transactionType) {
 //        ArrayList<BarEntry> entries = new ArrayList<>();
 //        ArrayList<Float> values;

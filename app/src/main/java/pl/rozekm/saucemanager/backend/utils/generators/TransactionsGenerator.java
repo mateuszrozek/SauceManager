@@ -110,10 +110,10 @@ public class TransactionsGenerator {
                 randomTransactions(1, 1, 3, 7, category, month, TransactionType.INCOME);
                 break;
             case SALARY:
-                randomTransactions(1, 1, 5500, 6100, category, month, TransactionType.INCOME);
+                randomTransactions(1, 1, 4000, 4500, category, month, TransactionType.INCOME);
                 break;
             case INVESTMENT:
-                randomTransactions(0.1, 2, 200, 20000, category, month, TransactionType.INCOME);
+                randomTransactions(0.1, 2, 200, 1000, category, month, TransactionType.INCOME);
                 break;
         }
     }

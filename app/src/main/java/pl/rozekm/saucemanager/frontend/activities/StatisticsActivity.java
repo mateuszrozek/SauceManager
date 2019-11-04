@@ -36,6 +36,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -75,14 +76,12 @@ public class StatisticsActivity extends AppCompatActivity {
     @BindView(R.id.tabularStatistics)
     TableLayout tabularStatistics;
 
-    protected final String[] categories = new String[]{
-            "CLOTHES", "ENTERTAINMENT", "FOOD", "HEALTH", "OTHER", "DUPA1", "DUPA2", "DUPA3", "DUPA4", "DUPA5"
-    };
-
     List<Transaction> allTransactions = new ArrayList<>();
     private TransactionsViewModel transactionsViewModel;
 
     private TransactionsSorter transactionsSorter;
+
+    private List<Float> accountStates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +98,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
                 allTransactions = transactions;
                 transactionsSorter = new TransactionsSorter(allTransactions);
+                accountStates = transactionsSorter.accountState(transactions, 1452f);
 
                 setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME);
                 setPolylinePieChart(pieChartIncomes, TransactionType.INCOME);
@@ -261,8 +261,11 @@ public class StatisticsActivity extends AppCompatActivity {
             yAxis.enableGridDashedLine(10f, 10f, 0f);
 
             // axis range
-            yAxis.setAxisMaximum(200f);
-            yAxis.setAxisMinimum(-50f);
+
+            //TODO coś ze skalowaniem zrobić
+            yAxis.setAxisMaximum(Collections.max(accountStates) * 1.1f);
+
+            yAxis.setAxisMinimum(Collections.min(accountStates) - (Math.abs(Collections.min(accountStates))* 0.1f));
         }
 
 
@@ -273,13 +276,13 @@ public class StatisticsActivity extends AppCompatActivity {
             llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
             llXAxis.setTextSize(10f);
 
-            LimitLine ll1 = new LimitLine(150f, "Upper Limit");
+            LimitLine ll1 = new LimitLine(Collections.max(accountStates), "Upper Limit");
             ll1.setLineWidth(4f);
             ll1.enableDashedLine(10f, 10f, 0f);
             ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
             ll1.setTextSize(10f);
 
-            LimitLine ll2 = new LimitLine(-30f, "Lower Limit");
+            LimitLine ll2 = new LimitLine(Collections.min(accountStates), "Lower Limit");
             ll2.setLineWidth(4f);
             ll2.enableDashedLine(10f, 10f, 0f);
             ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
@@ -296,7 +299,9 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         // add data
-        setLineChartData(45, 180, chart);
+//        setLineChartData(45, 180, chart);
+        setLineChartData(allTransactions, chart);
+
 
         // draw points over time
         chart.animateX(1500);
@@ -308,13 +313,11 @@ public class StatisticsActivity extends AppCompatActivity {
         l.setForm(Legend.LegendForm.LINE);
     }
 
-    private void setLineChartData(int count, float range, LineChart chart) {
+    private void setLineChartData(List<Transaction> transactions, LineChart chart) {
         ArrayList<Entry> values = new ArrayList<>();
 
-        for (int i = 0; i < count; i++) {
-
-            float val = (float) (Math.random() * range) - 30;
-            values.add(new Entry(i, val, getResources().getDrawable(R.drawable.housesvg)));
+        for (int i = 0; i < accountStates.size(); i++) {
+            values.add(new Entry(i, accountStates.get(i)));
         }
 
         LineDataSet set1;
@@ -395,26 +398,12 @@ public class StatisticsActivity extends AppCompatActivity {
     private void setPolylinePieChartData(PieChart chart, TransactionType type) {
         List<Transaction> transactions = transactionsSorter.sortByType(allTransactions, type);
         ArrayList<PieEntry> entries = new ArrayList<>();
-        int count = 5;
-        float range = 2.3f;
 
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
         Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactions);
 
         for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
             entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
         }
-
-//        for (int i = 0; i < valueOfEachCategory.size(); i++) {
-//            entries.add(new PieEntry((float) (Math.random() * range) + range / 5, categories[i % categories.length]));
-//        }
-
-//        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-//        // the chart.
-//        for (int i = 0; i < transactionsSorter.numberOfCategories(transactions); i++) {
-//            entries.add(new PieEntry((float) (Math.random() * range) + range / 5, categories[i % categories.length]));
-//        }
 
         PieDataSet dataSet = new PieDataSet(entries, "List of operations");
         dataSet.setSliceSpace(3f);
