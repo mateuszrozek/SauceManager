@@ -23,7 +23,8 @@
                 app:title="@string/app_name"
                 app:titleMarginStart="8dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,15 +67,15 @@
                 android:text="@string/back_to_main"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-            <TextView
-                android:id="@+id/textViewChartOutcomes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/outcomes"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonBackStats" />
+<!--            <TextView-->
+<!--                android:id="@+id/textViewChartOutcomes"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:text="@string/outcomes"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/buttonBackStats" />-->
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChartOutcomes"
@@ -84,18 +85,152 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewChartOutcomes" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonBackStats" />
 
-
-            <TextView
-                android:id="@+id/textViewChartIncomes"
-                android:layout_width="wrap_content"
+            <RadioGroup
+                android:id="@+id/pieChartSpecifyRange"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/incomes"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:orientation="horizontal"
+                android:padding="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pieChartOutcomes" />
+                app:layout_constraintTop_toBottomOf="@+id/pieChartOutcomes">
+
+                <RadioButton
+                    android:id="@+id/pieChartRadioButtonDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/heightOfRadioButton"
+                    android:layout_marginStart="@dimen/marginOfRadioButton"
+                    android:layout_marginEnd="@dimen/marginOfRadioButton"
+                    android:layout_weight="1"
+                    android:background="@drawable/myradiobuttonbackground"
+                    android:onClick="onRadioButtonClicked"
+                    android:button="@android:color/transparent"
+                    android:text="@string/day"
+                    android:textAlignment="center" />
+
+                <RadioButton
+                    android:id="@+id/pieChartRadioButtonWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/heightOfRadioButton"
+                    android:layout_marginStart="@dimen/marginOfRadioButton"
+                    android:layout_marginEnd="@dimen/marginOfRadioButton"
+                    android:layout_weight="1"
+                    android:background="@drawable/myradiobuttonbackground"
+                    android:onClick="onRadioButtonClicked"
+                    android:button="@android:color/transparent"
+                    android:text="@string/week"
+                    android:textAlignment="center" />
+
+                <RadioButton
+                    android:id="@+id/pieChartRadioButtonMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/heightOfRadioButton"
+                    android:layout_marginStart="@dimen/marginOfRadioButton"
+                    android:layout_marginEnd="@dimen/marginOfRadioButton"
+                    android:layout_weight="1"
+                    android:background="@drawable/myradiobuttonbackground"
+                    android:onClick="onRadioButtonClicked"
+                    android:button="@android:color/transparent"
+                    android:text="@string/month"
+                    android:textAlignment="center" />
+
+                <RadioButton
+                    android:id="@+id/pieChartRadioButtonYear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/heightOfRadioButton"
+                    android:layout_marginStart="@dimen/marginOfRadioButton"
+                    android:layout_marginEnd="@dimen/marginOfRadioButton"
+                    android:layout_weight="1"
+                    android:background="@drawable/myradiobuttonbackground"
+                    android:onClick="onRadioButtonClicked"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:text="@string/year"
+                    android:textAlignment="center" />
+            </RadioGroup>
+
+<!--                <RadioGroup-->
+<!--                    android:id="@+id/pieChartSpecifyRange"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:minHeight="300dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/pieChartOutcomes"-->
+<!--                    android:padding="5dp">-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radio0"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/day"-->
+<!--                        android:textAlignment="center" />-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radio1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/week"-->
+<!--                        android:textAlignment="center" />-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radio2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/month"-->
+<!--                        android:textAlignment="center" />-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radio3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/year"-->
+<!--                        android:textAlignment="center" />-->
+<!--                </RadioGroup>-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/textViewChartIncomes"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:text="@string/incomes"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/pieChartOutcomes" />-->
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pieChartIncomes"
@@ -105,7 +240,7 @@
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewChartIncomes" />
+                app:layout_constraintTop_toBottomOf="@+id/pieChartSpecifyRange" />
 
             <TextView
                 android:id="@+id/textViewAccount"
@@ -170,6 +305,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCashFlowTable" />
+
+<!--            <com.github.mikephil.charting.charts.BarChart-->
+<!--                android:id="@+id/barNegative"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:minWidth="100dp"-->
+<!--                android:minHeight="100dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tabularStatistics"-->
+<!--                app:layout_constraintStart_toStartOf="parent"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

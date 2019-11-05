@@ -6,7 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -28,13 +30,13 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.github.mikephil.charting.formatter.StackedValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,11 +50,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.charts.MyMarkerView;
-import pl.rozekm.saucemanager.frontend.utils.charts.MyValueFormatter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 
@@ -75,6 +77,19 @@ public class StatisticsActivity extends AppCompatActivity {
 
     @BindView(R.id.tabularStatistics)
     TableLayout tabularStatistics;
+
+
+    @BindView(R.id.pieChartRadioButtonDay)
+    RadioButton pieChartRadioButtonDay;
+
+    @BindView(R.id.pieChartRadioButtonWeek)
+    RadioButton pieChartRadioButtonWeek;
+
+    @BindView(R.id.pieChartRadioButtonMonth)
+    RadioButton pieChartRadioButtonMonth;
+
+    @BindView(R.id.pieChartRadioButtonYear)
+    RadioButton pieChartRadioButtonYear;
 
     List<Transaction> allTransactions = new ArrayList<>();
     private TransactionsViewModel transactionsViewModel;
@@ -100,102 +115,82 @@ public class StatisticsActivity extends AppCompatActivity {
                 transactionsSorter = new TransactionsSorter(allTransactions);
                 accountStates = transactionsSorter.accountState(transactions, 1452f);
 
-                setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME);
-                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME);
-
+                setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.YEARLY);
+                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);
                 setLineChart(lineChartAccount);
-
                 setBarChart(barChartCashFlow);
-
             }
         });
+    }
 
-//        setPolylinePieChart(pieChartOutcomes);
-//        setPolylinePieChart(pieChartIncomes);
-
-
-//        setLineChart(lineChartAccount);
-//
-//        setBarChart(barChartCashFlow);
+    public void onRadioButtonClicked(View v) {
+        boolean checked = ((RadioButton) v).isChecked();
+        switch (v.getId()) {
+            case R.id.pieChartRadioButtonDay:
+                if (checked)
+                    setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.DAILY);
+                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.DAILY);
+                break;
+            case R.id.pieChartRadioButtonWeek:
+                if (checked)
+                    setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.WEEKLY);
+                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.WEEKLY);
+                break;
+            case R.id.pieChartRadioButtonMonth:
+                if (checked)
+                    setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.MONTHLY);
+                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.MONTHLY);
+                break;
+            case R.id.pieChartRadioButtonYear:
+                if (checked)
+                    setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.YEARLY);
+                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);
+                break;
+        }
     }
 
     private void setBarChart(BarChart chart) {
-        setBarChartProperties(chart);
-        setBarChartData(12, 100, chart);
-    }
-
-    private void setBarChartData(int count, float range, BarChart chart) {
-
-        ArrayList<BarEntry> values = new ArrayList<>();
-
-        for (int i = 0; i < count; i++) {
-            float mul = (range + 1);
-            float val1 = (float) (Math.random() * mul) + mul / 3;
-            float val2 = (float) (Math.random() * mul) + mul / 3;
-            float val3 = (float) (Math.random() * mul) + mul / 3;
-
-            values.add(new BarEntry(
-                    i,
-                    new float[]{val1, val2, val3},
-                    getResources().getDrawable(R.drawable.foodsvg)));
-        }
-
-        BarDataSet set1;
-
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-        } else {
-            set1 = new BarDataSet(values, "Statistics Vienna 2014");
-            set1.setDrawIcons(false);
-            set1.setColors(getColors());
-            set1.setStackLabels(new String[]{"Births", "Divorces", "Marriages"});
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1);
-
-            BarData data = new BarData(dataSets);
-            data.setValueFormatter(new StackedValueFormatter(false, "", 1));
-            data.setValueTextColor(Color.WHITE);
-
-            chart.setData(data);
-        }
-
-        chart.setFitBars(true);
-        chart.invalidate();
-
-    }
-
-    private void setBarChartProperties(BarChart chart) {
+        chart.setDrawGridBackground(false);
         chart.getDescription().setEnabled(false);
-
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        chart.setMaxVisibleValueCount(40);
 
         // scaling can now only be done on x- and y-axis separately
         chart.setPinchZoom(false);
 
-        chart.setDrawGridBackground(false);
         chart.setDrawBarShadow(false);
-
-        chart.setDrawValueAboveBar(false);
+        chart.setDrawValueAboveBar(true);
         chart.setHighlightFullBarEnabled(false);
 
-        // change the position of the y-labels
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setValueFormatter(new MyValueFormatter("K"));
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-        chart.getAxisRight().setEnabled(false);
+        chart.getAxisLeft().setEnabled(false);
+        chart.getAxisRight().setAxisMaximum(25f);
+        chart.getAxisRight().setAxisMinimum(-25f);
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getAxisRight().setDrawZeroLine(true);
+        chart.getAxisRight().setLabelCount(7, false);
+        chart.getAxisRight().setValueFormatter(new CustomFormatter());
+        chart.getAxisRight().setTextSize(9f);
 
-        XAxis xLabels = chart.getXAxis();
-        xLabels.setPosition(XAxis.XAxisPosition.TOP);
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setTextSize(9f);
 
-        // chart.setDrawXLabels(false);
-        // chart.setDrawYLabels(false);
+        //TODO
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(110f);
+
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setLabelCount(12);
+        xAxis.setGranularity(10f);
+        xAxis.setValueFormatter(new ValueFormatter() {
+
+            private final DecimalFormat format = new DecimalFormat("###");
+
+            @Override
+            public String getFormattedValue(float value) {
+                return format.format(value) + "-" + format.format(value + 10);
+            }
+        });
 
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
@@ -206,7 +201,35 @@ public class StatisticsActivity extends AppCompatActivity {
         l.setFormToTextSpace(4f);
         l.setXEntrySpace(6f);
 
-        // chart.setDrawLegend(false);
+        // IMPORTANT: When using negative values in stacked bars, always make sure the negative values are in the array first
+        ArrayList<BarEntry> values = new ArrayList<>();
+        values.add(new BarEntry(5, new float[]{-10, 10}));
+        values.add(new BarEntry(15, new float[]{-12, 13}));
+        values.add(new BarEntry(25, new float[]{-15, 15}));
+        values.add(new BarEntry(35, new float[]{-17, 17}));
+        values.add(new BarEntry(45, new float[]{-19, 20}));
+        values.add(new BarEntry(45, new float[]{-19, 20}));
+        values.add(new BarEntry(55, new float[]{-19, 19}));
+        values.add(new BarEntry(65, new float[]{-16, 16}));
+        values.add(new BarEntry(75, new float[]{-13, 14}));
+        values.add(new BarEntry(85, new float[]{-10, 11}));
+        values.add(new BarEntry(95, new float[]{-5, 6}));
+        values.add(new BarEntry(105, new float[]{-1, 2}));
+
+        BarDataSet set = new BarDataSet(values, "Cash flow through the months");
+        set.setDrawIcons(false);
+        set.setValueFormatter(new CustomFormatter());
+        set.setValueTextSize(7f);
+        set.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        set.setColors(Color.rgb(200, 0, 0), Color.rgb(0, 200, 0));
+        set.setStackLabels(new String[]{
+                "Outcomes", "Incomes"
+        });
+
+        BarData data = new BarData(set);
+        data.setBarWidth(8.5f);
+        chart.setData(data);
+        chart.invalidate();
     }
 
     private void setLineChart(LineChart chart) {
@@ -265,7 +288,7 @@ public class StatisticsActivity extends AppCompatActivity {
             //TODO coś ze skalowaniem zrobić
             yAxis.setAxisMaximum(Collections.max(accountStates) * 1.1f);
 
-            yAxis.setAxisMinimum(Collections.min(accountStates) - (Math.abs(Collections.min(accountStates))* 0.1f));
+            yAxis.setAxisMinimum(Collections.min(accountStates) - (Math.abs(Collections.min(accountStates)) * 0.1f));
         }
 
 
@@ -390,16 +413,19 @@ public class StatisticsActivity extends AppCompatActivity {
 
     }
 
-    private void setPolylinePieChart(PieChart pieChart, TransactionType type) {
+    private void setPolylinePieChart(PieChart pieChart, TransactionType type, Frequency frequency) {
         setPolylinePieChartProperties(pieChart, type);
-        setPolylinePieChartData(pieChart, type);
+        setPolylinePieChartData(pieChart, type, frequency);
     }
 
-    private void setPolylinePieChartData(PieChart chart, TransactionType type) {
+    private void setPolylinePieChartData(PieChart chart, TransactionType type, Frequency frequency) {
         List<Transaction> transactions = transactionsSorter.sortByType(allTransactions, type);
         ArrayList<PieEntry> entries = new ArrayList<>();
 
-        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactions);
+        List<Transaction> transactionsByFrequency = transactionsSorter.sortByFrequency(transactions, frequency);
+
+        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactionsByFrequency);
+//        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategoryForFrequency(transactions, frequency);
 
         for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
             entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
@@ -409,9 +435,16 @@ public class StatisticsActivity extends AppCompatActivity {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
-        // add a lot of colors
 
         ArrayList<Integer> colors = new ArrayList<>();
+
+        //TODO colors
+//        if (type == TransactionType.OUTCOME){
+//
+//        }
+//        else {
+//
+//        }
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
@@ -521,5 +554,19 @@ public class StatisticsActivity extends AppCompatActivity {
         System.arraycopy(ColorTemplate.MATERIAL_COLORS, 0, colors, 0, 3);
 
         return colors;
+    }
+
+    private class CustomFormatter extends ValueFormatter {
+
+        private final DecimalFormat mFormat;
+
+        CustomFormatter() {
+            mFormat = new DecimalFormat("###");
+        }
+
+        @Override
+        public String getFormattedValue(float value) {
+            return mFormat.format(Math.abs(value)) + "m";
+        }
     }
 }

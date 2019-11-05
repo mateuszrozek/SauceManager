@@ -7,7 +7,7 @@
         android:color="@color/colorButtonBackground" />
     <stroke
         android:width="3dp"
-        android:color="@color/colorPrimaryLight" />
+        android:color="@color/sauceColor" />
 </shape>
     <!--<shape-->
         <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
