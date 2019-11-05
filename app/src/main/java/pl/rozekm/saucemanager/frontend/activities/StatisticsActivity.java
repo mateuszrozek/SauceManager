@@ -44,7 +44,6 @@ import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,44 +106,45 @@ public class StatisticsActivity extends AppCompatActivity {
 
         buttonBackStats.setOnClickListener(v -> onBackPressed());
 
-        transactionsViewModel.getAllTransactions().observe(this, new Observer<List<Transaction>>() {
-            @Override
-            public void onChanged(List<Transaction> transactions) {
+        transactionsViewModel.getAllTransactions().observe(this, transactions -> {
 
-                allTransactions = transactions;
-                transactionsSorter = new TransactionsSorter(allTransactions);
-                accountStates = transactionsSorter.accountState(transactions, 1452f);
+            allTransactions = transactions;
+            transactionsSorter = new TransactionsSorter(allTransactions);
+            accountStates = transactionsSorter.accountState(transactions, 1452f);
 
-                setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.YEARLY);
-                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);
-                setLineChart(lineChartAccount);
-                setBarChart(barChartCashFlow);
-            }
+            setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.YEARLY);
+            setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);
+            setLineChart(lineChartAccount);
+            setBarChart(barChartCashFlow);
         });
     }
 
-    public void onRadioButtonClicked(View v) {
+    public void onRadioButtonClickedStats(View v) {
         boolean checked = ((RadioButton) v).isChecked();
         switch (v.getId()) {
             case R.id.pieChartRadioButtonDay:
-                if (checked)
+                if (checked) {
                     setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.DAILY);
-                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.DAILY);
+                    setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.DAILY);
+                }
                 break;
             case R.id.pieChartRadioButtonWeek:
-                if (checked)
+                if (checked) {
                     setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.WEEKLY);
-                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.WEEKLY);
+                    setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.WEEKLY);
+                }
                 break;
             case R.id.pieChartRadioButtonMonth:
-                if (checked)
+                if (checked) {
                     setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.MONTHLY);
-                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.MONTHLY);
+                    setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.MONTHLY);
+                }
                 break;
             case R.id.pieChartRadioButtonYear:
-                if (checked)
+                if (checked) {
                     setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.YEARLY);
-                setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);
+                    setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);
+                }
                 break;
         }
     }

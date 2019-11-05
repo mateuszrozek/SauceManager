@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.amitshekhar.DebugDB;
@@ -39,11 +40,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.TransactionsFragmentBinding;
 import pl.rozekm.saucemanager.frontend.activities.AllTransactionsActivity;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
+import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
@@ -123,10 +126,24 @@ public class TransactionsFragment extends Fragment {
     @BindView(R.id.seeAllTransactionImageButton)
     Button seeAllTransactionImageButton;
 
+    @BindView(R.id.radioDay)
+    RadioButton radioDay;
+
+    @BindView(R.id.radioWeek)
+    RadioButton radioWeek;
+
+    @BindView(R.id.radioMonth)
+    RadioButton radioMonth;
+
+    @BindView(R.id.radioYear)
+    RadioButton radioYear;
+
     //    @BindView(R.id.transactionsRecyclerView)
     RecyclerView transactionsRecyclerView;
 
     private TransactionsAdapter transactionsAdapter;
+
+    TransactionsSorter transactionsSorter;
 
     private int[] imageViewsOutcomeTransactions = new int[]{
             R.id.imageViewClothes,
@@ -183,12 +200,11 @@ public class TransactionsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         TransactionsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.transactions_fragment, container, false);
         View view = binding.getRoot();
-
         ButterKnife.bind(this, view);
 
+        setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
+        setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
 
-        setChart(chartOutcome, TransactionType.OUTCOME);
-        setChart(chartIncome, TransactionType.INCOME);
         linearLayout.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), StatisticsActivity.class);
 
@@ -199,6 +215,11 @@ public class TransactionsFragment extends Fragment {
             Intent intent = new Intent(getActivity(), AllTransactionsActivity.class);
             startActivity(intent);
         });
+
+        radioDay.setOnClickListener(this::onRadioButtonClickedTransactions);
+        radioWeek.setOnClickListener(this::onRadioButtonClickedTransactions);
+        radioMonth.setOnClickListener(this::onRadioButtonClickedTransactions);
+        radioYear.setOnClickListener(this::onRadioButtonClickedTransactions);
 
         imageViewClothes.setOnClickListener(this::transactionCategorySelected);
         imageViewEntertainment.setOnClickListener(this::transactionCategorySelected);
@@ -290,12 +311,16 @@ public class TransactionsFragment extends Fragment {
         chart.setTouchEnabled(false);
     }
 
-    private ArrayList<BarEntry> addBarEntries(List<Transaction> transactions, TransactionType transactionType) {
+    private ArrayList<BarEntry> addBarEntries(List<Transaction> transactions, TransactionType transactionType, Frequency frequency) {
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<Float> values;
+        List<Transaction> sortedTransactions;
+
+        transactionsSorter = new TransactionsSorter(transactions);
+        sortedTransactions = transactionsSorter.sortByFrequency(transactions, frequency);
 
         Map<TransactionCategory, List<Transaction>> groupedTransactions =
-                transactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
+                sortedTransactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
 
         values = processGroupedTransactions(groupedTransactions, transactionType);
 
@@ -478,18 +503,19 @@ public class TransactionsFragment extends Fragment {
         return transactionCategory;
     }
 
-    private void setChart(BarChart chart, TransactionType transactionType) {
+    private void setChart(BarChart chart, TransactionType transactionType, Frequency frequency) {
 
         if (transactionType == TransactionType.OUTCOME) {
-            transactionsViewModel.getAllOutcomeTransactions().observe(this, transactions -> setTypedChart(chart, transactionType, transactions));
+            transactionsViewModel.getAllOutcomeTransactions().observe(this, transactions -> setTypedChart(chart, transactionType, transactions, frequency));
         } else {
-            transactionsViewModel.getAllIncomeTransactions().observe(this, transactions -> setTypedChart(chart, transactionType, transactions));
+            transactionsViewModel.getAllIncomeTransactions().observe(this, transactions -> setTypedChart(chart, transactionType, transactions, frequency));
         }
         applyChartSettings(chart);
     }
 
-    private void setTypedChart(BarChart chart, TransactionType transactionType, List<Transaction> transactions) {
-        barEntry = addBarEntries(transactions, transactionType);
+    private void setTypedChart(BarChart chart, TransactionType transactionType, List<Transaction> transactions, Frequency frequency) {
+
+        barEntry = addBarEntries(transactions, transactionType, frequency);
         barDataSet = new BarDataSet(barEntry, "Bar Set");
         if (transactionType == TransactionType.OUTCOME) {
             barDataSet.setColors(outcomeColors);
@@ -510,5 +536,35 @@ public class TransactionsFragment extends Fragment {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) image.getLayoutParams();
         params.weight = weight;
         image.setLayoutParams(params);
+    }
+
+    public void onRadioButtonClickedTransactions(View v) {
+        boolean checked = ((RadioButton) v).isChecked();
+        switch (v.getId()) {
+            case R.id.radioDay:
+                if (checked) {
+                    setChart(chartOutcome, TransactionType.OUTCOME, Frequency.DAILY);
+                    setChart(chartIncome, TransactionType.INCOME, Frequency.DAILY);
+                }
+                break;
+            case R.id.radioWeek:
+                if (checked) {
+                    setChart(chartOutcome, TransactionType.OUTCOME, Frequency.WEEKLY);
+                    setChart(chartIncome, TransactionType.INCOME, Frequency.WEEKLY);
+                }
+                break;
+            case R.id.radioMonth:
+                if (checked) {
+                    setChart(chartOutcome, TransactionType.OUTCOME, Frequency.MONTHLY);
+                    setChart(chartIncome, TransactionType.INCOME, Frequency.MONTHLY);
+                }
+                break;
+            case R.id.radioYear:
+                if (checked) {
+                    setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
+                    setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
+                }
+                break;
+        }
     }
 }
