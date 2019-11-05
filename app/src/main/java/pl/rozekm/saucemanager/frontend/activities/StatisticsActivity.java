@@ -75,9 +75,8 @@ public class StatisticsActivity extends AppCompatActivity {
     @BindView(R.id.barChartCashFlow)
     BarChart barChartCashFlow;
 
-    @BindView(R.id.tabularStatistics)
-    TableLayout tabularStatistics;
-
+//    @BindView(R.id.tableLayoutOutcomes)
+//    TableLayout tableLayoutOutcomes;
 
     @BindView(R.id.pieChartRadioButtonDay)
     RadioButton pieChartRadioButtonDay;
@@ -238,7 +237,8 @@ public class StatisticsActivity extends AppCompatActivity {
         {   // // Chart Style // //
 
             // background color
-            chart.setBackgroundColor(Color.WHITE);
+            chart.setBackgroundColor(getResources().getColor(R.color.colorScreenBackground));
+//            chart.setBackgroundColor(Color.WHITE);
 
             // disable description text
             chart.getDescription().setEnabled(false);
@@ -259,7 +259,6 @@ public class StatisticsActivity extends AppCompatActivity {
             // enable scaling and dragging
             chart.setDragEnabled(true);
             chart.setScaleEnabled(true);
-            // chart.setScaleXEnabled(true);
             // chart.setScaleYEnabled(true);
 
             // force pinch zoom along both axis
@@ -469,7 +468,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
 
         dataSet.setValueLinePart1OffsetPercentage(80.f);
-        dataSet.setValueLinePart1Length(0.2f);
+        dataSet.setValueLinePart1Length(0.3f);
         dataSet.setValueLinePart2Length(0.4f);
         //dataSet.setUsingSliceColorAsValueLineColor(true);
 
@@ -478,8 +477,8 @@ public class StatisticsActivity extends AppCompatActivity {
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
-        data.setValueTextSize(11f);
-        data.setValueTextColor(Color.BLACK);
+        data.setValueTextSize(13f);
+        data.setValueTextColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setData(data);
 
         // undo all highlights
@@ -501,13 +500,19 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
 
         chart.setDrawHoleEnabled(true);
-        chart.setHoleColor(Color.WHITE);
+//        chart.setHoleColor(Color.WHITE);
+        chart.setHoleColor(getResources().getColor(R.color.colorScreenBackground));
+
+        chart.setEntryLabelColor(getResources().getColor(R.color.colorPrimaryDark));
+        chart.setEntryLabelTextSize(13f);
+
+
 
         chart.setTransparentCircleColor(Color.WHITE);
         chart.setTransparentCircleAlpha(110);
 
-        chart.setHoleRadius(58f);
-        chart.setTransparentCircleRadius(61f);
+        chart.setHoleRadius(48f);
+        chart.setTransparentCircleRadius(53f);
 
         chart.setDrawCenterText(true);
 
@@ -522,7 +527,7 @@ public class StatisticsActivity extends AppCompatActivity {
 //        // add a selection listener
 //        chart.setOnChartValueSelectedListener(this);
 
-        chart.animateY(1400, Easing.EaseInOutQuad);
+        chart.animateY(800, Easing.EaseInOutQuad);
         // chart.spin(2000, 0, 360);
 
         Legend l = chart.getLegend();
