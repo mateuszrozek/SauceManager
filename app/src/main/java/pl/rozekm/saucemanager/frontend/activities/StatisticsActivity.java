@@ -37,6 +37,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.text.DecimalFormat;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -161,8 +162,15 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setHighlightFullBarEnabled(false);
 
         chart.getAxisLeft().setEnabled(false);
-        chart.getAxisRight().setAxisMaximum(25f);
-        chart.getAxisRight().setAxisMinimum(-25f);
+
+        List<float[]> cashFlowByMonths = transactionsSorter.cashFlow(allTransactions);
+
+        Float minimum = transactionsSorter.getMinimum(cashFlowByMonths);
+        Float maximum = transactionsSorter.getMaximum(cashFlowByMonths);
+
+        chart.getAxisRight().setAxisMaximum(maximum * 1.2f);
+        chart.getAxisRight().setAxisMinimum(minimum - (Math.abs(minimum) * 0.2f));
+
         chart.getAxisRight().setDrawGridLines(false);
         chart.getAxisRight().setDrawZeroLine(true);
         chart.getAxisRight().setLabelCount(7, false);
@@ -175,20 +183,22 @@ public class StatisticsActivity extends AppCompatActivity {
         xAxis.setDrawAxisLine(false);
         xAxis.setTextSize(9f);
 
-        //TODO
         xAxis.setAxisMinimum(0f);
-        xAxis.setAxisMaximum(110f);
+        xAxis.setAxisMaximum(cashFlowByMonths.size());
 
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setLabelCount(12);
-        xAxis.setGranularity(10f);
+        xAxis.setCenterAxisLabels(false);
+        xAxis.setLabelCount(cashFlowByMonths.size());
+        xAxis.setGranularity(1f);
         xAxis.setValueFormatter(new ValueFormatter() {
-
-            private final DecimalFormat format = new DecimalFormat("###");
 
             @Override
             public String getFormattedValue(float value) {
-                return format.format(value) + "-" + format.format(value + 10);
+
+                int size = cashFlowByMonths.size();
+
+                float monthValue = value + (float) (size - 1);
+
+                return Month.of((int) monthValue).toString();
             }
         });
 
@@ -201,20 +211,11 @@ public class StatisticsActivity extends AppCompatActivity {
         l.setFormToTextSpace(4f);
         l.setXEntrySpace(6f);
 
-        // IMPORTANT: When using negative values in stacked bars, always make sure the negative values are in the array first
         ArrayList<BarEntry> values = new ArrayList<>();
-        values.add(new BarEntry(5, new float[]{-10, 10}));
-        values.add(new BarEntry(15, new float[]{-12, 13}));
-        values.add(new BarEntry(25, new float[]{-15, 15}));
-        values.add(new BarEntry(35, new float[]{-17, 17}));
-        values.add(new BarEntry(45, new float[]{-19, 20}));
-        values.add(new BarEntry(45, new float[]{-19, 20}));
-        values.add(new BarEntry(55, new float[]{-19, 19}));
-        values.add(new BarEntry(65, new float[]{-16, 16}));
-        values.add(new BarEntry(75, new float[]{-13, 14}));
-        values.add(new BarEntry(85, new float[]{-10, 11}));
-        values.add(new BarEntry(95, new float[]{-5, 6}));
-        values.add(new BarEntry(105, new float[]{-1, 2}));
+
+        for (int i = 1; i < cashFlowByMonths.size(); i++) {
+            values.add(new BarEntry(i, cashFlowByMonths.get(i)));
+        }
 
         BarDataSet set = new BarDataSet(values, "Cash flow through the months");
         set.setDrawIcons(false);
@@ -227,7 +228,7 @@ public class StatisticsActivity extends AppCompatActivity {
         });
 
         BarData data = new BarData(set);
-        data.setBarWidth(8.5f);
+        data.setBarWidth(0.75f);
         chart.setData(data);
         chart.invalidate();
     }
@@ -566,7 +567,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         @Override
         public String getFormattedValue(float value) {
-            return mFormat.format(Math.abs(value)) + "m";
+            return mFormat.format(Math.abs(value)) + " zł";
         }
     }
 }

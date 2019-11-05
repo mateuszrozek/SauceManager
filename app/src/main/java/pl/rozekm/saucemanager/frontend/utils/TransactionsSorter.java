@@ -2,9 +2,11 @@ package pl.rozekm.saucemanager.frontend.utils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,11 +30,6 @@ public class TransactionsSorter {
         ArrayList<Transaction> sortedTransactions = new ArrayList<>();
         allTransactions.stream().filter(t -> t.getType().equals(type)).forEach(sortedTransactions::add);
         return sortedTransactions;
-    }
-
-    public int numberOfCategories(List<Transaction> transactions) {
-        Map<TransactionCategory, List<Transaction>> groupedByCategoryTransactions = transactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
-        return groupedByCategoryTransactions.size();
     }
 
     public Map<TransactionCategory, Float> valuesOfEachCategory(List<Transaction> transactions) {
@@ -67,6 +64,31 @@ public class TransactionsSorter {
                 val = (float) ((double) transactions.get(i).getAmount()) + result.get(i - 1);
             }
             result.add(val);
+        }
+        return result;
+    }
+
+    public List<float[]> cashFlow(List<Transaction> allTransactions) {
+
+        Map<Month, List<Transaction>> groupedByMonthTransactions = allTransactions.stream().collect(Collectors.groupingBy(t -> t.getDate().getMonth()));
+
+        List<float[]> result = new ArrayList<>();
+
+        for (Month month : groupedByMonthTransactions.keySet()) {
+            List<Transaction> transactionsOfMonth = groupedByMonthTransactions.get(month);
+
+            float incomes = 0.0f;
+            float outcomes = 0.0f;
+
+            for (Transaction transaction : transactionsOfMonth) {
+                if (transaction.getType()==TransactionType.OUTCOME){
+                    outcomes = outcomes + (float)((double)transaction.getAmount());
+                }
+                else {
+                    incomes = incomes + (float)((double)transaction.getAmount());
+                }
+            }
+            result.add( new float[]{-outcomes, incomes});
         }
         return result;
     }
@@ -145,5 +167,20 @@ public class TransactionsSorter {
         List<Transaction> result = new ArrayList<>();
         transactions.stream().filter(t -> t.getDate().getYear() == now.getYear()).forEach(result::add);
         return result;
+    }
+
+
+    public Float getMinimum(List<float[]> cashFlowByMonths) {
+        List<Float> negatives = new ArrayList<>();
+        cashFlowByMonths.forEach(item->negatives.add(item[0]));
+
+        return negatives.stream().min(Comparator.naturalOrder()).get();
+    }
+
+    public Float getMaximum(List<float[]> cashFlowByMonths) {
+        List<Float> positives = new ArrayList<>();
+        cashFlowByMonths.forEach(item->positives.add(item[1]));
+
+        return positives.stream().max(Comparator.naturalOrder()).get();
     }
 }
