@@ -97,6 +97,8 @@ public class StatisticsActivity extends AppCompatActivity {
 
     private List<Float> accountStates;
 
+    public static float INITIAL_VALUE = 1452.78f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +112,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
             allTransactions = transactions;
             transactionsSorter = new TransactionsSorter(allTransactions);
-            accountStates = transactionsSorter.accountState(transactions, 1452f);
+            accountStates = transactionsSorter.accountState(transactions, INITIAL_VALUE);
 
             setPolylinePieChart(pieChartOutcomes, TransactionType.OUTCOME, Frequency.YEARLY);
             setPolylinePieChart(pieChartIncomes, TransactionType.INCOME, Frequency.YEARLY);

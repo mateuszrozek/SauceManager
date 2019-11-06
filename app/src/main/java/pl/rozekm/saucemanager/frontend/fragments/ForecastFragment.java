@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -22,11 +27,14 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
+import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
+import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
 import pl.rozekm.saucemanager.frontend.viewmodels.ForecastViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
@@ -37,6 +45,20 @@ public class ForecastFragment extends Fragment {
     private ForecastViewModel mViewModel;
     private TableLayout tableLayout;
     private TransactionsViewModel transactionsViewModel;
+
+    @BindView(R.id.textViewNOW)
+    TextView textViewNOW;
+
+    @BindView(R.id.textViewFUT)
+    TextView textViewFUT;
+
+    @BindView(R.id.forecastButton)
+    Button forecastButton;
+
+    @BindView(R.id.forecastSpinner)
+    Spinner forecastSpinner;
+
+    private List<Transaction> allTransactions = new ArrayList<>();
 
     public static ForecastFragment newInstance() {
         return new ForecastFragment();
@@ -51,6 +73,13 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onChanged(List<Transaction> transactions) {
                 fillTableLayout(transactions);
+            }
+        });
+        transactionsViewModel.getAllTransactions().observe(ForecastFragment.this, new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> transactions) {
+                allTransactions = transactions;
+                calculateFutureAccount(transactions, 1);
             }
         });
     }
@@ -235,8 +264,56 @@ public class ForecastFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         tableLayout = view.findViewById(R.id.tableLayout);
+        textViewNOW.setText(convertFloatToCash(StatisticsActivity.INITIAL_VALUE));
+
+        ArrayList<String> spinnerArray = new ArrayList<>(Arrays.asList("1 miesiąc", "2 miesiące", "3 miesiące", "4 miesiące"));
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        forecastSpinner.setAdapter(spinnerArrayAdapter);
+
+
+        forecastButton.setOnClickListener(v -> {
+
+            char c = ( forecastSpinner.getSelectedItem().toString().charAt(0));
+            int val = Integer.parseInt(String.valueOf(c));
+            float month = (float) val;
+            calculateFutureAccount(allTransactions, month);
+        });
         fillTableLayout(new ArrayList<>());
         return view;
+    }
+
+    private void calculateFutureAccount(List<Transaction> transactions, float month) {
+
+        float sum = 0.0f;
+        float value = 0.0f;
+        float init = StatisticsActivity.INITIAL_VALUE;
+        LocalDateTime now = LocalDateTime.now();
+        Map<Month, List<Transaction>> groupedByMonth = transactions.stream().collect(Collectors.groupingBy(t -> t.getDate().getMonth()));
+        int months = groupedByMonth.size();
+        ArrayList<Transaction> transes = new ArrayList<>();
+        transactions.stream().filter(t -> t.getDate().getMonth() != now.getMonth()).forEach(transes::add);
+
+
+        for (Transaction transaction : transes) {
+
+            if (transaction.getType() == TransactionType.OUTCOME) {
+                sum = sum - (float) ((double) transaction.getAmount());
+            } else {
+                sum = sum + (float) ((double) transaction.getAmount());
+            }
+        }
+        value = sum / months - 1;
+
+        textViewFUT.setText(convertFloatToCash(init + (value * month)));
+    }
+
+    private String convertFloatToCash(float value) {
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+
+        return df.format(value) + " " + "zł";
     }
 
     @Override
