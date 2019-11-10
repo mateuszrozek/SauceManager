@@ -1,5 +1,6 @@
 package pl.rozekm.saucemanager.frontend.utils.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import pl.rozekm.saucemanager.backend.database.model.Reminder;
 
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.RemindersViewHolder> {
     private List<Reminder> reminders;
+    Context context;
 
     public static class RemindersViewHolder extends RecyclerView.ViewHolder {
         public CardView cardView;
@@ -34,18 +36,19 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
         this.reminders = reminders;
     }
 
-    public RemindersAdapter() {
-
+    public RemindersAdapter(Context context) {
+        this.context = context;
     }
 
     public void setReminders(List<Reminder> reminders) {
         this.reminders = reminders;
-        notifyDataSetChanged();
+//        notifyDataSetChanged();
     }
 
     @Override
     public RemindersAdapter.RemindersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.reminders_item, parent, false);
+
         RemindersViewHolder vh = new RemindersViewHolder(v);
         return vh;
     }
@@ -53,7 +56,9 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
     @Override
     public void onBindViewHolder(RemindersViewHolder holder, int position) {
 
-        holder.title.setText(reminders.get(position).getTitle());
+        Reminder reminder = reminders.get(position);
+
+        holder.title.setText(reminder.getTitle());
 //        holder.date.setText(reminders.get(position).getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
 //        holder.frequency.setText(reminders.get(position).getFrequency().toString());
         holder.date.setText("DATE");

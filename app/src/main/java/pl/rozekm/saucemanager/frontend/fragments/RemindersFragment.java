@@ -39,7 +39,7 @@ public class RemindersFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         remindersViewModel = ViewModelProviders.of(this).get(RemindersViewModel.class);
-        remindersAdapter = new RemindersAdapter();
+        remindersAdapter = new RemindersAdapter(getContext());
         getReminders();
 
     }
@@ -48,6 +48,7 @@ public class RemindersFragment extends Fragment {
         remindersViewModel.getAllReminders().observe(RemindersFragment.this, new Observer<List<Reminder>>() {
             @Override
             public void onChanged(List<Reminder> reminders) {
+//                remindersAdapter = new RemindersAdapter(reminders);
                 remindersAdapter.setReminders(reminders);
                 remindersAdapter.notifyDataSetChanged();
             }

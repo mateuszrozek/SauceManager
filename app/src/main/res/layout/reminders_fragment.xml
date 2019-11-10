@@ -6,13 +6,9 @@
             name="adapter"
             type="pl.rozekm.saucemanager.frontend.utils.adapters.RemindersAdapter" />
     </data>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colorScreenBackground"
             android:minWidth="80dp">
             <TextView
@@ -27,6 +23,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/remindersRecyclerView"
                 android:layout_width="match_parent"
@@ -34,11 +31,28 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:adapter="@{adapter}"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/addReminderImageButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/yourRemindersTextView">
+
             </androidx.recyclerview.widget.RecyclerView>
+
+            <Button
+                android:id="@+id/addReminderImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/b"
+                android:drawableEnd="@drawable/addsvg"
+                android:drawablePadding="10dp"
+                android:padding="15dp"
+                android:text="@string/add_reminder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 </layout>
