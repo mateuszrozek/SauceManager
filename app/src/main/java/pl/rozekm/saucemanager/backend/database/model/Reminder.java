@@ -22,24 +22,22 @@ public class Reminder {
     @ColumnInfo(name = "title")
     private String title;
 
-//    @ColumnInfo(name = "frequency")
-//    @TypeConverters(ReminderFrequencyConverter.class)
-//    private Frequency frequency;
-//
-//    @ColumnInfo(name = "date")
-//    @TypeConverters(LocalDateTimeConverter.class)
-//    private LocalDateTime date;
-//
-//    @ColumnInfo(name = "enabled")
-//    private Boolean enabled;
+    @ColumnInfo(name = "frequency")
+    @TypeConverters(ReminderFrequencyConverter.class)
+    private Frequency frequency;
 
-    public Reminder(String title
-//            , Frequency frequency, LocalDateTime date
-    ) {
+    @ColumnInfo(name = "date")
+    @TypeConverters(LocalDateTimeConverter.class)
+    private LocalDateTime date;
+
+    @ColumnInfo(name = "enabled")
+    private Boolean enabled;
+
+    public Reminder(String title, Frequency frequency, LocalDateTime date) {
         this.title = title;
-//        this.frequency = frequency;
-//        this.date = date;
-//        enabled = true;
+        this.frequency = frequency;
+        this.date = date;
+        enabled = true;
     }
 
     @NonNull
@@ -59,27 +57,27 @@ public class Reminder {
         this.title = title;
     }
 
-//    public Frequency getFrequency() {
-//        return frequency;
-//    }
-//
-//    public void setFrequency(Frequency frequency) {
-//        this.frequency = frequency;
-//    }
-//
-//    public LocalDateTime getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(LocalDateTime date) {
-//        this.date = date;
-//    }
-//
-//    public Boolean getEnabled() {
-//        return enabled;
-//    }
-//
-//    public void setEnabled(Boolean enabled) {
-//        this.enabled = enabled;
-//    }
+    public Frequency getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 }

@@ -16,11 +16,12 @@ import pl.rozekm.saucemanager.backend.database.daos.ReminderDao;
 import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.backend.utils.generators.TransactionsGenerator;
 
-@Database(entities = {Transaction.class, Reminder.class}, version = 3, exportSchema = false)
+@Database(entities = {Transaction.class, Reminder.class}, version = 4, exportSchema = false)
 public abstract class TransactionRoomDatabase extends RoomDatabase {
 
     public abstract TransactionDao transactionDao();
@@ -69,9 +70,9 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 
 
         List<Reminder> reminders = Arrays.asList(
-                new Reminder("Gaz"),
-                new Reminder("WODA"),
-                new Reminder("PODATKI")
+                new Reminder("Gaz", Frequency.WEEKLY, LocalDateTime.of(2019,11,10,21,37,00)),
+                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019,11,11,21,37,00)),
+                new Reminder("PODATKI", Frequency.YEARLY, LocalDateTime.of(2019,11,12,21,37,00))
         );
 
         PopulateDatabaseAsync(TransactionRoomDatabase database) {

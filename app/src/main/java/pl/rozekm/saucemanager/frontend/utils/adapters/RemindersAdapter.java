@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import androidx.cardview.widget.CardView;
@@ -32,37 +33,27 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
         }
     }
 
-    public RemindersAdapter(List<Reminder> reminders) {
-        this.reminders = reminders;
-    }
-
     public RemindersAdapter(Context context) {
         this.context = context;
     }
 
     public void setReminders(List<Reminder> reminders) {
         this.reminders = reminders;
-//        notifyDataSetChanged();
     }
 
     @Override
     public RemindersAdapter.RemindersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.reminders_item, parent, false);
-
         RemindersViewHolder vh = new RemindersViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(RemindersViewHolder holder, int position) {
-
         Reminder reminder = reminders.get(position);
-
         holder.title.setText(reminder.getTitle());
-//        holder.date.setText(reminders.get(position).getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
-//        holder.frequency.setText(reminders.get(position).getFrequency().toString());
-        holder.date.setText("DATE");
-        holder.frequency.setText("FREQUENCY");
+        holder.date.setText(reminder.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
+        holder.frequency.setText(reminder.getFrequency().toString());
     }
 
     @Override
