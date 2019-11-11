@@ -9,7 +9,6 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import pl.rozekm.saucemanager.R;
-import pl.rozekm.saucemanager.frontend.activities.MainActivity;
 import pl.rozekm.saucemanager.frontend.fragments.RemindersFragment;
 
 public class AlarmService extends IntentService {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.time.format.DateTimeFormatter;
@@ -60,11 +59,8 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
         holder.frequency.setText(reminder.getFrequency().toString());
         holder.enabled.setChecked(reminder.getEnabled());
 
-        holder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //TODO disable alarm
-            }
+        holder.enabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            //TODO disable alarm
         });
     }
 

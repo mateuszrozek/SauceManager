@@ -15,10 +15,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, Intent intent) {
-
-
         RemindersFragment inst = RemindersFragment.instance();
-//        inst.setAlarmText("Alarm! Wake up! Wake up!");
         String title = (String) intent.getExtras().get("title");
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
@@ -29,10 +26,6 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         inst.setAlarmScreen(title, ringtone);
 
-
-//        ringtone.play();
-
-        //this will send a notification message
         ComponentName comp = new ComponentName(context.getPackageName(), AlarmService.class.getName());
         startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);

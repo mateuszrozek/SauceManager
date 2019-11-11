@@ -126,14 +126,9 @@ public class RemindersFragment extends Fragment {
     private void createReminders(List<Reminder> reminders) {
 
         for (Reminder reminder : reminders) {
-
-//            int id = reminders.indexOf(reminder);
-
             AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
 
             if (reminder.getEnabled()) {
-
-//                Log.d("Reminders fragment", "Alarm On: " + );
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.MONTH, reminder.getDate().getMonthValue());
                 calendar.set(Calendar.DAY_OF_MONTH, reminder.getDate().getDayOfMonth());
@@ -141,7 +136,7 @@ public class RemindersFragment extends Fragment {
                 calendar.set(Calendar.MINUTE, reminder.getDate().getMinute());
                 Intent myIntent = new Intent(getContext(), AlarmReceiver.class);
                 myIntent.putExtra("title", reminder.getTitle());
-               final int id = (int) System.currentTimeMillis();
+                final int id = (int) System.currentTimeMillis();
                 Log.d("Reminders fragment", "Alarm On: " + id);
 
                 pendingIntent = PendingIntent.getBroadcast(getContext(), id, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -219,19 +214,16 @@ public class RemindersFragment extends Fragment {
         ringTitle.setText(title);
         ringtone.play();
 
-        ringButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ringLayout.setVisibility(View.GONE);
-                ringTitle.setVisibility(View.GONE);
-                ringButton.setVisibility(View.GONE);
-                alarmBell.setVisibility(View.GONE);
-                ringLayout.setElevation(elevation);
-                ringTitle.setElevation(elevation);
-                ringButton.setElevation(elevation);
-                alarmBell.setElevation(elevation);
-                ringtone.stop();
-            }
+        ringButton.setOnClickListener(v -> {
+            ringLayout.setVisibility(View.GONE);
+            ringTitle.setVisibility(View.GONE);
+            ringButton.setVisibility(View.GONE);
+            alarmBell.setVisibility(View.GONE);
+            ringLayout.setElevation(elevation);
+            ringTitle.setElevation(elevation);
+            ringButton.setElevation(elevation);
+            alarmBell.setElevation(elevation);
+            ringtone.stop();
         });
     }
 }
