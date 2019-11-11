@@ -18,14 +18,19 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
 
         RemindersFragment inst = RemindersFragment.instance();
-        inst.setAlarmText("Alarm! Wake up! Wake up!");
+//        inst.setAlarmText("Alarm! Wake up! Wake up!");
+        String title = (String) intent.getExtras().get("title");
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null) {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
         Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        ringtone.play();
+
+        inst.setAlarmScreen(title, ringtone);
+
+
+//        ringtone.play();
 
         //this will send a notification message
         ComponentName comp = new ComponentName(context.getPackageName(), AlarmService.class.getName());

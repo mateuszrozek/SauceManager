@@ -70,9 +70,9 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 
 
         List<Reminder> reminders = Arrays.asList(
-                new Reminder("Gaz co minutę", Frequency.MINUTELY, LocalDateTime.of(2019,11,11,12,15,00), true),
+                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019,11,11,12,15,00), true),
                 new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019,11,11,21,37,00), false),
-                new Reminder("PODATKI", Frequency.YEARLY, LocalDateTime.of(2019,11,12,21,37,00), true)
+                new Reminder("PODATKI za 30 sekund", Frequency.MINUTELY, LocalDateTime.of(2019,11,12,21,37,00), true)
         );
 
         PopulateDatabaseAsync(TransactionRoomDatabase database) {
