@@ -3,6 +3,8 @@ package pl.rozekm.saucemanager.frontend.utils.adapters;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.time.format.DateTimeFormatter;
@@ -22,6 +24,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
         public TextView title;
         public TextView date;
         public TextView frequency;
+        public CheckBox enabled;
 
 
         public RemindersViewHolder(CardView v) {
@@ -30,6 +33,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
             title = v.findViewById(R.id.reminder_item_title);
             date = v.findViewById(R.id.reminder_item_date);
             frequency = v.findViewById(R.id.reminder_item_frequency);
+            enabled = v.findViewById(R.id.reminder_check_box);
         }
     }
 
@@ -54,6 +58,14 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
         holder.title.setText(reminder.getTitle());
         holder.date.setText(reminder.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
         holder.frequency.setText(reminder.getFrequency().toString());
+        holder.enabled.setChecked(reminder.getEnabled());
+
+        holder.enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //TODO disable alarm
+            }
+        });
     }
 
     @Override

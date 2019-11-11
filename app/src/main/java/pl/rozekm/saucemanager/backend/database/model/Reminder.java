@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
@@ -38,6 +39,14 @@ public class Reminder {
         this.frequency = frequency;
         this.date = date;
         enabled = true;
+    }
+
+    @Ignore
+    public Reminder(String title, Frequency frequency, LocalDateTime date, Boolean enabled) {
+        this.title = title;
+        this.frequency = frequency;
+        this.date = date;
+        this.enabled = enabled;
     }
 
     @NonNull

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pl.rozekm.saucemanager">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logosvg"
@@ -9,7 +11,7 @@
         android:roundIcon="@drawable/logosvg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".frontend.activities.TransactionCrudActivity"></activity>
+        <activity android:name=".frontend.activities.TransactionCrudActivity" />
         <activity android:name=".frontend.activities.AllTransactionsActivity" />
         <activity android:name=".frontend.activities.StatisticsActivity" />
         <activity android:name=".frontend.activities.MainActivity">
@@ -19,6 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".frontend.utils.AlarmService"
+            android:enabled="true"
+            android:exported="true"/>
+        <receiver android:name=".frontend.utils.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -1,10 +1,19 @@
 package pl.rozekm.saucemanager.frontend.fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -16,12 +25,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.databinding.RemindersFragmentBinding;
+import pl.rozekm.saucemanager.frontend.utils.AlarmReceiver;
 import pl.rozekm.saucemanager.frontend.utils.adapters.RemindersAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.RemindersViewModel;
+
 
 public class RemindersFragment extends Fragment {
 
@@ -30,9 +42,26 @@ public class RemindersFragment extends Fragment {
 
     private RemindersAdapter remindersAdapter;
 
+    private PendingIntent pendingIntent;
+
+    private static RemindersFragment inst;
+
     public static RemindersFragment newInstance() {
         return new RemindersFragment();
     }
+
+    public static RemindersFragment instance() {
+        return inst;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        inst = this;
+    }
+
+    @BindView(R.id.alarmText)
+    TextView alarmTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +77,13 @@ public class RemindersFragment extends Fragment {
         remindersViewModel.getAllReminders().observe(RemindersFragment.this, new Observer<List<Reminder>>() {
             @Override
             public void onChanged(List<Reminder> reminders) {
-//                remindersAdapter = new RemindersAdapter(reminders);
                 remindersAdapter.setReminders(reminders);
                 remindersAdapter.notifyDataSetChanged();
+                createReminders(reminders);
             }
         });
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -75,5 +105,98 @@ public class RemindersFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private void createReminders(List<Reminder> reminders) {
+
+        for (Reminder reminder : reminders) {
+
+            AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+
+            if (reminder.getEnabled()) {
+
+                Log.d("MyActivity", "Alarm On");
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.MONTH, reminder.getDate().getMonthValue());
+                calendar.set(Calendar.DAY_OF_MONTH, reminder.getDate().getDayOfMonth());
+                calendar.set(Calendar.HOUR_OF_DAY, reminder.getDate().getHour());
+                calendar.set(Calendar.MINUTE, reminder.getDate().getMinute());
+                Intent myIntent = new Intent(getContext(), AlarmReceiver.class);
+                final int _id = (int) System.currentTimeMillis();
+
+                pendingIntent = PendingIntent.getBroadcast(getContext(), _id,  myIntent, 0);
+
+                switch (reminder.getFrequency()) {
+                    case DAILY:
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+                        break;
+                    case WEEKLY:
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY * 7, pendingIntent);
+                        break;
+                    case MONTHLY:
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), getDuration(), pendingIntent);
+                        break;
+                    case YEARLY:
+                        setAlarmYearly(calendar, alarmManager);
+                        break;
+                    case MINUTELY: {
+                        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30 * 1000, 1000 * 60, pendingIntent);
+                    }
+                    break;
+                }
+            } else {
+                alarmManager.cancel(pendingIntent);
+                setAlarmText("");
+                Log.d("MainActivity", "Alarm Off");
+            }
+        }
+    }
+
+    private void setAlarmYearly(Calendar calendar, AlarmManager alarmManager) {
+        long calInMillis = calendar.getTimeInMillis();
+        LocalDateTime now = LocalDateTime.now();
+        long nowInMilli = now.atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
+        if (nowInMilli < calInMillis) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        } else {
+            now.plusYears(1);
+            calendar.set(Calendar.YEAR, now.getYear());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+    }
+
+    private long getDuration() {
+        // get todays date
+        Calendar cal = Calendar.getInstance();
+        // get current month
+        int currentMonth = cal.get(Calendar.MONTH);
+
+        // move month ahead
+        currentMonth++;
+        // check if has not exceeded threshold of december
+
+        if (currentMonth > Calendar.DECEMBER) {
+            // alright, reset month to jan and forward year by 1 e.g fro 2013 to 2014
+            currentMonth = Calendar.JANUARY;
+            // Move year ahead as well
+            cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+        }
+
+        // reset calendar to next month
+        cal.set(Calendar.MONTH, currentMonth);
+        // get the maximum possible days in this month
+        int maximumDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        // set the calendar to maximum day (e.g in case of fEB 28th, or leap 29th)
+        cal.set(Calendar.DAY_OF_MONTH, maximumDay);
+        long thenTime = cal.getTimeInMillis(); // this is time one month ahead
+
+
+        return (thenTime); // this is what you set as trigger point time i.e one month after
+
+    }
+
+    public void setAlarmText(String alarmText) {
+        alarmTextView.setText(alarmText);
     }
 }

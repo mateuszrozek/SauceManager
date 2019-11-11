@@ -7,6 +7,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 
 @Dao
@@ -16,6 +17,9 @@ public interface ReminderDao {
 
     @Delete
     void deleteReminder(Reminder reminder);
+
+    @Update
+    void updateReminder(Reminder reminder);
 
     @Query("SELECT * FROM `reminder`")
     LiveData<List<Reminder>> getAllReminders();
