@@ -36,13 +36,11 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
-import pl.rozekm.saucemanager.frontend.viewmodels.ForecastViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 
 public class ForecastFragment extends Fragment {
 
-    private ForecastViewModel mViewModel;
     private TableLayout tableLayout;
     private TransactionsViewModel transactionsViewModel;
 
@@ -59,6 +57,7 @@ public class ForecastFragment extends Fragment {
     Spinner forecastSpinner;
 
     private List<Transaction> allTransactions = new ArrayList<>();
+    private List<Transaction> outcomeTransactions = new ArrayList<>();
 
     public static ForecastFragment newInstance() {
         return new ForecastFragment();
@@ -67,81 +66,53 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), new Transaction())).get(TransactionsViewModel.class);
-        transactionsViewModel.getAllOutcomeTransactions().observe(ForecastFragment.this, new Observer<List<Transaction>>() {
-            @Override
-            public void onChanged(List<Transaction> transactions) {
-                fillTableLayout(transactions);
-            }
-        });
-        transactionsViewModel.getAllTransactions().observe(ForecastFragment.this, new Observer<List<Transaction>>() {
-            @Override
-            public void onChanged(List<Transaction> transactions) {
-                allTransactions = transactions;
-                calculateFutureAccount(transactions, 1);
-            }
-        });
     }
 
     private void fillTableLayout(List<Transaction> transactions) {
 
-        if (transactions.isEmpty()) {
+        tableLayout.removeAllViews();
+
             TableRow row;
             TextView t1;
             TextView t2;
             TextView t3;
             TextView t4;
-
             row = new TableRow(getActivity());
-
             t1 = new TextView(getActivity());
             t2 = new TextView(getActivity());
             t3 = new TextView(getActivity());
             t4 = new TextView(getActivity());
-
             t1.setText("Category");
             t2.setText("Typically");
             t3.setText("So far");
             t4.setText("Remaining");
-
             t1.setTextSize(20);
             t2.setTextSize(20);
             t3.setTextSize(20);
             t4.setTextSize(20);
-
             t1.setPadding(2, 2, 2, 2);
             t2.setPadding(2, 2, 2, 2);
             t3.setPadding(2, 2, 2, 2);
             t4.setPadding(2, 2, 2, 2);
-
             t1.setGravity(2);
             t2.setGravity(3);
             t3.setGravity(3);
             t4.setGravity(3);
-
             t1.setTextColor(getResources().getColor(R.color.sauceColor));
             t2.setTextColor(getResources().getColor(R.color.sauceColor));
             t3.setTextColor(getResources().getColor(R.color.sauceColor));
             t4.setTextColor(getResources().getColor(R.color.sauceColor));
-
             row.addView(t1);
             row.addView(t2);
             row.addView(t3);
             row.addView(t4);
-
             styleHeader(row);
-
             tableLayout.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        } else {
             ArrayList<Forecast> forecasts = processTransactions(transactions);
+
             for (Forecast forecast : forecasts) {
-                TableRow row;
-                TextView t1;
-                TextView t2;
-                TextView t3;
-                TextView t4;
 
                 row = new TableRow(getActivity());
 
@@ -183,8 +154,6 @@ public class ForecastFragment extends Fragment {
                 styleRow(row);
 
                 tableLayout.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            }
         }
     }
 
@@ -271,15 +240,23 @@ public class ForecastFragment extends Fragment {
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         forecastSpinner.setAdapter(spinnerArrayAdapter);
 
-
         forecastButton.setOnClickListener(v -> {
 
-            char c = ( forecastSpinner.getSelectedItem().toString().charAt(0));
+            char c = (forecastSpinner.getSelectedItem().toString().charAt(0));
             int val = Integer.parseInt(String.valueOf(c));
             float month = (float) val;
             calculateFutureAccount(allTransactions, month);
         });
-        fillTableLayout(new ArrayList<>());
+
+        transactionsViewModel.getAllTransactions().observe(ForecastFragment.this, new Observer<List<Transaction>>() {
+            @Override
+            public void onChanged(List<Transaction> transactions) {
+                allTransactions = transactions;
+                transactions.stream().filter(t -> t.getType() == TransactionType.OUTCOME).forEach(outcomeTransactions::add);
+                fillTableLayout(outcomeTransactions);
+                calculateFutureAccount(allTransactions, 1);
+            }
+        });
         return view;
     }
 
@@ -293,7 +270,6 @@ public class ForecastFragment extends Fragment {
         int months = groupedByMonth.size();
         ArrayList<Transaction> transes = new ArrayList<>();
         transactions.stream().filter(t -> t.getDate().getMonth() != now.getMonth()).forEach(transes::add);
-
 
         for (Transaction transaction : transes) {
 
@@ -319,8 +295,5 @@ public class ForecastFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ForecastViewModel.class);
-        // TODO: Use the ViewModel
     }
-
 }

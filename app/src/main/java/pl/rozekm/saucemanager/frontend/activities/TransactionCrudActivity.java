@@ -1,5 +1,6 @@
 package pl.rozekm.saucemanager.frontend.activities;
 
+import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -154,8 +156,9 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
-            transaction.setAmount(Double.parseDouble(textInputLayoutAmount.getEditText().getText().toString()));
+            transaction.setAmount(getDoubleFromString(textInputLayoutAmount.getEditText().getText().toString()));
             transactionsViewModel.update(transaction);
+            onBackPressed();
             Toast.makeText(TransactionCrudActivity.this, "updated", Toast.LENGTH_SHORT).show();
         });
 
@@ -164,5 +167,16 @@ public class TransactionCrudActivity extends AppCompatActivity {
             onBackPressed();
             Toast.makeText(TransactionCrudActivity.this, "deleted", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private double getDoubleFromString(String s) {
+        NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+        Number number = null;
+        try {
+            number = format.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return number.doubleValue();
     }
 }

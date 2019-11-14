@@ -265,10 +265,12 @@ public class TransactionsFragment extends Fragment {
                         classTransaction.getType()
                 );
                 if (isTitleValid()) {
-                    newTransaction.setTitle(editTextTitle.getEditText().toString());
+                    newTransaction.setTitle(editTextTitle.getEditText().getText().toString());
                 }
                 System.out.println(DebugDB.getAddressLog());
                 transactionsViewModel.insert(newTransaction);
+                editTextAmount.getEditText().setText("");
+                editTextTitle.getEditText().setText("");
             }
         });
     }

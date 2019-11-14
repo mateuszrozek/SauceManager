@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -17,8 +18,6 @@ import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.backend.utils.generators.TransactionsGenerator;
 
 @Database(entities = {Transaction.class, Reminder.class}, version = 4, exportSchema = false)
@@ -38,7 +37,6 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
                     "transaction_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomDatabaseCallback)
-//                            .allowMainThreadQueries()
                     .build();
         }
         return INSTANCE;
@@ -47,7 +45,13 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
     private static RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
+//            new PopulateDatabaseAsync(INSTANCE).execute();
             super.onOpen(db);
+        }
+
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
             new PopulateDatabaseAsync(INSTANCE).execute();
         }
     };
@@ -68,11 +72,10 @@ public abstract class TransactionRoomDatabase extends RoomDatabase {
 //        );
 
 
-
         List<Reminder> reminders = Arrays.asList(
-                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019,11,11,12,15,00), true),
-                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019,11,11,21,37,00), false),
-                new Reminder("PODATKI za 30 sekund", Frequency.MINUTELY, LocalDateTime.of(2019,11,12,21,37,00), true)
+                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 11, 12, 15, 00), true),
+                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019, 11, 11, 21, 37, 00), false),
+                new Reminder("PODATKI za 30 sekund", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 12, 21, 37, 00), true)
         );
 
         PopulateDatabaseAsync(TransactionRoomDatabase database) {
