@@ -1,11 +1,13 @@
 package pl.rozekm.saucemanager.frontend.fragments;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -70,90 +73,93 @@ public class ForecastFragment extends Fragment {
     }
 
     private void fillTableLayout(List<Transaction> transactions) {
-
         tableLayout.removeAllViews();
+        TableRow.LayoutParams params = new TableRow.LayoutParams();
+        params.setMargins(2, 2, 2, 2);
+        TableRow row;
+        TextView t1;
+        TextView t2;
+        TextView t3;
+        TextView t4;
 
-            TableRow row;
-            TextView t1;
-            TextView t2;
-            TextView t3;
-            TextView t4;
+        row = new TableRow(getActivity());
+        t1 = new TextView(getActivity());
+        t2 = new TextView(getActivity());
+        t3 = new TextView(getActivity());
+        t4 = new TextView(getActivity());
+        t1.setText("Category");
+        t2.setText("Typically");
+        t3.setText("So far");
+        t4.setText("Remaining");
+        t1.setTextSize(16);
+        t2.setTextSize(16);
+        t3.setTextSize(16);
+        t4.setTextSize(16);
+        t1.setPadding(10, 4, 4, 4);
+        t2.setPadding(4, 4, 4, 4);
+        t3.setPadding(4, 4, 4, 4);
+        t4.setPadding(4, 4, 10, 4);
+        t1.setGravity(Gravity.CENTER_HORIZONTAL);
+        t2.setGravity(Gravity.CENTER_HORIZONTAL);
+        t3.setGravity(Gravity.CENTER_HORIZONTAL);
+        t4.setGravity(Gravity.CENTER_HORIZONTAL);
+        t1.setTextColor(getResources().getColor(R.color.sauceColor));
+        t2.setTextColor(getResources().getColor(R.color.sauceColor));
+        t3.setTextColor(getResources().getColor(R.color.sauceColor));
+        t4.setTextColor(getResources().getColor(R.color.sauceColor));
+        t1.setLayoutParams(params);
+        t2.setLayoutParams(params);
+        t3.setLayoutParams(params);
+        t4.setLayoutParams(params);
+
+        row.addView(t1);
+        row.addView(t2);
+        row.addView(t3);
+        row.addView(t4);
+        styleHeader(row);
+        tableLayout.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        ArrayList<Forecast> forecasts = processTransactions(transactions);
+
+        for (Forecast forecast : forecasts) {
             row = new TableRow(getActivity());
             t1 = new TextView(getActivity());
             t2 = new TextView(getActivity());
             t3 = new TextView(getActivity());
             t4 = new TextView(getActivity());
-            t1.setText("Category");
-            t2.setText("Typically");
-            t3.setText("So far");
-            t4.setText("Remaining");
-            t1.setTextSize(20);
-            t2.setTextSize(20);
-            t3.setTextSize(20);
-            t4.setTextSize(20);
-            t1.setPadding(2, 2, 2, 2);
-            t2.setPadding(2, 2, 2, 2);
-            t3.setPadding(2, 2, 2, 2);
-            t4.setPadding(2, 2, 2, 2);
-            t1.setGravity(2);
-            t2.setGravity(3);
-            t3.setGravity(3);
-            t4.setGravity(3);
-            t1.setTextColor(getResources().getColor(R.color.sauceColor));
-            t2.setTextColor(getResources().getColor(R.color.sauceColor));
-            t3.setTextColor(getResources().getColor(R.color.sauceColor));
-            t4.setTextColor(getResources().getColor(R.color.sauceColor));
+            t1.setText(forecast.getCategory().toString());
+            t2.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getTypically()));
+            t3.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getSoFar()));
+            t4.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getRemaining()));
+            t1.setTextSize(16);
+            t2.setTextSize(16);
+            t3.setTextSize(16);
+            t4.setTextSize(16);
+            t1.setPadding(10, 4, 4, 4);
+            t2.setPadding(4, 4, 4, 4);
+            t3.setPadding(4, 4, 4, 4);
+            t4.setPadding(4, 4, 10, 4);
+            t1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            t2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            t3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            t4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            t1.setGravity(Gravity.START);
+            t2.setGravity(Gravity.END);
+            t3.setGravity(Gravity.END);
+            t4.setGravity(Gravity.END);
+            t1.setLayoutParams(params);
+            t2.setLayoutParams(params);
+            t3.setLayoutParams(params);
+            t4.setLayoutParams(params);
+
             row.addView(t1);
             row.addView(t2);
             row.addView(t3);
             row.addView(t4);
-            styleHeader(row);
+
+            styleRow(row);
+
             tableLayout.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            ArrayList<Forecast> forecasts = processTransactions(transactions);
-
-            for (Forecast forecast : forecasts) {
-
-                row = new TableRow(getActivity());
-
-                t1 = new TextView(getActivity());
-                t2 = new TextView(getActivity());
-                t3 = new TextView(getActivity());
-                t4 = new TextView(getActivity());
-
-                t1.setText(forecast.getCategory().toString());
-                t2.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getTypically()));
-                t3.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getSoFar()));
-                t4.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getRemaining()));
-
-                t1.setTextSize(16);
-                t2.setTextSize(16);
-                t3.setTextSize(16);
-                t4.setTextSize(16);
-
-                t1.setPadding(0, 2, 2, 2);
-                t2.setPadding(2, 2, 2, 2);
-                t3.setPadding(2, 2, 2, 2);
-                t4.setPadding(2, 2, 2, 2);
-
-                t1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-                t2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-                t3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-                t4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-
-                t1.setGravity(2);
-                t2.setGravity(5);
-                t3.setGravity(5);
-                t4.setGravity(5);
-
-                row.addView(t1);
-                row.addView(t2);
-                row.addView(t3);
-                row.addView(t4);
-
-                styleRow(row);
-
-                tableLayout.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
     }
 

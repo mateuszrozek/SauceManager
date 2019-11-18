@@ -140,36 +140,16 @@
                 android:id="@+id/tableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:stretchColumns="1,2,3"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:minHeight="50dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spendingsThisMonthTextView">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </TableLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     </ScrollView>
 </layout>
