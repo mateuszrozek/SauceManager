@@ -1,5 +1,4 @@
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ScrollView
@@ -84,59 +83,69 @@
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
-                android:padding="10dp"
-                android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewFUT">
 
                 <Spinner
                     android:id="@+id/forecastSpinner"
-                    android:layout_marginEnd="20dp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="4"
+                    android:background="@drawable/spinner_background"
+                    android:gravity="center_vertical|center_horizontal"
                     android:maxWidth="50pt"
-                    android:minWidth="160dp" />
+                    android:minWidth="160dp"
+                    android:textAlignment="center" />
 
                 <Button
                     android:id="@+id/forecastButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="@string/calculate_forecast" />
+                    android:background="@drawable/b"
+                    android:drawableEnd="@android:drawable/ic_media_play"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:padding="7dp"
+                    android:text="@string/calculate_forecast"
+                    android:textAlignment="center" />
+
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/spendingsThisMonthTextView"
-                android:textSize="26sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="176dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="176dp"
                 android:text="@string/spendings_this_month"
+                android:textSize="26sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
             <TableLayout
                 android:id="@+id/tableLayout"
-                android:minHeight="50dp"
-                android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:minHeight="50dp"
+                android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spendingsThisMonthTextView">

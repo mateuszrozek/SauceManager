@@ -32,7 +32,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.text.DecimalFormat;
@@ -426,26 +425,33 @@ public class StatisticsActivity extends AppCompatActivity {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
+        int[] outcomeColors = new int[]{
+                Color.parseColor("#660000"),
+                Color.parseColor("#CC0000"),
+                Color.parseColor("#FF3333"),
+                Color.parseColor("#FF9999"),
+                Color.parseColor("#FFCC99"),
+                Color.parseColor("#FF9933"),
+                Color.parseColor("#CC6600"),
+                Color.parseColor("#663300")
+        };
+
+        int[] incomeColors = new int[]{
+                Color.parseColor("#4C9900"),
+                Color.parseColor("#80FF00"),
+                Color.parseColor("#B2FF66")
+        };
+
         ArrayList<Integer> colors = new ArrayList<>();
-
-        //TODO colors
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
+        if (type == TransactionType.OUTCOME) {
+            for (int i : outcomeColors) {
+                colors.add(i);
+            }
+        } else {
+            for (int i : incomeColors) {
+                colors.add(i);
+            }
+        }
 
         dataSet.setColors(colors);
         //dataSet.setSelectionShift(0f);

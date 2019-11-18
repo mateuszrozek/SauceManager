@@ -16,7 +16,7 @@
     <string name="amount">Amount</string>
     <string name="title_optional">Title (optional)</string>
     <string name="add_transaction">Add operation</string>
-    <string name="add_reminder">Add reminder</string>
+    <string name="add_reminder">New reminder</string>
     <string name="this_is_an_image_of_category">This is an image of category</string>
     <string name="last_operations">Last Operations</string>
     <string name="your_reminders">Your Reminders</string>
@@ -35,4 +35,9 @@
     <string name="add_update">Add/Update</string>
     <string name="delete">Delete</string>
     <string name="type_in_new_title_to_update">Type in new title to update</string>
+    <string name="all_transactions">All Transactions</string>
+    <string name="operations_statistics">Operations\' statistics</string>
+    <string name="operation_s_crud_screen">Operation\'s CRUD screen</string>
+    <string name="reminder_s_crud_screen">Reminder\'s CRUD screen</string>
+    <string name="update">Update</string>
 </resources>
