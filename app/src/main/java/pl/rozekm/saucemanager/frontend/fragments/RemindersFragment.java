@@ -34,6 +34,7 @@ import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.databinding.RemindersFragmentBinding;
+import pl.rozekm.saucemanager.frontend.activities.ReminderCrudActivity;
 import pl.rozekm.saucemanager.frontend.utils.AlarmReceiver;
 import pl.rozekm.saucemanager.frontend.utils.adapters.RemindersAdapter;
 import pl.rozekm.saucemanager.frontend.viewmodels.RemindersViewModel;
@@ -61,6 +62,9 @@ public class RemindersFragment extends Fragment {
 
     @BindView(R.id.alarmBell)
     ImageView alarmBell;
+
+    @BindView(R.id.addReminderImageButton)
+    Button addReminderImageButton;
 
     public static RemindersFragment newInstance() {
         return new RemindersFragment();
@@ -114,6 +118,11 @@ public class RemindersFragment extends Fragment {
         remindersRecyclerView.setHasFixedSize(true);
         remindersRecyclerView.setItemAnimator(new DefaultItemAnimator());
         remindersRecyclerView.setAdapter(remindersAdapter);
+
+        addReminderImageButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ReminderCrudActivity.class);
+            startActivity(intent);
+        });
 
         return view;
     }

@@ -34,7 +34,7 @@ public class TransactionCrudActivity extends AppCompatActivity {
     @BindView(R.id.textInputLayoutTitle)
     TextInputLayout textInputLayoutTitle;
 
-    @BindView(R.id.textViewDate)
+    @BindView(R.id.textViewTitleReminder)
     TextView textViewDate;
 
     @BindView(R.id.textInputLayoutAmount)
@@ -46,10 +46,10 @@ public class TransactionCrudActivity extends AppCompatActivity {
     @BindView(R.id.spinnerCategory)
     Spinner spinnerCategory;
 
-    @BindView(R.id.buttonUpdate)
+    @BindView(R.id.buttonUpdateAddReminder)
     Button buttonUpdate;
 
-    @BindView(R.id.buttonDelete)
+    @BindView(R.id.buttonDeleteReminder)
     Button buttonDelete;
 
     TypesAdapter typesAdapter;

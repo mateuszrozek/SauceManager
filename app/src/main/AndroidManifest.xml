@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".frontend.activities.TransactionCrudActivity" />
+        <activity android:name=".frontend.activities.ReminderCrudActivity" />
         <activity android:name=".frontend.activities.AllTransactionsActivity" />
         <activity android:name=".frontend.activities.StatisticsActivity" />
         <activity android:name=".frontend.activities.MainActivity">

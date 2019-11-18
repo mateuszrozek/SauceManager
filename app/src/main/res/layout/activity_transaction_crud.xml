@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorScreenBackground"
     tools:context=".frontend.activities.TransactionCrudActivity">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,7 +28,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/textViewDate"
+        android:id="@+id/textViewTitleReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -46,7 +47,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDate">
+        app:layout_constraintTop_toBottomOf="@+id/textViewTitleReminder">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -76,7 +77,7 @@
 
 
     <Button
-        android:id="@+id/buttonUpdate"
+        android:id="@+id/buttonUpdateAddReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -87,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategory" />
 
     <Button
-        android:id="@+id/buttonDelete"
+        android:id="@+id/buttonDeleteReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"

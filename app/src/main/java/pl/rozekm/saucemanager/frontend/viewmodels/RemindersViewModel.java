@@ -28,4 +28,12 @@ public class RemindersViewModel extends AndroidViewModel {
     public void insert(Reminder reminder) {
         reminderRepository.insertReminder(reminder);
     }
+
+    public void delete(Reminder reminder) {
+        reminderRepository.deleteReminder(reminder);
+    }
+
+    public void update(Reminder reminder) {
+        reminderRepository.updateReminder(reminder);
+    }
 }

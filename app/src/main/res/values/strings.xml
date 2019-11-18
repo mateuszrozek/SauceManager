@@ -32,4 +32,7 @@
     <string name="back_to_main">Back to main</string>
     <string name="enabled">Enabled:</string>
     <string name="click_to_disable_alarm">Click to disable alarm</string>
+    <string name="add_update">Add/Update</string>
+    <string name="delete">Delete</string>
+    <string name="type_in_new_title_to_update">Type in new title to update</string>
 </resources>

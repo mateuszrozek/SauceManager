@@ -9,7 +9,6 @@ import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.TableLayout;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -155,7 +154,6 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setDrawGridBackground(false);
         chart.getDescription().setEnabled(false);
 
-        // scaling can now only be done on x- and y-axis separately
         chart.setPinchZoom(false);
 
         chart.setDrawBarShadow(false);
@@ -240,7 +238,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
             // background color
             chart.setBackgroundColor(getResources().getColor(R.color.colorScreenBackground));
-//            chart.setBackgroundColor(Color.WHITE);
 
             // disable description text
             chart.getDescription().setEnabled(false);
@@ -261,7 +258,6 @@ public class StatisticsActivity extends AppCompatActivity {
             // enable scaling and dragging
             chart.setDragEnabled(true);
             chart.setScaleEnabled(true);
-            // chart.setScaleYEnabled(true);
 
             // force pinch zoom along both axis
             chart.setPinchZoom(true);
@@ -293,7 +289,6 @@ public class StatisticsActivity extends AppCompatActivity {
             yAxis.setAxisMinimum(Collections.min(accountStates) - (Math.abs(Collections.min(accountStates)) * 0.1f));
         }
 
-
         {   // // Create Limit Lines // //
             LimitLine llXAxis = new LimitLine(9f, "Index 10");
             llXAxis.setLineWidth(4f);
@@ -317,14 +312,9 @@ public class StatisticsActivity extends AppCompatActivity {
             yAxis.setDrawLimitLinesBehindData(true);
             xAxis.setDrawLimitLinesBehindData(true);
 
-            // add limit lines
             yAxis.addLimitLine(ll1);
             yAxis.addLimitLine(ll2);
-            //xAxis.addLimitLine(llXAxis);
         }
-
-        // add data
-//        setLineChartData(45, 180, chart);
         setLineChartData(allTransactions, chart);
 
 
@@ -427,7 +417,6 @@ public class StatisticsActivity extends AppCompatActivity {
         List<Transaction> transactionsByFrequency = transactionsSorter.sortByFrequency(transactions, frequency);
 
         Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactionsByFrequency);
-//        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategoryForFrequency(transactions, frequency);
 
         for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
             entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
@@ -437,16 +426,9 @@ public class StatisticsActivity extends AppCompatActivity {
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
-
         ArrayList<Integer> colors = new ArrayList<>();
 
         //TODO colors
-//        if (type == TransactionType.OUTCOME){
-//
-//        }
-//        else {
-//
-//        }
 
         for (int c : ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
@@ -483,7 +465,6 @@ public class StatisticsActivity extends AppCompatActivity {
         data.setValueTextColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setData(data);
 
-        // undo all highlights
         chart.highlightValues(null);
 
         chart.invalidate();
@@ -502,12 +483,10 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
 
         chart.setDrawHoleEnabled(true);
-//        chart.setHoleColor(Color.WHITE);
         chart.setHoleColor(getResources().getColor(R.color.colorScreenBackground));
 
         chart.setEntryLabelColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setEntryLabelTextSize(13f);
-
 
 
         chart.setTransparentCircleColor(Color.WHITE);
@@ -519,15 +498,8 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setDrawCenterText(true);
 
         chart.setRotationAngle(0);
-        // enable rotation of the chart by touch
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
-
-        // chart.setUnit(" €");
-        // chart.setDrawUnitsInChart(true);
-
-//        // add a selection listener
-//        chart.setOnChartValueSelectedListener(this);
 
         chart.animateY(800, Easing.EaseInOutQuad);
         // chart.spin(2000, 0, 360);
@@ -552,16 +524,6 @@ public class StatisticsActivity extends AppCompatActivity {
         s.setSpan(new RelativeSizeSpan(2f), 0, text.length(), 0);
 
         return s;
-    }
-
-    private int[] getColors() {
-
-        // have as many colors as stack-values per entry
-        int[] colors = new int[3];
-
-        System.arraycopy(ColorTemplate.MATERIAL_COLORS, 0, colors, 0, 3);
-
-        return colors;
     }
 
     private class CustomFormatter extends ValueFormatter {

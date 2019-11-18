@@ -1,5 +1,6 @@
 package pl.rozekm.saucemanager.backend.database.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,7 @@ import pl.rozekm.saucemanager.backend.utils.converters.LocalDateTimeConverter;
 import pl.rozekm.saucemanager.backend.utils.converters.ReminderFrequencyConverter;
 
 @Entity
-public class Reminder {
+public class Reminder implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -38,6 +39,14 @@ public class Reminder {
         this.title = title;
         this.frequency = frequency;
         this.date = date;
+        enabled = true;
+    }
+
+    @Ignore
+    public Reminder() {
+        this.title = "New title";
+        this.frequency = Frequency.MONTHLY;
+        this.date = LocalDateTime.now();
         enabled = true;
     }
 
