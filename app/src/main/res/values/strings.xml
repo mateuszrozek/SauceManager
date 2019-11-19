@@ -40,4 +40,6 @@
     <string name="operation_s_crud_screen">Operation\'s CRUD screen</string>
     <string name="reminder_s_crud_screen">Reminder\'s CRUD screen</string>
     <string name="update">Update</string>
+    <string name="_2019_10_17_23_23_12">2019-10-17 23:23:12</string>
+    <string name="type_in_new_amount_to_update">Type in new amount to update</string>
 </resources>
