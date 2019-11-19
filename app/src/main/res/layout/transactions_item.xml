@@ -18,6 +18,9 @@
             android:id="@+id/transaction_item_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:padding="2dp"
             android:text="Amount"
             android:textColor="#333"
             android:textSize="20sp" />
@@ -26,29 +29,37 @@
             android:id="@+id/transaction_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:padding="2dp"
             android:text="Title"
             android:textColor="#333"
             android:textSize="16sp" />
-
 
 
         <TextView
             android:id="@+id/transaction_item_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:padding="2dp"
             android:text="Category"
             android:textColor="#333"
             android:textSize="16sp" />
-
 
 
         <TextView
             android:id="@+id/transaction_item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:padding="2dp"
             android:text="Date"
+            android:textAlignment="viewEnd"
             android:textColor="#333"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

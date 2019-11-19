@@ -163,6 +163,7 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setHighlightFullBarEnabled(false);
 
         chart.getAxisLeft().setEnabled(false);
+        chart.animateX(2000);
 
         List<float[]> cashFlowByMonths = transactionsSorter.cashFlow(allTransactions);
 

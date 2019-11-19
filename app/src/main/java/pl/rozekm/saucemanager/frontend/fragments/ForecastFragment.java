@@ -285,7 +285,8 @@ public class ForecastFragment extends Fragment {
         }
         value = sum / months - 1;
 
-        textViewFUT.setText(convertFloatToCash(init + (value * month)));
+        textViewNOW.setText(convertFloatToCash(sum));
+        textViewFUT.setText(convertFloatToCash(sum + (value * month)));
     }
 
     private String convertFloatToCash(float value) {

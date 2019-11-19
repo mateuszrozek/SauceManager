@@ -127,7 +127,7 @@ public class TransactionsGenerator {
             if (random.nextDouble() < probability) {
                 Double amount = amountMin + (amountMax - amountMin) * random.nextDouble();
                 LocalDateTime date = LocalDateTime.of(2019, month, random.nextInt(27) + 1, random.nextInt(23), random.nextInt(55));
-                String title = givenUsingPlainJava_whenGeneratingRandomStringBounded_thenCorrect(random.nextInt(4) + 1, random.nextInt(7) + 1);
+                String title = givenUsingPlainJava_whenGeneratingRandomStringBounded_thenCorrect(random.nextInt(3) + 1, random.nextInt(7) + 1);
 
                 transaction = new Transaction(date, amount, title, category, type);
                 System.out.println(transaction.toString());

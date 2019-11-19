@@ -55,15 +55,6 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     @Override
     public TransactionsAdapter.TransactionsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.transactions_item, parent, false);
-
-//        Transaction transaction = transactions.get(viewType);
-//
-//        v.setOnClickListener(v1 -> {
-//            Intent intent = new Intent(v1.getContext(), TransactionCrudActivity.class);
-//            intent.putExtra("id", transaction.getId());
-//            intent.putExtra("trans", transaction);
-//            v1.getContext().startActivity(intent);
-//        });
         TransactionsViewHolder vh = new TransactionsViewHolder(v);
         return vh;
     }
