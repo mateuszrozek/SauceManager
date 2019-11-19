@@ -56,7 +56,6 @@ import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
-import pl.rozekm.saucemanager.frontend.utils.charts.MyMarkerView;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
 
@@ -240,9 +239,9 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.getDescription().setEnabled(false);
         chart.setTouchEnabled(true);
         chart.setDrawGridBackground(false);
-        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-        mv.setChartView(chart);
-        chart.setMarker(mv);
+//        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+//        mv.setChartView(chart);
+//        chart.setMarker(mv);
         chart.setDragEnabled(true);
         chart.setScaleEnabled(true);
         chart.setPinchZoom(true);
@@ -428,7 +427,6 @@ public class StatisticsActivity extends AppCompatActivity {
 
         chart.setEntryLabelColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setEntryLabelTextSize(13f);
-
 
         chart.setTransparentCircleColor(Color.WHITE);
         chart.setTransparentCircleAlpha(110);
