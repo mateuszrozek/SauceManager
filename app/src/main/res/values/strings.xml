@@ -36,7 +36,7 @@
     <string name="delete">Delete</string>
     <string name="type_in_new_title_to_update">Type in new title to update</string>
     <string name="all_transactions">All Transactions</string>
-    <string name="operations_statistics">Operations\' statistics</string>
+    <string name="operations_statistics">Statistics</string>
     <string name="operation_s_crud_screen">Operation\'s CRUD screen</string>
     <string name="reminder_s_crud_screen">Reminder\'s CRUD screen</string>
     <string name="update">Update</string>

@@ -35,11 +35,15 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -232,98 +236,62 @@ public class StatisticsActivity extends AppCompatActivity {
     }
 
     private void setLineChart(LineChart chart) {
-
-        {   // // Chart Style // //
-
-            // background color
-            chart.setBackgroundColor(getResources().getColor(R.color.colorScreenBackground));
-
-            // disable description text
-            chart.getDescription().setEnabled(false);
-
-            // enable touch gestures
-            chart.setTouchEnabled(true);
-
-            // set listeners
-            chart.setDrawGridBackground(false);
-
-            // create marker to display box when values are selected
-            MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-
-            // Set the marker to the chart
-            mv.setChartView(chart);
-            chart.setMarker(mv);
-
-            // enable scaling and dragging
-            chart.setDragEnabled(true);
-            chart.setScaleEnabled(true);
-
-            // force pinch zoom along both axis
-            chart.setPinchZoom(true);
-        }
+        chart.setBackgroundColor(getResources().getColor(R.color.colorScreenBackground));
+        chart.getDescription().setEnabled(false);
+        chart.setTouchEnabled(true);
+        chart.setDrawGridBackground(false);
+        MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
+        mv.setChartView(chart);
+        chart.setMarker(mv);
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+        chart.setPinchZoom(true);
 
         XAxis xAxis;
-        {   // // X-Axis Style // //
-            xAxis = chart.getXAxis();
+        xAxis = chart.getXAxis();
+        xAxis.enableGridDashedLine(10f, 10f, 0f);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            private final SimpleDateFormat mFormat = new SimpleDateFormat("dd-MMM", Locale.ENGLISH);
 
-            // vertical grid lines
-            xAxis.enableGridDashedLine(10f, 10f, 0f);
-        }
+            @Override
+            public String getFormattedValue(float value) {
+                long millis = TimeUnit.DAYS.toMillis((long) (value + 100));
+                return mFormat.format(new Date(millis));
+            }
+        });
 
         YAxis yAxis;
-        {   // // Y-Axis Style // //
-            yAxis = chart.getAxisLeft();
+        yAxis = chart.getAxisLeft();
+        chart.getAxisRight().setEnabled(false);
+        yAxis.enableGridDashedLine(10f, 10f, 0f);
+        yAxis.setAxisMaximum(Collections.max(accountStates) * 1.1f);
+        yAxis.setAxisMinimum(Collections.min(accountStates) - (Math.abs(Collections.min(accountStates)) * 0.1f));
 
-            // disable dual axis (only use LEFT axis)
-            chart.getAxisRight().setEnabled(false);
+        LimitLine llXAxis = new LimitLine(9f, "Index 10");
+        llXAxis.setLineWidth(4f);
+        llXAxis.enableDashedLine(10f, 10f, 0f);
+        llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        llXAxis.setTextSize(10f);
 
-            // horizontal grid lines
-            yAxis.enableGridDashedLine(10f, 10f, 0f);
+        LimitLine ll1 = new LimitLine(Collections.max(accountStates), "Upper Limit");
+        ll1.setLineWidth(4f);
+        ll1.enableDashedLine(10f, 10f, 0f);
+        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+        ll1.setTextSize(10f);
 
-            // axis range
+        LimitLine ll2 = new LimitLine(Collections.min(accountStates), "Lower Limit");
+        ll2.setLineWidth(4f);
+        ll2.enableDashedLine(10f, 10f, 0f);
+        ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll2.setTextSize(10f);
 
-            //TODO coś ze skalowaniem zrobić
-            yAxis.setAxisMaximum(Collections.max(accountStates) * 1.1f);
-
-            yAxis.setAxisMinimum(Collections.min(accountStates) - (Math.abs(Collections.min(accountStates)) * 0.1f));
-        }
-
-        {   // // Create Limit Lines // //
-            LimitLine llXAxis = new LimitLine(9f, "Index 10");
-            llXAxis.setLineWidth(4f);
-            llXAxis.enableDashedLine(10f, 10f, 0f);
-            llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-            llXAxis.setTextSize(10f);
-
-            LimitLine ll1 = new LimitLine(Collections.max(accountStates), "Upper Limit");
-            ll1.setLineWidth(4f);
-            ll1.enableDashedLine(10f, 10f, 0f);
-            ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-            ll1.setTextSize(10f);
-
-            LimitLine ll2 = new LimitLine(Collections.min(accountStates), "Lower Limit");
-            ll2.setLineWidth(4f);
-            ll2.enableDashedLine(10f, 10f, 0f);
-            ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-            ll2.setTextSize(10f);
-
-            // draw limit lines behind data instead of on top
-            yAxis.setDrawLimitLinesBehindData(true);
-            xAxis.setDrawLimitLinesBehindData(true);
-
-            yAxis.addLimitLine(ll1);
-            yAxis.addLimitLine(ll2);
-        }
+        yAxis.setDrawLimitLinesBehindData(true);
+        xAxis.setDrawLimitLinesBehindData(true);
+        yAxis.addLimitLine(ll1);
+        yAxis.addLimitLine(ll2);
         setLineChartData(allTransactions, chart);
-
-
-        // draw points over time
         chart.animateX(1500);
-
-        // get the legend (only possible after setting data)
         Legend l = chart.getLegend();
-
-        // draw legend entries as lines
         l.setForm(Legend.LegendForm.LINE);
     }
 
@@ -336,45 +304,25 @@ public class StatisticsActivity extends AppCompatActivity {
 
         LineDataSet set1;
 
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
+        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
             set1 = (LineDataSet) chart.getData().getDataSetByIndex(0);
             set1.setValues(values);
             set1.notifyDataSetChanged();
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
         } else {
-            // create a dataset and give it a type
-            set1 = new LineDataSet(values, "DataSet 1");
-
+            set1 = new LineDataSet(values, "Balanse of the account");
             set1.setDrawIcons(false);
-
-            // draw dashed line
-            set1.enableDashedLine(10f, 5f, 0f);
-
-            // black lines and points
             set1.setColor(Color.BLACK);
             set1.setCircleColor(Color.BLACK);
-
-            // line thickness and point size
-            set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
-
-            // draw points as solid circles
-            set1.setDrawCircleHole(false);
-
-            // customize legend entry
+            set1.setLineWidth(0.5f);
+            set1.setCircleRadius(0.5f);
+            set1.setDrawCircles(false);
             set1.setFormLineWidth(1f);
             set1.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
             set1.setFormSize(15.f);
-
-            // text size of values
             set1.setValueTextSize(9f);
-
-            // draw selection line as dashed
             set1.enableDashedHighlightLine(10f, 5f, 0f);
-
-            // set the filled area
             set1.setDrawFilled(true);
             set1.setFillFormatter(new IFillFormatter() {
                 @Override
@@ -382,26 +330,17 @@ public class StatisticsActivity extends AppCompatActivity {
                     return chart.getAxisLeft().getAxisMinimum();
                 }
             });
-
-            // set color of filled area
             if (Utils.getSDKInt() >= 18) {
-                // drawables only supported on api level 18 and above
                 Drawable drawable = ContextCompat.getDrawable(this, R.drawable.fade_red);
                 set1.setFillDrawable(drawable);
             } else {
                 set1.setFillColor(Color.BLACK);
             }
-
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1); // add the data sets
-
-            // create a data object with the data sets
+            dataSets.add(set1);
             LineData data = new LineData(dataSets);
-
-            // set data
             chart.setData(data);
         }
-
     }
 
     private void setPolylinePieChart(PieChart pieChart, TransactionType type, Frequency frequency) {
@@ -454,15 +393,11 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         dataSet.setColors(colors);
-        //dataSet.setSelectionShift(0f);
-
 
         dataSet.setValueLinePart1OffsetPercentage(80.f);
         dataSet.setValueLinePart1Length(0.3f);
         dataSet.setValueLinePart2Length(0.4f);
-        //dataSet.setUsingSliceColorAsValueLineColor(true);
 
-        //dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
         PieData data = new PieData(dataSet);
@@ -508,7 +443,6 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setHighlightPerTapEnabled(true);
 
         chart.animateY(800, Easing.EaseInOutQuad);
-        // chart.spin(2000, 0, 360);
 
         Legend l = chart.getLegend();
         l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);

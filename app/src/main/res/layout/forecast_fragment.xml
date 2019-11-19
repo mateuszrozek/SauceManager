@@ -119,8 +119,6 @@
                     android:padding="7dp"
                     android:text="@string/calculate_forecast"
                     android:textAlignment="center" />
-
-
             </LinearLayout>
 
             <TextView
@@ -140,15 +138,14 @@
                 android:id="@+id/tableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:stretchColumns="1,2,3"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="8dp"
                 android:minHeight="50dp"
+                android:stretchColumns="1,2,3"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spendingsThisMonthTextView">
-            </TableLayout>
+                app:layout_constraintTop_toBottomOf="@+id/spendingsThisMonthTextView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

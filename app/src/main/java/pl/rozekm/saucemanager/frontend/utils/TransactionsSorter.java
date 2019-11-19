@@ -52,16 +52,14 @@ public class TransactionsSorter {
 
     public List<Float> accountState(List<Transaction> transactions, float initialValue) {
         ArrayList<Float> result = new ArrayList<>();
-
         result.add(initialValue);
 
         for (int i = 1; i < transactions.size(); i++) {
-
             float val;
             if (transactions.get(i).getType() == TransactionType.OUTCOME) {
-                val = (float) ((double) transactions.get(i).getAmount()) - result.get(i - 1);
+                val = result.get(i - 1) - (float) ((double) transactions.get(i).getAmount());
             } else {
-                val = (float) ((double) transactions.get(i).getAmount()) + result.get(i - 1);
+                val = result.get(i - 1) + (float) ((double) transactions.get(i).getAmount());
             }
             result.add(val);
         }
@@ -81,14 +79,13 @@ public class TransactionsSorter {
             float outcomes = 0.0f;
 
             for (Transaction transaction : transactionsOfMonth) {
-                if (transaction.getType()==TransactionType.OUTCOME){
-                    outcomes = outcomes + (float)((double)transaction.getAmount());
-                }
-                else {
-                    incomes = incomes + (float)((double)transaction.getAmount());
+                if (transaction.getType() == TransactionType.OUTCOME) {
+                    outcomes = outcomes + (float) ((double) transaction.getAmount());
+                } else {
+                    incomes = incomes + (float) ((double) transaction.getAmount());
                 }
             }
-            result.add( new float[]{-outcomes, incomes});
+            result.add(new float[]{-outcomes, incomes});
         }
         return result;
     }
@@ -172,14 +169,14 @@ public class TransactionsSorter {
 
     public Float getMinimum(List<float[]> cashFlowByMonths) {
         List<Float> negatives = new ArrayList<>();
-        cashFlowByMonths.forEach(item->negatives.add(item[0]));
+        cashFlowByMonths.forEach(item -> negatives.add(item[0]));
 
         return negatives.stream().min(Comparator.naturalOrder()).get();
     }
 
     public Float getMaximum(List<float[]> cashFlowByMonths) {
         List<Float> positives = new ArrayList<>();
-        cashFlowByMonths.forEach(item->positives.add(item[1]));
+        cashFlowByMonths.forEach(item -> positives.add(item[1]));
 
         return positives.stream().max(Comparator.naturalOrder()).get();
     }
