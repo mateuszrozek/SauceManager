@@ -16,8 +16,8 @@ import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class AllTransactionsActivity extends AppCompatActivity {
 

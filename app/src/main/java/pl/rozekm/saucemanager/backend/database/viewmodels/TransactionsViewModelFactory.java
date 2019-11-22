@@ -1,4 +1,4 @@
-package pl.rozekm.saucemanager.frontend.viewmodels;
+package pl.rozekm.saucemanager.backend.database.viewmodels;
 
 import android.app.Application;
 

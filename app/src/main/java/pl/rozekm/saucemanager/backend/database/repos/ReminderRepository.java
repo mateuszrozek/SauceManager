@@ -7,7 +7,7 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import pl.rozekm.saucemanager.backend.database.daos.ReminderDao;
-import pl.rozekm.saucemanager.backend.database.databases.TransactionRoomDatabase;
+import pl.rozekm.saucemanager.backend.database.databases.SauceManagerRoomDatabase;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 
 public class ReminderRepository {
@@ -18,7 +18,7 @@ public class ReminderRepository {
 
 
     public ReminderRepository(Application application) {
-        TransactionRoomDatabase database = TransactionRoomDatabase.getDatabase(application);
+        SauceManagerRoomDatabase database = SauceManagerRoomDatabase.getDatabase(application);
         reminderDao = database.reminderDao();
         allReminders = reminderDao.getAllReminders();
     }

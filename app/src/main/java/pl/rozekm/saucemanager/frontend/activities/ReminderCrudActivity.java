@@ -22,7 +22,7 @@ import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.frontend.utils.adapters.FrequenciesAdapter;
-import pl.rozekm.saucemanager.frontend.viewmodels.RemindersViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.RemindersViewModel;
 
 public class ReminderCrudActivity extends AppCompatActivity {
 
@@ -94,7 +94,7 @@ public class ReminderCrudActivity extends AppCompatActivity {
 
     private void prepareLayoutForUpdate() {
         textInputLayoutTitleReminder.getEditText().setText(reminder.getTitle());
-        buttonUpdateAddReminder.setText("Update");
+        buttonUpdateAddReminder.setText("Aktualizuj");
         alarmDatePicker.updateDate(reminder.getDate().getYear(), reminder.getDate().getMonthValue(), reminder.getDate().getDayOfMonth());
         alarmTimePicker.setHour(reminder.getDate().getHour());
         alarmTimePicker.setMinute(reminder.getDate().getMinute());
@@ -125,7 +125,7 @@ public class ReminderCrudActivity extends AppCompatActivity {
     }
 
     private void prepareLayoutForAddition() {
-        buttonUpdateAddReminder.setText("Add");
+        buttonUpdateAddReminder.setText("Dodaj");
 
         buttonUpdateAddReminder.setOnClickListener(v -> {
             reminder.setTitle(textInputLayoutTitleReminder.getEditText().getText().toString());

@@ -48,8 +48,8 @@ import pl.rozekm.saucemanager.frontend.activities.AllTransactionsActivity;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class TransactionsFragment extends Fragment {
 

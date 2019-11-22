@@ -26,8 +26,8 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.frontend.utils.adapters.CategoriesAdapter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TypesAdapter;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class TransactionCrudActivity extends AppCompatActivity {
 

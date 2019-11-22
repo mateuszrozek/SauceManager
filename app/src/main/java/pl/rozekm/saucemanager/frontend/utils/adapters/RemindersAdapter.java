@@ -18,7 +18,7 @@ import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.frontend.activities.MainActivity;
 import pl.rozekm.saucemanager.frontend.activities.ReminderCrudActivity;
-import pl.rozekm.saucemanager.frontend.viewmodels.RemindersViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.RemindersViewModel;
 
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.RemindersViewHolder> {
     private List<Reminder> reminders;

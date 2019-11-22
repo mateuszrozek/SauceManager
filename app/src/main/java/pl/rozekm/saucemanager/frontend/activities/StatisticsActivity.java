@@ -56,8 +56,8 @@ import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class StatisticsActivity extends AppCompatActivity {
 
@@ -219,14 +219,14 @@ public class StatisticsActivity extends AppCompatActivity {
             values.add(new BarEntry(i, cashFlowByMonths.get(i)));
         }
 
-        BarDataSet set = new BarDataSet(values, "Cash flow through the months");
+        BarDataSet set = new BarDataSet(values, "Przepływ gotówki");
         set.setDrawIcons(false);
         set.setValueFormatter(new CustomFormatter());
         set.setValueTextSize(7f);
         set.setAxisDependency(YAxis.AxisDependency.RIGHT);
         set.setColors(Color.rgb(200, 0, 0), Color.rgb(0, 200, 0));
         set.setStackLabels(new String[]{
-                "Outcomes", "Incomes"
+                "Wydatki", "Przychody"
         });
 
         BarData data = new BarData(set);
@@ -273,13 +273,13 @@ public class StatisticsActivity extends AppCompatActivity {
         llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
         llXAxis.setTextSize(10f);
 
-        LimitLine ll1 = new LimitLine(Collections.max(accountStates), "Upper Limit");
+        LimitLine ll1 = new LimitLine(Collections.max(accountStates), "Najwyższa wartość");
         ll1.setLineWidth(4f);
         ll1.enableDashedLine(10f, 10f, 0f);
         ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
         ll1.setTextSize(10f);
 
-        LimitLine ll2 = new LimitLine(Collections.min(accountStates), "Lower Limit");
+        LimitLine ll2 = new LimitLine(Collections.min(accountStates), "Najniższa wartość");
         ll2.setLineWidth(4f);
         ll2.enableDashedLine(10f, 10f, 0f);
         ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
@@ -311,7 +311,7 @@ public class StatisticsActivity extends AppCompatActivity {
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
         } else {
-            set1 = new LineDataSet(values, "Balanse of the account");
+            set1 = new LineDataSet(values, "Bilans konta");
             set1.setDrawIcons(false);
             set1.setColor(Color.BLACK);
             set1.setCircleColor(Color.BLACK);
@@ -360,7 +360,7 @@ public class StatisticsActivity extends AppCompatActivity {
             entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "List of operations");
+        PieDataSet dataSet = new PieDataSet(entries, "Lista operacji");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
 
@@ -454,9 +454,9 @@ public class StatisticsActivity extends AppCompatActivity {
     private SpannableString generateCenterSpannableText(TransactionType type) {
         String text;
         if (type == TransactionType.OUTCOME) {
-            text = "Outcomes";
+            text = "Wydatki";
         } else {
-            text = "Incomes";
+            text = "Przychody";
         }
         SpannableString s = new SpannableString(text);
 

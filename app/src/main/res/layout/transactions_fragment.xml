@@ -196,7 +196,8 @@
                         android:button="@android:color/transparent"
                         android:checked="true"
                         android:text="@string/day"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/radioWeek"
@@ -210,7 +211,8 @@
                         android:button="@android:color/transparent"
                         android:checked="true"
                         android:text="@string/week"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/radioMonth"
@@ -224,7 +226,8 @@
                         android:button="@android:color/transparent"
                         android:checked="true"
                         android:text="@string/month"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
 
                     <RadioButton
                         android:id="@+id/radioYear"
@@ -238,7 +241,8 @@
                         android:button="@android:color/transparent"
                         android:checked="true"
                         android:text="@string/year"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textSize="12sp" />
                 </RadioGroup>
             </LinearLayout>
 

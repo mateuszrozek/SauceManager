@@ -7,7 +7,7 @@ import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import pl.rozekm.saucemanager.backend.database.daos.TransactionDao;
-import pl.rozekm.saucemanager.backend.database.databases.TransactionRoomDatabase;
+import pl.rozekm.saucemanager.backend.database.databases.SauceManagerRoomDatabase;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 
 public class TransactionRepository {
@@ -21,7 +21,7 @@ public class TransactionRepository {
     private LiveData<List<Transaction>> limitOutcomeTransactions;
 
     public TransactionRepository(Application application, Transaction transaction) {
-        TransactionRoomDatabase database = TransactionRoomDatabase.getDatabase(application);
+        SauceManagerRoomDatabase database = SauceManagerRoomDatabase.getDatabase(application);
         transactionDao = database.transactionDao();
         allTransactions = transactionDao.getAllTransactions();
         allOutcomeTransactions = transactionDao.getAllOutcomeTransactions();

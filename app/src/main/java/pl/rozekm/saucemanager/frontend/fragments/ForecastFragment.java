@@ -26,7 +26,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,8 +36,8 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.frontend.viewmodels.TransactionsViewModelFactory;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class ForecastFragment extends Fragment {
 
@@ -85,10 +84,14 @@ public class ForecastFragment extends Fragment {
         t2 = new TextView(getActivity());
         t3 = new TextView(getActivity());
         t4 = new TextView(getActivity());
-        t1.setText("Category");
-        t2.setText("Typically");
-        t3.setText("So far");
-        t4.setText("Remaining");
+//        t1.setText("Category");
+//        t2.setText("Typically");
+//        t3.setText("So far");
+//        t4.setText("Remaining");
+        t1.setText("Kategoria");
+        t2.setText("Zazwyczaj");
+        t3.setText("Do teraz");
+        t4.setText("Pozostało");
         t1.setTextSize(16);
         t2.setTextSize(16);
         t3.setTextSize(16);
@@ -252,15 +255,16 @@ public class ForecastFragment extends Fragment {
             calculateFutureAccount(allTransactions, month);
         });
 
-        transactionsViewModel.getAllTransactions().observe(ForecastFragment.this, new Observer<List<Transaction>>() {
-            @Override
-            public void onChanged(List<Transaction> transactions) {
-                allTransactions = transactions;
-                transactions.stream().filter(t -> t.getType() == TransactionType.OUTCOME).forEach(outcomeTransactions::add);
-                fillTableLayout(outcomeTransactions);
-                calculateFutureAccount(allTransactions, 1);
-            }
-        });
+        transactionsViewModel.getAllTransactions().observe(
+                ForecastFragment.this,
+                transactions -> {
+                    allTransactions = transactions;
+                    transactions.stream()
+                            .filter(t -> t.getType() == TransactionType.OUTCOME)
+                            .forEach(outcomeTransactions::add);
+                    fillTableLayout(outcomeTransactions);
+                    calculateFutureAccount(allTransactions, 1);
+                });
         return view;
     }
 

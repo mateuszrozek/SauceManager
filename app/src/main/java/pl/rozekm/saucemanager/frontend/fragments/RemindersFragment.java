@@ -37,7 +37,7 @@ import pl.rozekm.saucemanager.databinding.RemindersFragmentBinding;
 import pl.rozekm.saucemanager.frontend.activities.ReminderCrudActivity;
 import pl.rozekm.saucemanager.frontend.utils.AlarmReceiver;
 import pl.rozekm.saucemanager.frontend.utils.adapters.RemindersAdapter;
-import pl.rozekm.saucemanager.frontend.viewmodels.RemindersViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.RemindersViewModel;
 
 
 public class RemindersFragment extends Fragment {
