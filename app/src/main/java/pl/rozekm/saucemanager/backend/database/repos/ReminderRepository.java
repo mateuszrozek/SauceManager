@@ -28,22 +28,22 @@ public class ReminderRepository {
     }
 
     public void insertReminder(Reminder reminder) {
-        new insertAsyncTask(reminderDao).execute(reminder);
+        new InsertAsyncTask(reminderDao).execute(reminder);
     }
 
     public void deleteReminder(Reminder reminder) {
-        new deleteAsyncTask(reminderDao).execute(reminder);
+        new DeleteAsyncTask(reminderDao).execute(reminder);
     }
 
     public void updateReminder(Reminder reminder) {
-        new updateAsyncTask(reminderDao).execute(reminder);
+        new UpdateAsyncTask(reminderDao).execute(reminder);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Reminder, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Reminder, Void, Void> {
 
         private ReminderDao reminderDao;
 
-        insertAsyncTask(ReminderDao reminderDao) {
+        InsertAsyncTask(ReminderDao reminderDao) {
             this.reminderDao = reminderDao;
         }
 
@@ -54,11 +54,11 @@ public class ReminderRepository {
         }
     }
 
-    private static class deleteAsyncTask extends AsyncTask<Reminder, Void, Void> {
+    private static class DeleteAsyncTask extends AsyncTask<Reminder, Void, Void> {
 
         private ReminderDao reminderDao;
 
-        deleteAsyncTask(ReminderDao reminderDao) {
+        DeleteAsyncTask(ReminderDao reminderDao) {
             this.reminderDao = reminderDao;
         }
 
@@ -69,11 +69,11 @@ public class ReminderRepository {
         }
     }
 
-    private static class updateAsyncTask extends AsyncTask<Reminder, Void, Void> {
+    private static class UpdateAsyncTask extends AsyncTask<Reminder, Void, Void> {
 
         private ReminderDao reminderDao;
 
-        updateAsyncTask(ReminderDao reminderDao) {
+        UpdateAsyncTask(ReminderDao reminderDao) {
             this.reminderDao = reminderDao;
         }
 
