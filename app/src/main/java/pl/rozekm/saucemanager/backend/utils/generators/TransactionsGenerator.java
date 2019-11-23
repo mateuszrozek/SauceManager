@@ -94,21 +94,32 @@ public class TransactionsGenerator {
         }
     }
 
-    private void randomTransactions(double probability, int frequency, double amountMin, double amountMax, TransactionCategory category, int month, TransactionType type) {
-        Transaction transaction;
+    private void randomTransactions(
+            double probability,
+            int frequency,
+            double amountMin,
+            double amountMax,
+            TransactionCategory category,
+            int month,
+            TransactionType type) {
         for (int i = 0; i < frequency; i++) {
             if (random.nextDouble() < probability) {
                 Double amount = amountMin + (amountMax - amountMin) * random.nextDouble();
-                LocalDateTime date = LocalDateTime.of(2019, month, random.nextInt(27) + 1, random.nextInt(23), random.nextInt(55));
-                String title = givenUsingPlainJavaWhenGeneratingRandomStringBoundedThenCorrect(random.nextInt(3) + 1, random.nextInt(7) + 1);
-
-                transaction = new Transaction(date, amount, title, category, type);
-                transactions.add(transaction);
+                LocalDateTime date = LocalDateTime.of(
+                        2019,
+                        month,
+                        random.nextInt(27) + 1,
+                        random.nextInt(23),
+                        random.nextInt(55));
+                String title = generateTitles(
+                        random.nextInt(3) + 1,
+                        random.nextInt(7) + 1);
+                transactions.add(new Transaction(date, amount, title, category, type));
             }
         }
     }
 
-    private String givenUsingPlainJavaWhenGeneratingRandomStringBoundedThenCorrect(int numOfWords, int lengthOfWords) {
+    private String generateTitles(int numOfWords, int lengthOfWords) {
         StringBuilder result;
 
         int leftLimit = 65; // letter 'A'

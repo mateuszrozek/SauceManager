@@ -351,11 +351,8 @@ public class StatisticsActivity extends AppCompatActivity {
     private void setPolylinePieChartData(PieChart chart, TransactionType type, Frequency frequency) {
         List<Transaction> transactions = transactionsSorter.sortByType(allTransactions, type);
         ArrayList<PieEntry> entries = new ArrayList<>();
-
         List<Transaction> transactionsByFrequency = transactionsSorter.sortByFrequency(transactions, frequency);
-
         Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactionsByFrequency);
-
         for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
             entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
         }
@@ -363,7 +360,6 @@ public class StatisticsActivity extends AppCompatActivity {
         PieDataSet dataSet = new PieDataSet(entries, "Lista operacji");
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
-
         int[] outcomeColors = new int[]{
                 Color.parseColor("#660000"),
                 Color.parseColor("#CC0000"),
@@ -374,13 +370,11 @@ public class StatisticsActivity extends AppCompatActivity {
                 Color.parseColor("#CC6600"),
                 Color.parseColor("#663300")
         };
-
         int[] incomeColors = new int[]{
                 Color.parseColor("#4C9900"),
                 Color.parseColor("#80FF00"),
                 Color.parseColor("#B2FF66")
         };
-
         ArrayList<Integer> colors = new ArrayList<>();
         if (type == TransactionType.OUTCOME) {
             for (int i : outcomeColors) {
@@ -391,13 +385,10 @@ public class StatisticsActivity extends AppCompatActivity {
                 colors.add(i);
             }
         }
-
         dataSet.setColors(colors);
-
         dataSet.setValueLinePart1OffsetPercentage(80.f);
         dataSet.setValueLinePart1Length(0.3f);
         dataSet.setValueLinePart2Length(0.4f);
-
         dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
 
         PieData data = new PieData(dataSet);
@@ -405,9 +396,7 @@ public class StatisticsActivity extends AppCompatActivity {
         data.setValueTextSize(13f);
         data.setValueTextColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setData(data);
-
         chart.highlightValues(null);
-
         chart.invalidate();
 
     }
@@ -416,31 +405,21 @@ public class StatisticsActivity extends AppCompatActivity {
         chart.setUsePercentValues(true);
         chart.getDescription().setEnabled(false);
         chart.setExtraOffsets(5, 10, 5, 5);
-
         chart.setDragDecelerationFrictionCoef(0.95f);
-
         chart.setCenterText(generateCenterSpannableText(type));
-
         chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
-
         chart.setDrawHoleEnabled(true);
         chart.setHoleColor(getResources().getColor(R.color.colorScreenBackground));
-
         chart.setEntryLabelColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setEntryLabelTextSize(13f);
-
         chart.setTransparentCircleColor(Color.WHITE);
         chart.setTransparentCircleAlpha(110);
-
         chart.setHoleRadius(48f);
         chart.setTransparentCircleRadius(53f);
-
         chart.setDrawCenterText(true);
-
         chart.setRotationAngle(0);
         chart.setRotationEnabled(true);
         chart.setHighlightPerTapEnabled(true);
-
         chart.animateY(800, Easing.EaseInOutQuad);
 
         Legend l = chart.getLegend();
