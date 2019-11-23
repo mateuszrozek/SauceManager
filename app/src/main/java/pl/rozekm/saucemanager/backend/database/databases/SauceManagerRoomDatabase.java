@@ -36,16 +36,6 @@ public abstract class SauceManagerRoomDatabase extends RoomDatabase {
         }
         return instance;
     }
-    
-    
-
-    public static SauceManagerRoomDatabase getInstance() {
-        return instance;
-    }
-
-    public static void setInstance(SauceManagerRoomDatabase instance) {
-        SauceManagerRoomDatabase.instance = instance;
-    }
 
     private static RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
@@ -57,7 +47,7 @@ public abstract class SauceManagerRoomDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new PopulateDatabaseAsync(getInstance()).execute();
+            new PopulateDatabaseAsync(instance).execute();
         }
     };
 
@@ -69,19 +59,11 @@ public abstract class SauceManagerRoomDatabase extends RoomDatabase {
         TransactionsGenerator generator = new TransactionsGenerator(6);
         List<Transaction> transactions = generator.getTransactions();
 
-//        List<Transaction> transactions = Arrays.asList(
-//                new Transaction(LocalDateTime.now(), 1.1, "Zakupy nr 1", TransactionCategory.OTHER, TransactionType.OUTCOME),
-//                new Transaction(LocalDateTime.now(), 2.2, "Zakupy nr 2", TransactionCategory.OTHER, TransactionType.OUTCOME),
-//                new Transaction(LocalDateTime.now(), 3.3, "Zakupy nr 3", TransactionCategory.OTHER, TransactionType.OUTCOME),
-//                new Transaction(LocalDateTime.now(), 4.4, "Zakupy nr 4", TransactionCategory.OTHER, TransactionType.OUTCOME)
-//        );
-
-
         List<Reminder> reminders = Arrays.asList(
-                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 11, 12, 15, 00), true),
-                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019, 11, 11, 21, 37, 00), false),
-                new Reminder("PODATKI za 30 sekund", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 12, 21, 37, 00), true),
-                new Reminder("Nowe przypomnienie", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 21, 20, 20, 00), true)
+                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 11, 12, 15, 0), true),
+                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019, 11, 11, 21, 37, 0), false),
+                new Reminder("PODATKI za 30 sekund", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 12, 21, 37, 0), true),
+                new Reminder("Nowe przypomnienie", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 21, 20, 20, 0), true)
         );
 
         PopulateDatabaseAsync(SauceManagerRoomDatabase database) {
