@@ -51,22 +51,22 @@ public class TransactionRepository {
     }
 
     public void insertTransaction(Transaction transaction) {
-        new insertAsyncTask(transactionDao).execute(transaction);
+        new InsertAsyncTask(transactionDao).execute(transaction);
     }
 
     public void update(Transaction transaction){
-        new updateAsyncTask(transactionDao).execute(transaction);
+        new UpdateAsyncTask(transactionDao).execute(transaction);
     }
 
     public void delete(Transaction transaction){
-        new deleteAsyncTask(transactionDao).execute(transaction);
+        new DeleteAsyncTask(transactionDao).execute(transaction);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Transaction, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Transaction, Void, Void> {
 
         private TransactionDao transactionDao;
 
-        insertAsyncTask(TransactionDao transactionDao) {
+        InsertAsyncTask(TransactionDao transactionDao) {
             this.transactionDao = transactionDao;
         }
 
@@ -77,10 +77,10 @@ public class TransactionRepository {
         }
     }
 
-    private static class deleteAsyncTask extends AsyncTask<Transaction, Void, Void> {
+    private static class DeleteAsyncTask extends AsyncTask<Transaction, Void, Void> {
         private TransactionDao transactionDao;
 
-        deleteAsyncTask(TransactionDao transactionDao) {
+        DeleteAsyncTask(TransactionDao transactionDao) {
             this.transactionDao = transactionDao;
         }
 
@@ -91,10 +91,10 @@ public class TransactionRepository {
         }
     }
 
-    private static class updateAsyncTask extends AsyncTask<Transaction, Void, Void> {
+    private static class UpdateAsyncTask extends AsyncTask<Transaction, Void, Void> {
         private TransactionDao transactionDao;
 
-        updateAsyncTask(TransactionDao transactionDao) {
+        UpdateAsyncTask(TransactionDao transactionDao) {
             this.transactionDao = transactionDao;
         }
 
