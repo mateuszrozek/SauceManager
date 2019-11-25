@@ -16,6 +16,7 @@ public class TransactionsGenerator {
     private Random random;
 
     public TransactionsGenerator(int generationPeriod) {
+        random = new Random();
         generateTransactions(generationPeriod);
     }
 
@@ -25,7 +26,6 @@ public class TransactionsGenerator {
 
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
-        random = new Random();
     }
 
     private void generateTransactions(int generationPeriod) {
@@ -126,7 +126,7 @@ public class TransactionsGenerator {
         int rightLimit = 90; // letter 'Z'
         StringBuilder buffer = new StringBuilder(lengthOfWords);
         for (int i = 0; i < 1; i++) {
-            int randomLimitedInt = leftLimit + (random.nextInt() * (rightLimit - leftLimit + 1));
+            int randomLimitedInt = leftLimit + (int)(random.nextFloat() * (rightLimit - leftLimit + 1));
             buffer.append((char) randomLimitedInt);
         }
         result = new StringBuilder(buffer.toString());
@@ -135,7 +135,7 @@ public class TransactionsGenerator {
         int rightLimit3 = 122; // letter 'z'
         StringBuilder buffer3 = new StringBuilder(lengthOfWords);
         for (int i = 0; i < lengthOfWords; i++) {
-            int randomLimitedInt = leftLimit3 + (random.nextInt() * (rightLimit3 - leftLimit3 + 1));
+            int randomLimitedInt = leftLimit3 + (int)(random.nextFloat() * (rightLimit3 - leftLimit3 + 1));
             buffer3.append((char) randomLimitedInt);
         }
         String generatedString3 = buffer3.toString();
@@ -146,7 +146,7 @@ public class TransactionsGenerator {
             int rightLimit2 = 122; // letter 'z'
             StringBuilder buffer2 = new StringBuilder(lengthOfWords);
             for (int i = 0; i < lengthOfWords; i++) {
-                int randomLimitedInt = leftLimit2 + (random.nextInt() * (rightLimit2 - leftLimit2 + 1));
+                int randomLimitedInt = leftLimit2 + (int)(random.nextFloat() * (rightLimit2 - leftLimit2 + 1));
                 buffer2.append((char) randomLimitedInt);
             }
             String generatedString2 = buffer2.toString();
