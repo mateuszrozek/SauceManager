@@ -43,7 +43,7 @@ import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
-import pl.rozekm.saucemanager.databinding.TransactionsFragmentBinding;
+import pl.rozekm.saucemanager.databinding.MainFragmentBinding;
 import pl.rozekm.saucemanager.frontend.activities.AllTransactionsActivity;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
@@ -51,7 +51,7 @@ import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
-public class TransactionsFragment extends Fragment {
+public class MainFragment extends Fragment {
 
     private TransactionsViewModel transactionsViewModel;
 
@@ -180,8 +180,8 @@ public class TransactionsFragment extends Fragment {
     };
 
 
-    public static TransactionsFragment newInstance() {
-        return new TransactionsFragment();
+    public static MainFragment newInstance() {
+        return new MainFragment();
     }
 
 
@@ -198,7 +198,7 @@ public class TransactionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        TransactionsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.transactions_fragment, container, false);
+        MainFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
         View view = binding.getRoot();
         ButterKnife.bind(this, view);
 
@@ -244,7 +244,7 @@ public class TransactionsFragment extends Fragment {
 
     private void getRecentTransactions() {
 
-        transactionsViewModel.getLimitOutcomeTransactions().observe(TransactionsFragment.this, new Observer<List<Transaction>>() {
+        transactionsViewModel.getLimitOutcomeTransactions().observe(MainFragment.this, new Observer<List<Transaction>>() {
             @Override
             public void onChanged(List<Transaction> transactions) {
                 transactionsAdapter.setTransactions(transactions);

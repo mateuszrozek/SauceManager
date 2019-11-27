@@ -7,33 +7,37 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.frontend.fragments.ForecastFragment;
+import pl.rozekm.saucemanager.frontend.fragments.MainFragment;
+import pl.rozekm.saucemanager.frontend.fragments.OperationsFragment;
 import pl.rozekm.saucemanager.frontend.fragments.RemindersFragment;
-import pl.rozekm.saucemanager.frontend.fragments.TransactionsFragment;
+import pl.rozekm.saucemanager.frontend.fragments.StatisticsFragment;
 
-public class MainSectionsAdapter extends FragmentPagerAdapter
-{
-    private static final int TRANSACTIONS = 0;
-    private static final int REMINDERS = 1;
-    private static final int FORECAST = 2;
+public class MainSectionsAdapter extends FragmentPagerAdapter {
 
+    private static final int MAIN = 0;
+    private static final int TRANSACTIONS = 1;
+    private static final int STATISTICS = 2;
+    private static final int REMINDERS = 3;
+    private static final int FORECAST = 4;
 
-    private static final int[] TABS = new int[]{TRANSACTIONS, REMINDERS, FORECAST};
+    private static final int[] TABS = new int[]{MAIN, TRANSACTIONS, STATISTICS, REMINDERS, FORECAST};
 
     private Context mContext;
 
-    public MainSectionsAdapter(final Context context, final FragmentManager fm)
-    {
+    public MainSectionsAdapter(final Context context, final FragmentManager fm) {
         super(fm);
         mContext = context.getApplicationContext();
     }
 
     @Override
-    public Fragment getItem(int position)
-    {
-        switch (TABS[position])
-        {
+    public Fragment getItem(int position) {
+        switch (TABS[position]) {
+            case MAIN:
+                return MainFragment.newInstance();
             case TRANSACTIONS:
-                return TransactionsFragment.newInstance();
+                return OperationsFragment.newInstance();
+            case STATISTICS:
+                return StatisticsFragment.newInstance();
             case REMINDERS:
                 return RemindersFragment.newInstance();
             case FORECAST:
@@ -43,18 +47,19 @@ public class MainSectionsAdapter extends FragmentPagerAdapter
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return TABS.length;
     }
 
     @Override
-    public CharSequence getPageTitle(int position)
-    {
-        switch (TABS[position])
-        {
+    public CharSequence getPageTitle(int position) {
+        switch (TABS[position]) {
+            case MAIN:
+                return mContext.getResources().getString(R.string.main);
             case TRANSACTIONS:
                 return mContext.getResources().getString(R.string.transactions);
+            case STATISTICS:
+                return mContext.getResources().getString(R.string.statistics);
             case REMINDERS:
                 return mContext.getResources().getString(R.string.reminders);
             case FORECAST:

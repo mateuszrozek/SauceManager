@@ -64,15 +64,15 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:textColor="@color/colorScreenBackground"
             app:tabTextColor="@color/colorScreenBackground"
             app:tabSelectedTextColor="@color/sauceColor"
+            app:tabIndicatorColor="@color/colorPrimary"
             android:background="@color/colorPrimaryLight"
-            app:tabIndicator="@color/sauceColor"
-            app:tabIconTint="@color/sauceColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:pager="@{(pager)}">
+            app:tabMode="scrollable"
+            app:pager="@{(pager)}"
+            >
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
