@@ -51,17 +51,17 @@ public class RemindersFragment extends Fragment {
 
     private static RemindersFragment inst;
 
-    @BindView(R.id.ringLayout)
-    ConstraintLayout ringLayout;
-
-    @BindView(R.id.ringTitle)
-    TextView ringTitle;
-
-    @BindView(R.id.ringButton)
-    Button ringButton;
-
-    @BindView(R.id.alarmBell)
-    ImageView alarmBell;
+//    @BindView(R.id.ringLayout)
+//    ConstraintLayout ringLayout;
+//
+//    @BindView(R.id.ringTitle)
+//    TextView ringTitle;
+//
+//    @BindView(R.id.ringButton)
+//    Button ringButton;
+//
+//    @BindView(R.id.alarmBell)
+//    ImageView alarmBell;
 
     @BindView(R.id.addReminderImageButton)
     Button addReminderImageButton;
@@ -80,8 +80,8 @@ public class RemindersFragment extends Fragment {
         inst = this;
     }
 
-    @BindView(R.id.alarmText)
-    TextView alarmTextView;
+//    @BindView(R.id.alarmText)
+//    TextView alarmTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -170,7 +170,7 @@ public class RemindersFragment extends Fragment {
                 }
             } else {
                 alarmManager.cancel(pendingIntent);
-                setAlarmText("");
+//                setAlarmText("");
                 Log.d("Reminders fragment", "Alarm Off");
             }
         }
@@ -204,35 +204,35 @@ public class RemindersFragment extends Fragment {
         return (thenTime); //this is what you set as trigger point time i.e one month after
     }
 
-    public void setAlarmText(String alarmText) {
-        alarmTextView.setText(alarmText);
-    }
-
-    public void setAlarmScreen(String title, Ringtone ringtone) {
-
-        float elevation = ringLayout.getElevation();
-
-        ringLayout.setVisibility(View.VISIBLE);
-        ringTitle.setVisibility(View.VISIBLE);
-        ringButton.setVisibility(View.VISIBLE);
-        alarmBell.setVisibility(View.VISIBLE);
-        ringLayout.setElevation(20);
-        ringTitle.setElevation(20);
-        ringButton.setElevation(20);
-        alarmBell.setElevation(20);
-        ringTitle.setText(title);
-        ringtone.play();
-
-        ringButton.setOnClickListener(v -> {
-            ringLayout.setVisibility(View.GONE);
-            ringTitle.setVisibility(View.GONE);
-            ringButton.setVisibility(View.GONE);
-            alarmBell.setVisibility(View.GONE);
-            ringLayout.setElevation(elevation);
-            ringTitle.setElevation(elevation);
-            ringButton.setElevation(elevation);
-            alarmBell.setElevation(elevation);
-            ringtone.stop();
-        });
-    }
+//    public void setAlarmText(String alarmText) {
+//        alarmTextView.setText(alarmText);
+//    }
+//
+//    public void setAlarmScreen(String title, Ringtone ringtone) {
+//
+//        float elevation = ringLayout.getElevation();
+//
+//        ringLayout.setVisibility(View.VISIBLE);
+//        ringTitle.setVisibility(View.VISIBLE);
+//        ringButton.setVisibility(View.VISIBLE);
+//        alarmBell.setVisibility(View.VISIBLE);
+//        ringLayout.setElevation(20);
+//        ringTitle.setElevation(20);
+//        ringButton.setElevation(20);
+//        alarmBell.setElevation(20);
+//        ringTitle.setText(title);
+//        ringtone.play();
+//
+//        ringButton.setOnClickListener(v -> {
+//            ringLayout.setVisibility(View.GONE);
+//            ringTitle.setVisibility(View.GONE);
+//            ringButton.setVisibility(View.GONE);
+//            alarmBell.setVisibility(View.GONE);
+//            ringLayout.setElevation(elevation);
+//            ringTitle.setElevation(elevation);
+//            ringButton.setElevation(elevation);
+//            alarmBell.setElevation(elevation);
+//            ringtone.stop();
+//        });
+//    }
 }
