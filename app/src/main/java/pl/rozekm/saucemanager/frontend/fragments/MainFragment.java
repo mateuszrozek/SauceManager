@@ -67,20 +67,20 @@ public class MainFragment extends Fragment {
     @BindView(R.id.chartOutcome)
     public BarChart chartOutcome;
 
-    @BindView(R.id.chartIncome)
-    public BarChart chartIncome;
+//    @BindView(R.id.chartIncome)
+//    public BarChart chartIncome;
 
-    @BindView(R.id.editTextAmount)
-    TextInputLayout editTextAmount;
+//    @BindView(R.id.editTextAmount)
+//    TextInputLayout editTextAmount;
 
-    @BindView(R.id.editTextTitle)
-    TextInputLayout editTextTitle;
+//    @BindView(R.id.editTextTitle)
+//    TextInputLayout editTextTitle;
 
     @BindView(R.id.textViewOutcomeChartTitle)
     TextView textViewOutcomeChartTitle;
 
-    @BindView(R.id.textViewIncomeChartTitle)
-    TextView textViewIncomeChartTitle;
+//    @BindView(R.id.textViewIncomeChartTitle)
+//    TextView textViewIncomeChartTitle;
 
 
     @BindView(R.id.imageViewClothes)
@@ -195,7 +195,7 @@ public class MainFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
-        setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
+//        setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
 
         radioDay.setOnClickListener(this::onRadioButtonClickedTransactions);
         radioWeek.setOnClickListener(this::onRadioButtonClickedTransactions);
@@ -238,43 +238,43 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        addTransactionImageButton.setOnClickListener(v -> {
-            if (isAmountValid() && isCategoryValid()) {
-                Transaction newTransaction = new Transaction(
-                        Double.valueOf(editTextAmount.getEditText().getText().toString()),
-                        classTransaction.getCategory(),
-                        classTransaction.getType()
-                );
-                if (isTitleValid()) {
-                    newTransaction.setTitle(editTextTitle.getEditText().getText().toString());
-                }
-                System.out.println(DebugDB.getAddressLog());
-                transactionsViewModel.insert(newTransaction);
-                editTextAmount.getEditText().setText("");
-                editTextTitle.getEditText().setText("");
-            }
-        });
+//        addTransactionImageButton.setOnClickListener(v -> {
+//            if (isAmountValid() && isCategoryValid()) {
+//                Transaction newTransaction = new Transaction(
+//                        Double.valueOf(editTextAmount.getEditText().getText().toString()),
+//                        classTransaction.getCategory(),
+//                        classTransaction.getType()
+//                );
+//                if (isTitleValid()) {
+//                    newTransaction.setTitle(editTextTitle.getEditText().getText().toString());
+//                }
+//                System.out.println(DebugDB.getAddressLog());
+//                transactionsViewModel.insert(newTransaction);
+//                editTextAmount.getEditText().setText("");
+//                editTextTitle.getEditText().setText("");
+//            }
+//        });
     }
 
-    private boolean isTitleValid() {
-        boolean result = false;
-        if (editTextTitle.getEditText() != null) {
-            result = !TextUtils.isEmpty(editTextTitle.getEditText().getText());
-        }
-        return result;
-    }
-
-    private boolean isCategoryValid() {
-        return classTransaction.getCategory() != null;
-    }
-
-    private boolean isAmountValid() {
-        boolean result = false;
-        if (editTextAmount.getEditText() != null) {
-            result = !TextUtils.isEmpty(editTextAmount.getEditText().getText());
-        }
-        return result;
-    }
+//    private boolean isTitleValid() {
+//        boolean result = false;
+//        if (editTextTitle.getEditText() != null) {
+//            result = !TextUtils.isEmpty(editTextTitle.getEditText().getText());
+//        }
+//        return result;
+//    }
+//
+//    private boolean isCategoryValid() {
+//        return classTransaction.getCategory() != null;
+//    }
+//
+//    private boolean isAmountValid() {
+//        boolean result = false;
+//        if (editTextAmount.getEditText() != null) {
+//            result = !TextUtils.isEmpty(editTextAmount.getEditText().getText());
+//        }
+//        return result;
+//    }
 
     private void applyChartSettings(BarChart chart) {
         chart.setNoDataText("No data available yet");
@@ -527,25 +527,25 @@ public class MainFragment extends Fragment {
             case R.id.radioDay:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.DAILY);
-                    setChart(chartIncome, TransactionType.INCOME, Frequency.DAILY);
+//                    setChart(chartIncome, TransactionType.INCOME, Frequency.DAILY);
                 }
                 break;
             case R.id.radioWeek:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.WEEKLY);
-                    setChart(chartIncome, TransactionType.INCOME, Frequency.WEEKLY);
+//                    setChart(chartIncome, TransactionType.INCOME, Frequency.WEEKLY);
                 }
                 break;
             case R.id.radioMonth:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.MONTHLY);
-                    setChart(chartIncome, TransactionType.INCOME, Frequency.MONTHLY);
+//                    setChart(chartIncome, TransactionType.INCOME, Frequency.MONTHLY);
                 }
                 break;
             case R.id.radioYear:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
-                    setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
+//                    setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
                 }
                 break;
         }

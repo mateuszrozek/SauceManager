@@ -139,34 +139,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/textViewOutcomeChartTitle" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/incomeConstraintLayout"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/textViewIncomeChartTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/incomes"
-                        android:textSize="20sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.github.mikephil.charting.charts.BarChart
-                        android:id="@+id/chartIncome"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewIncomeChartTitle" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
 
@@ -246,57 +218,46 @@
                 </RadioGroup>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewClickInfoChart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/click_chart_to_see_detailed_statistics"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutOutcomes" />
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/editTextAmount"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/linearLayoutSpecifyRange">-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editTextAmount"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewClickInfoChart">
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="@string/amount"-->
+<!--                    android:inputType="numberDecimal"-->
+<!--                    android:textSize="26sp" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/amount"
-                    android:inputType="numberDecimal"
-                    android:textSize="26sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/editTextTitle"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/editTextTitle"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+<!--                android:layout_marginEnd="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editTextAmount">-->
 
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextAmount">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/title_optional"
-                    android:inputType="text"
-                    android:textSize="20sp" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="@string/title_optional"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textSize="20sp" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <LinearLayout
                 android:id="@+id/linearLayoutIncomes"
@@ -347,7 +308,7 @@
                 android:text="@string/add_transaction"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintsLayoutTitle"
@@ -380,7 +341,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="112dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -393,3 +354,403 @@
 
     </ScrollView>
 </layout>
+
+
+
+
+
+<!--<layout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto">-->
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:fillViewport="true">-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/colorScreenBackground"-->
+<!--            android:minWidth="80dp">-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayoutOutcomes"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="450dp"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewClothes"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/clothessvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewEntertaiment"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/entertainmentsvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewFood"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/foodsvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewHealth"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/healthsvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewHouse"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/housesvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewSport"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/sportsvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewTransport"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    android:elevation="5dp"-->
+<!--                    app:srcCompat="@drawable/transportsvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewOther"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    android:elevation="5dp"-->
+<!--                    app:srcCompat="@drawable/othersvg" />-->
+
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayout"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:baselineAligned="false"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintBottom_toBottomOf="@+id/linearLayoutOutcomes"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/linearLayoutIncomes"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/linearLayoutOutcomes"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/linearLayoutOutcomes">-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/outcomeConstraintLayout"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/textViewOutcomeChartTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/outcomes"-->
+<!--                        android:textSize="20sp"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                    <com.github.mikephil.charting.charts.BarChart-->
+<!--                        android:id="@+id/chartOutcome"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/textViewOutcomeChartTitle" />-->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/incomeConstraintLayout"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/textViewIncomeChartTitle"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/incomes"-->
+<!--                        android:textSize="20sp"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                    <com.github.mikephil.charting.charts.BarChart-->
+<!--                        android:id="@+id/chartIncome"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/textViewIncomeChartTitle" />-->
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayoutSpecifyRange"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="225dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/linearLayoutIncomes">-->
+
+<!--                <RadioGroup-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:padding="5dp">-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioDay"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/day"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioWeek"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/week"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioMonth"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/month"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textSize="12sp" />-->
+
+<!--                    <RadioButton-->
+<!--                        android:id="@+id/radioYear"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="0dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/myradiobuttonbackground"-->
+<!--                        android:button="@android:color/transparent"-->
+<!--                        android:checked="true"-->
+<!--                        android:text="@string/year"-->
+<!--                        android:textAlignment="center"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </RadioGroup>-->
+<!--            </LinearLayout>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/textViewClickInfoChart"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:text="@string/click_chart_to_see_detailed_statistics"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/linearLayoutOutcomes" />-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/editTextAmount"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textViewClickInfoChart">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="@string/amount"-->
+<!--                    android:inputType="numberDecimal"-->
+<!--                    android:textSize="26sp" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/editTextTitle"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:layout_marginTop="8dp"-->
+
+<!--                android:layout_marginEnd="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editTextAmount">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="@string/title_optional"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textSize="20sp" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/linearLayoutIncomes"-->
+<!--                android:layout_width="60dp"-->
+<!--                android:layout_height="225dp"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/linearLayoutOutcomes">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewInvestments"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/investmentsvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewSalary"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/salarysvg" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageViewSavings"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:contentDescription="@string/this_is_an_image_of_category"-->
+<!--                    app:srcCompat="@drawable/savingssvg" />-->
+<!--            </LinearLayout>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/addTransactionImageButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/b"-->
+<!--                android:drawableEnd="@drawable/addsvg"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="15dp"-->
+<!--                android:text="@string/add_transaction"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />-->
+
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/constraintsLayoutTitle"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:background="@color/colorPrimaryLight"-->
+<!--                android:padding="5dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/addTransactionImageButton">-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/lastOperationsTextView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="32dp"-->
+<!--                    android:text="@string/last_operations"-->
+<!--                    android:textColor="@color/sauceColor"-->
+<!--                    android:textSize="26sp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/transactionsRecyclerView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:layout_marginEnd="112dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/constraintsLayoutTitle">-->
+<!--            </androidx.recyclerview.widget.RecyclerView>-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--    </ScrollView>-->
+<!--</layout>-->
