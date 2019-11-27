@@ -1,6 +1,5 @@
 package pl.rozekm.saucemanager.frontend.fragments;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +41,11 @@ import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 import pl.rozekm.saucemanager.databinding.MainFragmentBinding;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
-import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class MainFragment extends Fragment {
 
