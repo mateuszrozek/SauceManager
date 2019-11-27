@@ -44,7 +44,6 @@ import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.MainFragmentBinding;
-import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
@@ -175,7 +174,6 @@ public class MainFragment extends Fragment {
             Color.parseColor("#B2FF66")
     };
 
-
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -200,13 +198,6 @@ public class MainFragment extends Fragment {
 
         setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
         setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
-
-        linearLayout.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), StatisticsActivity.class);
-
-            intent.putExtra("transactions", (Serializable) transactionsViewModel.getAllTransactions().getValue());
-            startActivity(intent);
-        });
 
         radioDay.setOnClickListener(this::onRadioButtonClickedTransactions);
         radioWeek.setOnClickListener(this::onRadioButtonClickedTransactions);

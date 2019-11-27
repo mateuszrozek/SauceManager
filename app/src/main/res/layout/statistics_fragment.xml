@@ -1,14 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".frontend.fragments.StatisticsFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/colorScreenBackground"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textViewStatistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/operations_statistics"
+            android:textAlignment="center"
+            android:textSize="26sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChartOutcomes"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/pieChartSpecifyRange"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pieChartOutcomes">
+
+                    <RadioButton
+                        android:id="@+id/pieChartRadioButtonDay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/heightOfRadioButton"
+                        android:layout_marginStart="@dimen/marginOfRadioButton"
+                        android:layout_marginEnd="@dimen/marginOfRadioButton"
+                        android:layout_weight="1"
+                        android:background="@drawable/myradiobuttonbackground"
+                        android:button="@android:color/transparent"
+                        android:onClick="onRadioButtonClickedStats"
+                        android:text="@string/day"
+                        android:textAlignment="center" />
+
+                    <RadioButton
+                        android:id="@+id/pieChartRadioButtonWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/heightOfRadioButton"
+                        android:layout_marginStart="@dimen/marginOfRadioButton"
+                        android:layout_marginEnd="@dimen/marginOfRadioButton"
+                        android:layout_weight="1"
+                        android:background="@drawable/myradiobuttonbackground"
+                        android:button="@android:color/transparent"
+                        android:onClick="onRadioButtonClickedStats"
+                        android:text="@string/week"
+                        android:textAlignment="center" />
+
+                    <RadioButton
+                        android:id="@+id/pieChartRadioButtonMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/heightOfRadioButton"
+                        android:layout_marginStart="@dimen/marginOfRadioButton"
+                        android:layout_marginEnd="@dimen/marginOfRadioButton"
+                        android:layout_weight="1"
+                        android:background="@drawable/myradiobuttonbackground"
+                        android:button="@android:color/transparent"
+                        android:onClick="onRadioButtonClickedStats"
+                        android:text="@string/month"
+                        android:textAlignment="center" />
+
+                    <RadioButton
+                        android:id="@+id/pieChartRadioButtonYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/heightOfRadioButton"
+                        android:layout_marginStart="@dimen/marginOfRadioButton"
+                        android:layout_marginEnd="@dimen/marginOfRadioButton"
+                        android:layout_weight="1"
+                        android:background="@drawable/myradiobuttonbackground"
+                        android:button="@android:color/transparent"
+                        android:checked="true"
+                        android:onClick="onRadioButtonClickedStats"
+                        android:text="@string/year"
+                        android:textAlignment="center" />
+                </RadioGroup>
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChartIncomes"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pieChartSpecifyRange" />
+
+                <TextView
+                    android:id="@+id/textViewAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/balance_of_the_account"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/pieChartIncomes" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChartAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAccount" />
+
+                <TextView
+                    android:id="@+id/textViewCashFlow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/cash_flow"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lineChartAccount" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChartCashFlow"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:minWidth="100dp"
+                    android:minHeight="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCashFlow" />
+
+                <!--            <TextView-->
+                <!--                android:id="@+id/textViewCashFlowOutcomes"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="32dp"-->
+                <!--                android:text="Table of the Cash Flow"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@+id/barChartCashFlow" />-->
+
+                <!--            <Spinner-->
+                <!--                android:id="@+id/spinnerCashFlowOutcomes"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginStart="32dp"-->
+                <!--                android:layout_marginEnd="32dp"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@+id/textViewCashFlowOutcomes" />-->
+
+                <!--            <TableLayout-->
+                <!--                android:id="@+id/tableLayoutOutcomes"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginStart="16dp"-->
+                <!--                android:layout_marginEnd="16dp"-->
+                <!--                android:minWidth="100dp"-->
+                <!--                android:minHeight="100dp"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@+id/spinnerCashFlowOutcomes" />-->
+
+                <!--            <TextView-->
+                <!--                android:id="@+id/textViewCashFlowIncomes"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginTop="32dp"-->
+                <!--                android:text="Table of the Cash Flow"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@+id/tableLayoutOutcomes" />-->
+
+                <!--            <Spinner-->
+                <!--                android:id="@+id/spinnerCashFlowIncomes"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginStart="32dp"-->
+                <!--                android:layout_marginEnd="32dp"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@+id/textViewCashFlowIncomes" />-->
+
+                <!--            <TableLayout-->
+                <!--                android:id="@+id/tableLayoutIncomes"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_marginStart="16dp"-->
+                <!--                android:layout_marginEnd="16dp"-->
+                <!--                android:minWidth="100dp"-->
+                <!--                android:minHeight="100dp"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintStart_toStartOf="parent"-->
+                <!--                app:layout_constraintTop_toBottomOf="@+id/spinnerCashFlowIncomes" />-->
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</layout>

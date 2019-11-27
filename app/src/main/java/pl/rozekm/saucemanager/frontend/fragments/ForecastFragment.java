@@ -34,7 +34,6 @@ import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
-import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
@@ -240,7 +239,7 @@ public class ForecastFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         tableLayout = view.findViewById(R.id.tableLayout);
-        textViewNOW.setText(convertFloatToCash(StatisticsActivity.INITIAL_VALUE));
+        textViewNOW.setText(convertFloatToCash(StatisticsFragment.INITIAL_VALUE));
 
         ArrayList<String> spinnerArray = new ArrayList<>(Arrays.asList("1 miesiąc", "2 miesiące", "3 miesiące", "4 miesiące"));
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
@@ -272,7 +271,7 @@ public class ForecastFragment extends Fragment {
 
         float sum = 0.0f;
         float value = 0.0f;
-        float init = StatisticsActivity.INITIAL_VALUE;
+        float init = StatisticsFragment.INITIAL_VALUE;
         LocalDateTime now = LocalDateTime.now();
         Map<Month, List<Transaction>> groupedByMonth = transactions.stream().collect(Collectors.groupingBy(t -> t.getDate().getMonth()));
         int months = groupedByMonth.size();
