@@ -44,7 +44,6 @@ import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.MainFragmentBinding;
-import pl.rozekm.saucemanager.frontend.activities.AllTransactionsActivity;
 import pl.rozekm.saucemanager.frontend.activities.StatisticsActivity;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
@@ -122,9 +121,6 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.linearLayout)
     LinearLayout linearLayout;
-
-    @BindView(R.id.seeAllTransactionImageButton)
-    Button seeAllTransactionImageButton;
 
     @BindView(R.id.radioDay)
     RadioButton radioDay;
@@ -209,10 +205,6 @@ public class MainFragment extends Fragment {
             Intent intent = new Intent(getActivity(), StatisticsActivity.class);
 
             intent.putExtra("transactions", (Serializable) transactionsViewModel.getAllTransactions().getValue());
-            startActivity(intent);
-        });
-        seeAllTransactionImageButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), AllTransactionsActivity.class);
             startActivity(intent);
         });
 
