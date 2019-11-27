@@ -8,59 +8,73 @@
     card_view:cardCornerRadius="5dp"
     card_view:cardElevation="5dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="2dp">
 
         <TextView
             android:id="@+id/transaction_item_amount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:padding="2dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start"
             android:text="Amount"
             android:textColor="#333"
-            android:textSize="20sp" />
+            android:textSize="22sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toStartOf="@+id/transaction_item_title"
+            card_view:layout_constraintHorizontal_bias="0.08"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/transaction_item_title"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:padding="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="end"
+            android:maxWidth="200dp"
             android:text="Title"
             android:textColor="#333"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/transaction_item_category" />
 
 
         <TextView
             android:id="@+id/transaction_item_category"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:padding="2dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="5dp"
+            android:gravity="end"
             android:text="Category"
             android:textColor="#333"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
             android:id="@+id/transaction_item_date"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:padding="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="end"
             android:text="Date"
             android:textAlignment="viewEnd"
             android:textColor="#333"
-            android:textSize="14sp" />
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/transaction_item_title" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
