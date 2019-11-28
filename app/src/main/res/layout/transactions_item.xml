@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    card_view:cardBackgroundColor="#FEFEFE"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="5dp">
+    android:background="@drawable/layout_background"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/layout_background"
         android:padding="2dp">
 
         <TextView
@@ -22,7 +23,7 @@
             android:layout_marginTop="4dp"
             android:gravity="start"
             android:text="Amount"
-            android:textColor="#333"
+            android:textColor="@color/colorPrimary"
             android:textSize="22sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toStartOf="@+id/transaction_item_title"
@@ -39,7 +40,7 @@
             android:gravity="end"
             android:maxWidth="200dp"
             android:text="Title"
-            android:textColor="#333"
+            android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/transaction_item_category" />
@@ -53,7 +54,7 @@
             android:layout_marginEnd="5dp"
             android:gravity="end"
             android:text="Category"
-            android:textColor="#333"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +70,7 @@
             android:gravity="end"
             android:text="Date"
             android:textAlignment="viewEnd"
-            android:textColor="#333"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"

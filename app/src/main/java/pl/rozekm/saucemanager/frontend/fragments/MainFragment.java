@@ -1,5 +1,6 @@
 package pl.rozekm.saucemanager.frontend.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -44,6 +45,7 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 import pl.rozekm.saucemanager.databinding.MainFragmentBinding;
+import pl.rozekm.saucemanager.frontend.activities.TransactionCrudActivity;
 import pl.rozekm.saucemanager.frontend.utils.TransactionsSorter;
 import pl.rozekm.saucemanager.frontend.utils.adapters.TransactionsAdapter;
 
@@ -238,22 +240,7 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        addTransactionImageButton.setOnClickListener(v -> {
-//            if (isAmountValid() && isCategoryValid()) {
-//                Transaction newTransaction = new Transaction(
-//                        Double.valueOf(editTextAmount.getEditText().getText().toString()),
-//                        classTransaction.getCategory(),
-//                        classTransaction.getType()
-//                );
-//                if (isTitleValid()) {
-//                    newTransaction.setTitle(editTextTitle.getEditText().getText().toString());
-//                }
-//                System.out.println(DebugDB.getAddressLog());
-//                transactionsViewModel.insert(newTransaction);
-//                editTextAmount.getEditText().setText("");
-//                editTextTitle.getEditText().setText("");
-//            }
-//        });
+        addTransactionImageButton.setOnClickListener(v -> startActivity(new Intent(getContext(), TransactionCrudActivity.class)));
     }
 
 //    private boolean isTitleValid() {
@@ -505,7 +492,8 @@ public class MainFragment extends Fragment {
         } else {
             barDataSet.setColors(incomeColors);
         }
-        barDataSet.setDrawValues(false);
+        barDataSet.setDrawValues(true);
+        barDataSet.setValueTextSize(7f);
         barData = new BarData(barDataSet);
         barData.notifyDataChanged();
         chart.setData(barData);

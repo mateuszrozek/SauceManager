@@ -64,10 +64,10 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            app:tabTextColor="@color/colorScreenBackground"
+            app:tabTextColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/sauceColor"
             app:tabIndicatorColor="@color/colorPrimary"
-            android:background="@color/colorPrimaryLight"
+            android:background="@drawable/layout_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabMode="scrollable"

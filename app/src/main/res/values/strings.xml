@@ -34,14 +34,16 @@
     <string name="click_to_disable_alarm">Naciśnij, by wyłączyć alarm</string>
     <string name="add_update">Dodaj/Aktualizuj</string>
     <string name="delete">Usuń</string>
-    <string name="type_in_new_title_to_update">Wpisz nowy zaktualizowany tytuł</string>
     <string name="all_transactions">Wszystkie operacje</string>
     <string name="operations_statistics">Statystyki</string>
     <string name="operation_s_crud_screen">Ekran CRUD operacji</string>
     <string name="reminder_s_crud_screen">Ekran CRUD przypomnień</string>
     <string name="update">Aktualizuj</string>
     <string name="_2019_10_17_23_23_12">2019-10-17 23:23:12</string>
-    <string name="type_in_new_amount_to_update">Wpisz nową zaktualizowaną kwotę</string>
+    <string name="type_in_new_title_to_update">Wpisz nowy tytuł (opcjonalny)</string>
+    <string name="type_in_new_amount_to_update">Wpisz nową kwotę</string>
+    <string name="type_in_title_to_update">Wpisz tytuł (opcjonalny)</string>
+    <string name="type_in_amount_to_update">Wpisz kwotę</string>
     <string name="balance_of_the_account">Bilans konta</string>
     <string name="cash_flow">Przepływ gotówki</string>
 
@@ -49,6 +51,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="main">GŁÓWNA</string>
     <string name="statistics">STATYSTYKI</string>
+    <string name="update_button">Aktualizuj</string>
+    <string name="add_button">Dodaj</string>
 
 
     <!--    <string name="app_name">SAUCE Manager</string>-->

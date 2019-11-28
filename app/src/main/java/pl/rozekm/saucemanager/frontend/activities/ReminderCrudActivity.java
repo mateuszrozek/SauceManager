@@ -94,7 +94,7 @@ public class ReminderCrudActivity extends AppCompatActivity {
 
     private void prepareLayoutForUpdate() {
         textInputLayoutTitleReminder.getEditText().setText(reminder.getTitle());
-        buttonUpdateAddReminder.setText("Aktualizuj");
+        buttonUpdateAddReminder.setText(R.string.update_button);
         alarmDatePicker.updateDate(reminder.getDate().getYear(), reminder.getDate().getMonthValue(), reminder.getDate().getDayOfMonth());
         alarmTimePicker.setHour(reminder.getDate().getHour());
         alarmTimePicker.setMinute(reminder.getDate().getMinute());
@@ -125,7 +125,7 @@ public class ReminderCrudActivity extends AppCompatActivity {
     }
 
     private void prepareLayoutForAddition() {
-        buttonUpdateAddReminder.setText("Dodaj");
+        buttonUpdateAddReminder.setText(getString(R.string.add_button));
 
         buttonUpdateAddReminder.setOnClickListener(v -> {
             reminder.setTitle(textInputLayoutTitleReminder.getEditText().getText().toString());
