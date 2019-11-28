@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -55,9 +56,7 @@ public class TransactionCrudActivity extends AppCompatActivity {
     private TypesAdapter typesAdapter;
     private CategoriesAdapter outcomesAdapter;
     private CategoriesAdapter incomesAdapter;
-
     private Transaction transaction;
-
     private TransactionsViewModel transactionsViewModel;
 
     @Override
@@ -97,24 +96,7 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
         if (transaction != null) {
             prepareLayoutForUpdate();
-            TransactionType type = transaction.getType();
-            TransactionCategory category = transaction.getCategory();
-            textInputLayoutTitle.getEditText().setText(transaction.getTitle());
-            textViewDate.setText(transaction.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
-            textInputLayoutAmount.getEditText().setText(String.format(Locale.forLanguageTag("PL"), "%5.2f", transaction.getAmount()));
 
-            int spinnerTypePosition = typesAdapter.getPosition(type);
-            spinnerType.setSelection(spinnerTypePosition);
-
-            if (type == TransactionType.OUTCOME) {
-                spinnerCategory.setAdapter(outcomesAdapter);
-                int spinnerCatPosition = outcomesAdapter.getPosition(category);
-                spinnerCategory.setSelection(spinnerCatPosition, true);
-            } else {
-                spinnerCategory.setAdapter(incomesAdapter);
-                int spinnerCatPosition = incomesAdapter.getPosition(category);
-                spinnerCategory.setSelection(spinnerCatPosition, true);
-            }
         } else {
             transaction = new Transaction();
             prepareLayoutForAddition();
@@ -150,50 +132,63 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-
-
     }
 
 
     private void prepareLayoutForUpdate() {
         buttonUpdate.setText(getString(R.string.update_button));
-        textInputLayoutAmount.getEditText().setText(transaction.getTitle());
-        textInputLayoutTitle.getEditText().setText(transaction.getAmount().toString());
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
             transaction.setAmount(getDoubleFromString(textInputLayoutAmount.getEditText().getText().toString()));
             transactionsViewModel.update(transaction);
             onBackPressed();
-            Toast.makeText(TransactionCrudActivity.this, "updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransactionCrudActivity.this, "Operacja zaktualizowana", Toast.LENGTH_SHORT).show();
         });
 
         buttonDelete.setOnClickListener(v -> {
             transactionsViewModel.delete(transaction);
             onBackPressed();
-            Toast.makeText(TransactionCrudActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransactionCrudActivity.this, "Operacja usunięta", Toast.LENGTH_SHORT).show();
         });
+
+        TransactionType type = transaction.getType();
+        TransactionCategory category = transaction.getCategory();
+        textInputLayoutTitle.getEditText().setText(transaction.getTitle());
+        textViewDate.setText(transaction.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
+        textInputLayoutAmount.getEditText().setText(String.format(Locale.forLanguageTag("PL"), "%5.2f", transaction.getAmount()));
+
+        int spinnerTypePosition = typesAdapter.getPosition(type);
+        spinnerType.setSelection(spinnerTypePosition);
+
+        if (type == TransactionType.OUTCOME) {
+            spinnerCategory.setAdapter(outcomesAdapter);
+            int spinnerCatPosition = outcomesAdapter.getPosition(category);
+            spinnerCategory.setSelection(spinnerCatPosition, true);
+        } else {
+            spinnerCategory.setAdapter(incomesAdapter);
+            int spinnerCatPosition = incomesAdapter.getPosition(category);
+            spinnerCategory.setSelection(spinnerCatPosition, true);
+        }
     }
 
     private void prepareLayoutForAddition() {
         buttonUpdate.setText(getString(R.string.add_button));
-        textInputLayoutAmount.getEditText().setHint(getString(R.string.type_in_amount_to_update));
-        textInputLayoutTitle.getEditText().setHint(getString(R.string.type_in_title_to_update));
+        textViewDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
             transaction.setAmount(getDoubleFromString(textInputLayoutAmount.getEditText().getText().toString()));
             transactionsViewModel.insert(transaction);
             onBackPressed();
-            Toast.makeText(TransactionCrudActivity.this, "updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransactionCrudActivity.this, "Operacja dodana", Toast.LENGTH_SHORT).show();
         });
 
         buttonDelete.setOnClickListener(v -> {
             onBackPressed();
-            Toast.makeText(TransactionCrudActivity.this, "deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TransactionCrudActivity.this, "Powrót do menu głównego", Toast.LENGTH_SHORT).show();
         });
     }
 
