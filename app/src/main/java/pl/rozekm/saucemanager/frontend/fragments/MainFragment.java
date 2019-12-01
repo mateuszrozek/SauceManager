@@ -96,11 +96,11 @@ public class MainFragment extends Fragment {
     @BindView(R.id.radioYear)
     RadioButton radioYear;
 
-    RecyclerView transactionsRecyclerView;
+    private RecyclerView transactionsRecyclerView;
 
     private TransactionsAdapter transactionsAdapter;
 
-    TransactionsSorter transactionsSorter;
+    private TransactionsSorter transactionsSorter;
 
     private int[] outcomeColors = new int[]{
             Color.parseColor("#660000"),
@@ -153,12 +153,9 @@ public class MainFragment extends Fragment {
 
     private void getRecentTransactions() {
 
-        transactionsViewModel.getLimitOutcomeTransactions().observe(MainFragment.this, new Observer<List<Transaction>>() {
-            @Override
-            public void onChanged(List<Transaction> transactions) {
-                transactionsAdapter.setTransactions(transactions);
-                transactionsAdapter.notifyDataSetChanged();
-            }
+        transactionsViewModel.getLimitOutcomeTransactions().observe(MainFragment.this, transactions -> {
+            transactionsAdapter.setTransactions(transactions);
+            transactionsAdapter.notifyDataSetChanged();
         });
     }
 
