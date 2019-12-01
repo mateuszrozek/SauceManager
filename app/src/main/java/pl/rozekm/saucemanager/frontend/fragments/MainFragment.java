@@ -102,17 +102,6 @@ public class MainFragment extends Fragment {
 
     TransactionsSorter transactionsSorter;
 
-    private int[] imageViewsOutcomeTransactions = new int[]{
-            R.id.imageViewClothes,
-            R.id.imageViewEntertainment,
-            R.id.imageViewFood,
-            R.id.imageViewHealth,
-            R.id.imageViewHouse,
-            R.id.imageViewSport,
-            R.id.imageViewTransport,
-            R.id.imageViewOther
-    };
-
     private int[] outcomeColors = new int[]{
             Color.parseColor("#660000"),
             Color.parseColor("#CC0000"),
