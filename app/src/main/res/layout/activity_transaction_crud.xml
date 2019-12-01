@@ -135,9 +135,9 @@
             android:layout_marginTop="16dp"
             android:showText="true"
             android:checked="true"
-            android:text="Typ operacji: "
-            android:textOff="Przychód"
-            android:textOn="Wydatek"
+            android:text="@string/typ_operacji"
+            android:textOff="@string/przych_d"
+            android:textOn="@string/wydatek"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAmount" />
 

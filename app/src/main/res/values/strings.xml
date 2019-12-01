@@ -54,6 +54,10 @@
     <string name="statistics">STATYSTYKI</string>
     <string name="update_button">Aktualizuj</string>
     <string name="add_button">Dodaj</string>
+    <string name="typ_operacji">Typ operacji:</string>
+    <string name="przych_d">Przychód</string>
+    <string name="wydatek">Wydatek</string>
+    <string name="resetuj_filtry">Resetuj filtry</string>
 
 
     <!--    <string name="app_name">SAUCE Manager</string>-->
