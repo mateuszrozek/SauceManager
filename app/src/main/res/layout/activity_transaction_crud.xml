@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorScreenBackground"
+    android:background="@color/colorButtonBackground"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -54,47 +54,51 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textViewOperationCrud"
-        android:background="@color/colorPrimaryLight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:padding="12dp"
-        android:text="@string/operation_s_crud_screen"
-        android:textAlignment="center"
-        android:textSize="26sp" />
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".frontend.activities.TransactionCrudActivity">
 
+        <TextView
+            android:id="@+id/textViewOperationCrud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/operation_s_crud_screen_add"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textFontWeight="100"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutTitle"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/textViewOperationCrud">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/type_in_new_title_to_update"
                 android:inputType="text"
-                android:textSize="26sp" />
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/textViewTitleReminder"
+            android:id="@+id/textViewOperationDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -108,30 +112,32 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitleReminder">
+            app:layout_constraintTop_toBottomOf="@+id/textViewOperationDate">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/type_in_new_amount_to_update"
                 android:inputType="numberDecimal"
-                android:textSize="26sp" />
+                android:textSize="22sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinnerType"
+        <Switch
+            android:id="@+id/switchOperationType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:minWidth="170dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/spinner_background"
-            android:textAlignment="center"
+            android:layout_marginTop="16dp"
+            android:showText="true"
+            android:checked="true"
+            android:text="Typ operacji: "
+            android:textOff="Przychód"
+            android:textOn="Wydatek"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutAmount" />
 
@@ -140,12 +146,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:minWidth="170dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/spinner_background"
+            android:minWidth="170dp"
             android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerType" />
+            app:layout_constraintTop_toBottomOf="@+id/switchOperationType" />
 
 
         <Button

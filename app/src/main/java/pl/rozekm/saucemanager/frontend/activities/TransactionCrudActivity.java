@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,21 +29,20 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 import pl.rozekm.saucemanager.frontend.utils.adapters.CategoriesAdapter;
-import pl.rozekm.saucemanager.frontend.utils.adapters.TypesAdapter;
 
 public class TransactionCrudActivity extends AppCompatActivity {
 
     @BindView(R.id.textInputLayoutTitle)
     TextInputLayout textInputLayoutTitle;
 
-    @BindView(R.id.textViewTitleReminder)
-    TextView textViewDate;
+    @BindView(R.id.textViewOperationDate)
+    TextView textViewOperationDate;
+
+    @BindView(R.id.textViewOperationCrud)
+    TextView textViewOperationCrud;
 
     @BindView(R.id.textInputLayoutAmount)
     TextInputLayout textInputLayoutAmount;
-
-    @BindView(R.id.spinnerType)
-    Spinner spinnerType;
 
     @BindView(R.id.spinnerCategory)
     Spinner spinnerCategory;
@@ -53,7 +53,9 @@ public class TransactionCrudActivity extends AppCompatActivity {
     @BindView(R.id.buttonDeleteReminder)
     Button buttonDelete;
 
-    private TypesAdapter typesAdapter;
+    @BindView(R.id.switchOperationType)
+    Switch switchOperationType;
+
     private CategoriesAdapter outcomesAdapter;
     private CategoriesAdapter incomesAdapter;
     private Transaction transaction;
@@ -66,10 +68,6 @@ public class TransactionCrudActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getApplication(), new Transaction())).get(TransactionsViewModel.class);
-
-        ArrayList<TransactionType> types = new ArrayList<>();
-        types.add(TransactionType.INCOME);
-        types.add(TransactionType.OUTCOME);
 
         ArrayList<TransactionCategory> outcomes = new ArrayList<>();
         outcomes.add(TransactionCategory.CLOTHES);
@@ -86,9 +84,6 @@ public class TransactionCrudActivity extends AppCompatActivity {
         incomes.add(TransactionCategory.SALARY);
         incomes.add(TransactionCategory.SAVINGS);
 
-        typesAdapter = new TypesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, types);
-        spinnerType.setAdapter(typesAdapter);
-
         outcomesAdapter = new CategoriesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, outcomes);
         incomesAdapter = new CategoriesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, incomes);
 
@@ -96,27 +91,18 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
         if (transaction != null) {
             prepareLayoutForUpdate();
-
         } else {
             transaction = new Transaction();
             prepareLayoutForAddition();
         }
 
-        spinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                transaction.setType(typesAdapter.getItem(position));
-
-                if (typesAdapter.getItem(position) == TransactionType.OUTCOME) {
-                    spinnerCategory.setAdapter(outcomesAdapter);
-                } else {
-                    spinnerCategory.setAdapter(incomesAdapter);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+        switchOperationType.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (switchOperationType.isChecked()) {
+                transaction.setType(TransactionType.OUTCOME);
+                spinnerCategory.setAdapter(outcomesAdapter);
+            } else {
+                transaction.setType(TransactionType.INCOME);
+                spinnerCategory.setAdapter(incomesAdapter);
             }
         });
 
@@ -136,9 +122,9 @@ public class TransactionCrudActivity extends AppCompatActivity {
         });
     }
 
-
     private void prepareLayoutForUpdate() {
         buttonUpdate.setText(getString(R.string.update_button));
+        textViewOperationCrud.setText(getString(R.string.operation_s_crud_screen_update));
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
@@ -157,11 +143,10 @@ public class TransactionCrudActivity extends AppCompatActivity {
         TransactionType type = transaction.getType();
         TransactionCategory category = transaction.getCategory();
         textInputLayoutTitle.getEditText().setText(transaction.getTitle());
-        textViewDate.setText(transaction.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
+        textViewOperationDate.setText(transaction.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
         textInputLayoutAmount.getEditText().setText(String.format(Locale.forLanguageTag("PL"), "%5.2f", transaction.getAmount()));
 
-        int spinnerTypePosition = typesAdapter.getPosition(type);
-        spinnerType.setSelection(spinnerTypePosition);
+        switchOperationType.setChecked(transaction.getType() == TransactionType.OUTCOME);
 
         if (type == TransactionType.OUTCOME) {
             spinnerCategory.setAdapter(outcomesAdapter);
@@ -176,7 +161,10 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
     private void prepareLayoutForAddition() {
         buttonUpdate.setText(getString(R.string.add_button));
-        textViewDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
+        textViewOperationDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
+        textViewOperationCrud.setText(getString(R.string.operation_s_crud_screen_add));
+
+        spinnerCategory.setAdapter(outcomesAdapter);
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
@@ -185,6 +173,9 @@ public class TransactionCrudActivity extends AppCompatActivity {
             onBackPressed();
             Toast.makeText(TransactionCrudActivity.this, "Operacja dodana", Toast.LENGTH_SHORT).show();
         });
+
+        buttonDelete.setText(getString(R.string.back_to_main));
+        buttonDelete.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.ic_menu_revert, 0);
 
         buttonDelete.setOnClickListener(v -> {
             onBackPressed();

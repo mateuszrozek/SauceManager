@@ -36,7 +36,8 @@
     <string name="delete">Usuń</string>
     <string name="all_transactions">Wszystkie operacje</string>
     <string name="operations_statistics">Statystyki</string>
-    <string name="operation_s_crud_screen">Ekran CRUD operacji</string>
+    <string name="operation_s_crud_screen_add">Dodaj operację</string>
+    <string name="operation_s_crud_screen_update">Aktualizuj operację</string>
     <string name="reminder_s_crud_screen">Ekran CRUD przypomnień</string>
     <string name="update">Aktualizuj</string>
     <string name="_2019_10_17_23_23_12">2019-10-17 23:23:12</string>
