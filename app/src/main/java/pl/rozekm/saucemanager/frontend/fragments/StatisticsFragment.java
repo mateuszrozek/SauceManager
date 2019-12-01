@@ -424,7 +424,7 @@ public class StatisticsFragment extends Fragment {
         chart.setCenterText(generateCenterSpannableText(type));
         chart.setExtraOffsets(20.f, 0.f, 20.f, 0.f);
         chart.setDrawHoleEnabled(true);
-        chart.setHoleColor(getResources().getColor(R.color.colorScreenBackground));
+        chart.setHoleColor(getResources().getColor(R.color.colorButtonBackground));
         chart.setEntryLabelColor(getResources().getColor(R.color.colorPrimaryDark));
         chart.setEntryLabelTextSize(13f);
         chart.setTransparentCircleColor(Color.WHITE);

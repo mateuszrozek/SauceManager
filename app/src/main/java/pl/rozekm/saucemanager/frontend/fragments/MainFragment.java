@@ -3,23 +3,18 @@ package pl.rozekm.saucemanager.frontend.fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
-import com.amitshekhar.DebugDB;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,36 +54,16 @@ public class MainFragment extends Fragment {
 
     private BarData barData;
 
-    private Transaction classTransaction = new Transaction();
-
-    private List<Transaction> allTransactions = new ArrayList<>();
-
     @BindView(R.id.addTransactionImageButton)
     public Button addTransactionImageButton;
 
     @BindView(R.id.chartOutcome)
     public BarChart chartOutcome;
 
-//    @BindView(R.id.chartIncome)
-//    public BarChart chartIncome;
-
-//    @BindView(R.id.editTextAmount)
-//    TextInputLayout editTextAmount;
-
-//    @BindView(R.id.editTextTitle)
-//    TextInputLayout editTextTitle;
-
-    @BindView(R.id.textViewOutcomeChartTitle)
-    TextView textViewOutcomeChartTitle;
-
-//    @BindView(R.id.textViewIncomeChartTitle)
-//    TextView textViewIncomeChartTitle;
-
-
     @BindView(R.id.imageViewClothes)
     ImageView imageViewClothes;
 
-    @BindView(R.id.imageViewEntertaiment)
+    @BindView(R.id.imageViewEntertainment)
     ImageView imageViewEntertainment;
 
     @BindView(R.id.imageViewFood)
@@ -109,18 +84,6 @@ public class MainFragment extends Fragment {
     @BindView(R.id.imageViewOther)
     ImageView imageViewOther;
 
-    @BindView(R.id.imageViewInvestments)
-    ImageView imageViewInvestments;
-
-    @BindView(R.id.imageViewSalary)
-    ImageView imageViewSalary;
-
-    @BindView(R.id.imageViewSavings)
-    ImageView imageViewSavings;
-
-    @BindView(R.id.linearLayout)
-    LinearLayout linearLayout;
-
     @BindView(R.id.radioDay)
     RadioButton radioDay;
 
@@ -133,7 +96,6 @@ public class MainFragment extends Fragment {
     @BindView(R.id.radioYear)
     RadioButton radioYear;
 
-    //    @BindView(R.id.transactionsRecyclerView)
     RecyclerView transactionsRecyclerView;
 
     private TransactionsAdapter transactionsAdapter;
@@ -142,19 +104,13 @@ public class MainFragment extends Fragment {
 
     private int[] imageViewsOutcomeTransactions = new int[]{
             R.id.imageViewClothes,
-            R.id.imageViewEntertaiment,
+            R.id.imageViewEntertainment,
             R.id.imageViewFood,
             R.id.imageViewHealth,
             R.id.imageViewHouse,
             R.id.imageViewSport,
             R.id.imageViewTransport,
             R.id.imageViewOther
-    };
-
-    private int[] imageViewsIncomeTransactions = new int[]{
-            R.id.imageViewInvestments,
-            R.id.imageViewSalary,
-            R.id.imageViewSavings,
     };
 
     private int[] outcomeColors = new int[]{
@@ -168,12 +124,6 @@ public class MainFragment extends Fragment {
             Color.parseColor("#663300")
     };
 
-    private int[] incomeColors = new int[]{
-            Color.parseColor("#4C9900"),
-            Color.parseColor("#80FF00"),
-            Color.parseColor("#B2FF66")
-    };
-
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -183,7 +133,7 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), classTransaction)).get(TransactionsViewModel.class);
+        transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getActivity().getApplication(), new Transaction())).get(TransactionsViewModel.class);
         transactionsAdapter = new TransactionsAdapter(getContext());
         getRecentTransactions();
     }
@@ -197,24 +147,11 @@ public class MainFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
-//        setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
 
         radioDay.setOnClickListener(this::onRadioButtonClickedTransactions);
         radioWeek.setOnClickListener(this::onRadioButtonClickedTransactions);
         radioMonth.setOnClickListener(this::onRadioButtonClickedTransactions);
         radioYear.setOnClickListener(this::onRadioButtonClickedTransactions);
-
-        imageViewClothes.setOnClickListener(this::transactionCategorySelected);
-        imageViewEntertainment.setOnClickListener(this::transactionCategorySelected);
-        imageViewFood.setOnClickListener(this::transactionCategorySelected);
-        imageViewHealth.setOnClickListener(this::transactionCategorySelected);
-        imageViewHouse.setOnClickListener(this::transactionCategorySelected);
-        imageViewSport.setOnClickListener(this::transactionCategorySelected);
-        imageViewTransport.setOnClickListener(this::transactionCategorySelected);
-        imageViewOther.setOnClickListener(this::transactionCategorySelected);
-        imageViewInvestments.setOnClickListener(this::transactionCategorySelected);
-        imageViewSalary.setOnClickListener(this::transactionCategorySelected);
-        imageViewSavings.setOnClickListener(this::transactionCategorySelected);
 
         transactionsRecyclerView = view.findViewById(R.id.transactionsRecyclerView);
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -242,26 +179,6 @@ public class MainFragment extends Fragment {
 
         addTransactionImageButton.setOnClickListener(v -> startActivity(new Intent(getContext(), TransactionCrudActivity.class)));
     }
-
-//    private boolean isTitleValid() {
-//        boolean result = false;
-//        if (editTextTitle.getEditText() != null) {
-//            result = !TextUtils.isEmpty(editTextTitle.getEditText().getText());
-//        }
-//        return result;
-//    }
-//
-//    private boolean isCategoryValid() {
-//        return classTransaction.getCategory() != null;
-//    }
-//
-//    private boolean isAmountValid() {
-//        boolean result = false;
-//        if (editTextAmount.getEditText() != null) {
-//            result = !TextUtils.isEmpty(editTextAmount.getEditText().getText());
-//        }
-//        return result;
-//    }
 
     private void applyChartSettings(BarChart chart) {
         chart.setNoDataText("No data available yet");
@@ -351,128 +268,6 @@ public class MainFragment extends Fragment {
         return sum;
     }
 
-    private void transactionCategorySelected(View view) {
-        switch (view.getId()) {
-            case R.id.imageViewClothes:
-                setFocus(R.id.imageViewClothes);
-                break;
-
-            case R.id.imageViewEntertaiment:
-                setFocus(R.id.imageViewEntertaiment);
-                break;
-
-            case R.id.imageViewFood:
-                setFocus(R.id.imageViewFood);
-                break;
-
-            case R.id.imageViewHealth:
-                setFocus(R.id.imageViewHealth);
-                break;
-
-            case R.id.imageViewHouse:
-                setFocus(R.id.imageViewHouse);
-                break;
-
-            case R.id.imageViewSport:
-                setFocus(R.id.imageViewSport);
-                break;
-
-            case R.id.imageViewTransport:
-                setFocus(R.id.imageViewTransport);
-                break;
-
-            case R.id.imageViewOther:
-                setFocus(R.id.imageViewOther);
-                break;
-
-            case R.id.imageViewInvestments:
-                setFocus(R.id.imageViewInvestments);
-                break;
-
-            case R.id.imageViewSalary:
-                setFocus(R.id.imageViewSalary);
-                break;
-
-            case R.id.imageViewSavings:
-                setFocus(R.id.imageViewSavings);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void setFocus(int imageView) {
-
-        for (Integer imageViewsOutcomeTransaction : imageViewsOutcomeTransactions) {
-            setLayoutWeightForView(imageViewsOutcomeTransaction, 1.0f);
-        }
-        for (Integer imageViewsIncomeTransaction : imageViewsIncomeTransactions) {
-            setLayoutWeightForView(imageViewsIncomeTransaction, 1.0f);
-        }
-        setLayoutWeightForView(imageView, 3.0f);
-
-        if (imageView == R.id.imageViewInvestments || imageView == R.id.imageViewSalary || imageView == R.id.imageViewSavings) {
-            classTransaction.setType(TransactionType.INCOME);
-        } else {
-            classTransaction.setType(TransactionType.OUTCOME);
-        }
-        classTransaction.setCategory(translateImageViewToTransactionCategory(imageView));
-    }
-
-    private TransactionCategory translateImageViewToTransactionCategory(int imageView) {
-
-        TransactionCategory transactionCategory = null;
-
-        switch (imageView) {
-            case R.id.imageViewClothes:
-                transactionCategory = TransactionCategory.CLOTHES;
-                break;
-
-            case R.id.imageViewEntertaiment:
-                transactionCategory = TransactionCategory.ENTERTAINMENT;
-                break;
-
-            case R.id.imageViewFood:
-                transactionCategory = TransactionCategory.FOOD;
-                break;
-
-            case R.id.imageViewHealth:
-                transactionCategory = TransactionCategory.HEALTH;
-                break;
-
-            case R.id.imageViewHouse:
-                transactionCategory = TransactionCategory.HOUSE;
-                break;
-
-            case R.id.imageViewSport:
-                transactionCategory = TransactionCategory.SPORT;
-                break;
-
-            case R.id.imageViewTransport:
-                transactionCategory = TransactionCategory.TRANSPORT;
-                break;
-
-            case R.id.imageViewOther:
-                transactionCategory = TransactionCategory.OTHER;
-                break;
-
-            case R.id.imageViewInvestments:
-                transactionCategory = TransactionCategory.INVESTMENT;
-                break;
-
-            case R.id.imageViewSalary:
-                transactionCategory = TransactionCategory.SALARY;
-                break;
-
-            case R.id.imageViewSavings:
-                transactionCategory = TransactionCategory.SAVINGS;
-                break;
-            default:
-                break;
-        }
-        return transactionCategory;
-    }
-
     private void setChart(BarChart chart, TransactionType transactionType, Frequency frequency) {
 
         if (transactionType == TransactionType.OUTCOME) {
@@ -487,11 +282,7 @@ public class MainFragment extends Fragment {
 
         barEntry = addBarEntries(transactions, transactionType, frequency);
         barDataSet = new BarDataSet(barEntry, "Bar Set");
-        if (transactionType == TransactionType.OUTCOME) {
-            barDataSet.setColors(outcomeColors);
-        } else {
-            barDataSet.setColors(incomeColors);
-        }
+        barDataSet.setColors(outcomeColors);
         barDataSet.setDrawValues(true);
         barDataSet.setValueTextSize(7f);
         barData = new BarData(barDataSet);
@@ -502,38 +293,27 @@ public class MainFragment extends Fragment {
         chart.invalidate();
     }
 
-    private void setLayoutWeightForView(int view, float weight) {
-        ImageView image = getView().findViewById(view);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) image.getLayoutParams();
-        params.weight = weight;
-        image.setLayoutParams(params);
-    }
-
     public void onRadioButtonClickedTransactions(View v) {
         boolean checked = ((RadioButton) v).isChecked();
         switch (v.getId()) {
             case R.id.radioDay:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.DAILY);
-//                    setChart(chartIncome, TransactionType.INCOME, Frequency.DAILY);
                 }
                 break;
             case R.id.radioWeek:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.WEEKLY);
-//                    setChart(chartIncome, TransactionType.INCOME, Frequency.WEEKLY);
                 }
                 break;
             case R.id.radioMonth:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.MONTHLY);
-//                    setChart(chartIncome, TransactionType.INCOME, Frequency.MONTHLY);
                 }
                 break;
             case R.id.radioYear:
                 if (checked) {
                     setChart(chartOutcome, TransactionType.OUTCOME, Frequency.YEARLY);
-//                    setChart(chartIncome, TransactionType.INCOME, Frequency.YEARLY);
                 }
                 break;
         }
