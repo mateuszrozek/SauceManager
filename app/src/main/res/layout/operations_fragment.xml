@@ -14,6 +14,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
+            android:layout_marginTop="8dp"
             android:text="@string/all_transactions"
             android:textColor="@color/colorPrimary"
             android:textFontWeight="100"
@@ -22,7 +23,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -50,9 +51,9 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_weight="2"
-                android:gravity="center_vertical|center_horizontal"
+                android:gravity="center_vertical|start"
                 android:orientation="vertical"
-                android:paddingStart="10dp"
+                android:paddingStart="0dp"
                 android:paddingEnd="10dp">
 
                 <TextView
@@ -69,7 +70,7 @@
             android:id="@+id/pieChartSpecifyRangeOutcomes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="0dp"
             android:orientation="horizontal"
             android:padding="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="24dp">
 
             </androidx.recyclerview.widget.RecyclerView>
