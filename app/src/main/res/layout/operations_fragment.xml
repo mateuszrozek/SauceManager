@@ -38,8 +38,8 @@
                 <Spinner
                     android:id="@+id/spinnerCategory"
                     android:layout_width="wrap_content"
-                    android:layout_marginVertical="8dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="8dp"
                     android:background="@drawable/spinner_background"
                     android:minWidth="170dp"
                     android:textAlignment="center" />
