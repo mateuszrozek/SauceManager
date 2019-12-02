@@ -189,4 +189,8 @@ public class TransactionsSorter {
         }
         return transactions;
     }
+
+    public List<Transaction> sortByCategoryAndFrequency(List<Transaction> transactions, Frequency frequency, TransactionCategory category) {
+        return sortByFrequency(sortByCategory(transactions, category), frequency);
+    }
 }

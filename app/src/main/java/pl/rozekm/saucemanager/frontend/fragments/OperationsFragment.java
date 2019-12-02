@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
+import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 import pl.rozekm.saucemanager.databinding.OperationsFragmentBinding;
@@ -36,22 +38,33 @@ public class OperationsFragment extends Fragment {
     @BindView(R.id.numberOfOperationsTextView)
     TextView numberOfOperationsTextView;
 
+    @BindView(R.id.radioDay)
+    RadioButton radioDay;
+
+    @BindView(R.id.radioWeek)
+    RadioButton radioWeek;
+
+    @BindView(R.id.radioMonth)
+    RadioButton radioMonth;
+
+    @BindView(R.id.radioYear)
+    RadioButton radioYear;
+
     private TransactionsViewModel transactionsViewModel;
     private RecyclerView allTransactionsRecyclerView;
     private TransactionsAdapter transactionsAdapter;
 
     private List<Transaction> allTransacations;
 
-    CategoriesConverter categoriesConverter;
-    ArrayAdapter<String> operationStringAdapter;
-    TransactionsSorter transactionsSorter;
+    private CategoriesConverter categoriesConverter;
+    private ArrayAdapter<String> operationStringAdapter;
+    private TransactionsSorter transactionsSorter;
 
 
     public OperationsFragment() {
     }
 
     public static OperationsFragment newInstance() {
-
         return new OperationsFragment();
     }
 
@@ -87,12 +100,7 @@ public class OperationsFragment extends Fragment {
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                transactionsAdapter.setTransactions(
-                        transactionsSorter.sortByCategory(
-                                allTransacations,
-                                categoriesConverter.stringToEnum((String) spinnerCategory.getSelectedItem())
-                        )
-                );
+                filterOperations();
                 numberOfOperationsTextView.setText(getString(R.string.liczba_operacji, transactionsAdapter.getItemCount()));
                 transactionsAdapter.notifyDataSetChanged();
             }
@@ -103,7 +111,76 @@ public class OperationsFragment extends Fragment {
             }
         });
 
+        radioDay.setOnClickListener(v -> filterOperations());
+        radioWeek.setOnClickListener(v -> filterOperations());
+        radioMonth.setOnClickListener(v -> filterOperations());
+        radioYear.setOnClickListener(v -> filterOperations());
+
         return view;
+    }
+
+    private void filterOperations() {
+        int button = 0;
+        if (radioDay.isChecked()) {
+            button = R.id.radioDay;
+        } else if (radioWeek.isChecked()) {
+            button = R.id.radioWeek;
+        } else if (radioMonth.isChecked()) {
+            button = R.id.radioMonth;
+        } else if (radioYear.isChecked()) {
+            button = R.id.radioYear;
+        }
+
+        switch (button) {
+            case R.id.radioDay: {
+                transactionsAdapter.setTransactions(
+                        transactionsSorter.sortByCategoryAndFrequency(
+                                allTransacations,
+                                Frequency.DAILY,
+                                categoriesConverter.stringToEnum((String) spinnerCategory.getSelectedItem())
+                        )
+                );
+                transactionsAdapter.notifyDataSetChanged();
+                numberOfOperationsTextView.setText(getString(R.string.liczba_operacji, transactionsAdapter.getItemCount()));
+            }
+            break;
+            case R.id.radioWeek: {
+                transactionsAdapter.setTransactions(
+                        transactionsSorter.sortByCategoryAndFrequency(
+                                allTransacations,
+                                Frequency.WEEKLY,
+                                categoriesConverter.stringToEnum((String) spinnerCategory.getSelectedItem())
+                        )
+                );
+                transactionsAdapter.notifyDataSetChanged();
+                numberOfOperationsTextView.setText(getString(R.string.liczba_operacji, transactionsAdapter.getItemCount()));
+            }
+            break;
+            case R.id.radioMonth: {
+                transactionsAdapter.setTransactions(
+                        transactionsSorter.sortByCategoryAndFrequency(
+                                allTransacations,
+                                Frequency.MONTHLY,
+                                categoriesConverter.stringToEnum((String) spinnerCategory.getSelectedItem())
+                        )
+                );
+                transactionsAdapter.notifyDataSetChanged();
+                numberOfOperationsTextView.setText(getString(R.string.liczba_operacji, transactionsAdapter.getItemCount()));
+            }
+            break;
+            case R.id.radioYear: {
+                transactionsAdapter.setTransactions(
+                        transactionsSorter.sortByCategoryAndFrequency(
+                                allTransacations,
+                                Frequency.YEARLY,
+                                categoriesConverter.stringToEnum((String) spinnerCategory.getSelectedItem())
+                        )
+                );
+                transactionsAdapter.notifyDataSetChanged();
+                numberOfOperationsTextView.setText(getString(R.string.liczba_operacji, transactionsAdapter.getItemCount()));
+            }
+            break;
+        }
     }
 
     @Override
