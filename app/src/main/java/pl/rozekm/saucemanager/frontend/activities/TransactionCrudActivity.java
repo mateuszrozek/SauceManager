@@ -4,6 +4,7 @@ import android.icu.text.NumberFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -28,7 +29,7 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
-import pl.rozekm.saucemanager.frontend.utils.adapters.CategoriesAdapter;
+import pl.rozekm.saucemanager.frontend.utils.CategoriesConverter;
 
 public class TransactionCrudActivity extends AppCompatActivity {
 
@@ -56,8 +57,10 @@ public class TransactionCrudActivity extends AppCompatActivity {
     @BindView(R.id.switchOperationType)
     Switch switchOperationType;
 
-    private CategoriesAdapter outcomesAdapter;
-    private CategoriesAdapter incomesAdapter;
+    private CategoriesConverter categoriesConverter = new CategoriesConverter();
+    ArrayAdapter<String> outcomesArrayAdapter;
+    ArrayAdapter<String> incomesArrayAdapter;
+
     private Transaction transaction;
     private TransactionsViewModel transactionsViewModel;
 
@@ -84,8 +87,9 @@ public class TransactionCrudActivity extends AppCompatActivity {
         incomes.add(TransactionCategory.SALARY);
         incomes.add(TransactionCategory.SAVINGS);
 
-        outcomesAdapter = new CategoriesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, outcomes);
-        incomesAdapter = new CategoriesAdapter(TransactionCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, incomes);
+        incomesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoriesConverter.getIncomesStrings());
+        outcomesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoriesConverter.getOutcomesStrings());
+
 
         transaction = (Transaction) getIntent().getSerializableExtra("trans");
 
@@ -99,10 +103,10 @@ public class TransactionCrudActivity extends AppCompatActivity {
         switchOperationType.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (switchOperationType.isChecked()) {
                 transaction.setType(TransactionType.OUTCOME);
-                spinnerCategory.setAdapter(outcomesAdapter);
+                spinnerCategory.setAdapter(outcomesArrayAdapter);
             } else {
                 transaction.setType(TransactionType.INCOME);
-                spinnerCategory.setAdapter(incomesAdapter);
+                spinnerCategory.setAdapter(incomesArrayAdapter);
             }
         });
 
@@ -110,9 +114,9 @@ public class TransactionCrudActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (transaction.getType() == TransactionType.OUTCOME) {
-                    transaction.setCategory(outcomesAdapter.getItem(position));
+                    transaction.setCategory(categoriesConverter.stringToEnum(outcomesArrayAdapter.getItem(position)));
                 } else {
-                    transaction.setCategory(incomesAdapter.getItem(position));
+                    transaction.setCategory(categoriesConverter.stringToEnum(incomesArrayAdapter.getItem(position)));
                 }
             }
 
@@ -141,7 +145,7 @@ public class TransactionCrudActivity extends AppCompatActivity {
         });
 
         TransactionType type = transaction.getType();
-        TransactionCategory category = transaction.getCategory();
+        String category = categoriesConverter.enumToString(transaction.getCategory());
         textInputLayoutTitle.getEditText().setText(transaction.getTitle());
         textViewOperationDate.setText(transaction.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
         textInputLayoutAmount.getEditText().setText(String.format(Locale.forLanguageTag("PL"), "%5.2f", transaction.getAmount()));
@@ -149,12 +153,12 @@ public class TransactionCrudActivity extends AppCompatActivity {
         switchOperationType.setChecked(transaction.getType() == TransactionType.OUTCOME);
 
         if (type == TransactionType.OUTCOME) {
-            spinnerCategory.setAdapter(outcomesAdapter);
-            int spinnerCatPosition = outcomesAdapter.getPosition(category);
+            spinnerCategory.setAdapter(outcomesArrayAdapter);
+            int spinnerCatPosition = outcomesArrayAdapter.getPosition(category);
             spinnerCategory.setSelection(spinnerCatPosition, true);
         } else {
-            spinnerCategory.setAdapter(incomesAdapter);
-            int spinnerCatPosition = incomesAdapter.getPosition(category);
+            spinnerCategory.setAdapter(incomesArrayAdapter);
+            int spinnerCatPosition = incomesArrayAdapter.getPosition(category);
             spinnerCategory.setSelection(spinnerCatPosition, true);
         }
     }
@@ -164,7 +168,7 @@ public class TransactionCrudActivity extends AppCompatActivity {
         textViewOperationDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
         textViewOperationCrud.setText(getString(R.string.operation_s_crud_screen_add));
 
-        spinnerCategory.setAdapter(outcomesAdapter);
+        spinnerCategory.setAdapter(outcomesArrayAdapter);
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());

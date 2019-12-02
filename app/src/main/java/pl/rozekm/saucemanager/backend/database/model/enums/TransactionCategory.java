@@ -11,12 +11,12 @@ public enum TransactionCategory implements Serializable {
     SPORT(6),
     TRANSPORT(7),
     OTHER(0),
-    //chemia spożywcza()
-    //wyposażenie domu()
 
     INVESTMENT(91),
     SALARY(92),
-    SAVINGS(93);
+    SAVINGS(93),
+
+    ALL(99);
 
     private int code;
 

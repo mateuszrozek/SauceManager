@@ -34,6 +34,7 @@ import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
+import pl.rozekm.saucemanager.frontend.utils.CategoriesConverter;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
@@ -42,6 +43,7 @@ public class ForecastFragment extends Fragment {
 
     private TableLayout tableLayout;
     private TransactionsViewModel transactionsViewModel;
+    private CategoriesConverter categoriesConverter= new CategoriesConverter();
 
     @BindView(R.id.textViewNOW)
     TextView textViewNOW;
@@ -83,14 +85,10 @@ public class ForecastFragment extends Fragment {
         t2 = new TextView(getActivity());
         t3 = new TextView(getActivity());
         t4 = new TextView(getActivity());
-//        t1.setText("Category");
-//        t2.setText("Typically");
-//        t3.setText("So far");
-//        t4.setText("Remaining");
-        t1.setText("Kategoria");
-        t2.setText("Zazwyczaj");
-        t3.setText("Do teraz");
-        t4.setText("Pozostało");
+        t1.setText(R.string.kategoria);
+        t2.setText(R.string.zazwyczaj);
+        t3.setText(R.string.do_teraz);
+        t4.setText(R.string.pozostalo);
         t1.setTextSize(16);
         t2.setTextSize(16);
         t3.setTextSize(16);
@@ -127,7 +125,7 @@ public class ForecastFragment extends Fragment {
             t2 = new TextView(getActivity());
             t3 = new TextView(getActivity());
             t4 = new TextView(getActivity());
-            t1.setText(forecast.getCategory().toString());
+            t1.setText(categoriesConverter.enumToString(forecast.getCategory()));
             t2.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getTypically()));
             t3.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getSoFar()));
             t4.setText(String.format(Locale.forLanguageTag("PL"), "%.2f", forecast.getRemaining()));

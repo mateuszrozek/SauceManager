@@ -67,6 +67,14 @@
     <string name="sport">Sport</string>
     <string name="transport">Transport</string>
     <string name="inne">Inne</string>
+    <string name="kategoria">Kategoria</string>
+    <string name="zazwyczaj">Zazwyczaj</string>
+    <string name="do_teraz">Do teraz</string>
+    <string name="pozostalo">Pozostało</string>
+    <string name="inwestycje">Inwestycje</string>
+    <string name="pensja">Pensja</string>
+    <string name="oszczednosci">Oszczędności</string>
+    <string name="wszystkie">Wszystkie</string>
 
 
     <!--    <string name="app_name">SAUCE Manager</string>-->

@@ -192,7 +192,8 @@ public class MainFragment extends Fragment {
         sortedTransactions = transactionsSorter.sortByFrequency(transactions, frequency);
 
         Map<TransactionCategory, List<Transaction>> groupedTransactions =
-                sortedTransactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
+                sortedTransactions.stream()
+                        .collect(Collectors.groupingBy(Transaction::getCategory));
 
         values = processGroupedTransactions(groupedTransactions, transactionType);
 
