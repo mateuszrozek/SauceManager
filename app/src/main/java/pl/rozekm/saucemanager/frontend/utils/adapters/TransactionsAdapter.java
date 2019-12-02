@@ -17,10 +17,13 @@ import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.frontend.activities.TransactionCrudActivity;
+import pl.rozekm.saucemanager.frontend.utils.CategoriesConverter;
 
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder> {
     private List<Transaction> transactions;
-    Context context;
+    private Context context;
+
+    private CategoriesConverter categoriesConverter = new CategoriesConverter();
 
     public static class TransactionsViewHolder extends RecyclerView.ViewHolder {
         public CardView cardView;
@@ -64,7 +67,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
         Transaction trans = transactions.get(position);
 
-        holder.category.setText(trans.getCategory().toString());
+        holder.category.setText(categoriesConverter.enumToString(trans.getCategory()));
         holder.category.setTextColor(chooseColor(trans));
         holder.amount.setText(String.format(Locale.forLanguageTag("PL"), "%7.2f", trans.getAmount()) + " zł");
         holder.date.setText(trans.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
