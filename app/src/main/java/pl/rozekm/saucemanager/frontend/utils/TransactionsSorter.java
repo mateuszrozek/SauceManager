@@ -180,4 +180,13 @@ public class TransactionsSorter {
 
         return positives.stream().max(Comparator.naturalOrder()).get();
     }
+
+    public List<Transaction> sortByCategory(List<Transaction> transactions, TransactionCategory category) {
+        if (category != TransactionCategory.ALL) {
+            return transactions.stream()
+                    .filter(transaction -> transaction.getCategory() == category)
+                    .collect(Collectors.toList());
+        }
+        return transactions;
+    }
 }

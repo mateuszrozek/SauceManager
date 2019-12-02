@@ -58,7 +58,7 @@
     <string name="przych_d">Przychód</string>
     <string name="wydatek">Wydatek</string>
     <string name="resetuj_filtry">Resetuj filtry</string>
-    <string name="liczba_operacji">Liczba operacji:</string>
+    <string name="liczba_operacji">Liczba operacji: %1$d</string>
     <string name="ubrania">Ubrania</string>
     <string name="rozrywka">Rozrywka</string>
     <string name="jedzenie">Jedzenie</string>

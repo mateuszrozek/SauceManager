@@ -27,6 +27,7 @@ public class CategoriesConverter {
 
     ArrayList<String> outcomesStrings = new ArrayList<>();
     ArrayList<String> incomesStrings = new ArrayList<>();
+    ArrayList<String> operationsStrings = new ArrayList<>();
 
     public CategoriesConverter(){
         outcomesStrings.add("Ubrania");
@@ -41,6 +42,21 @@ public class CategoriesConverter {
         incomesStrings.add("Inwestycje");
         incomesStrings.add("Pensja");
         incomesStrings.add("Oszczędności");
+
+        operationsStrings.add("Wszystkie");
+
+        operationsStrings.add("Ubrania");
+        operationsStrings.add("Rozrywka");
+        operationsStrings.add("Jedzenie");
+        operationsStrings.add("Zdrowie");
+        operationsStrings.add("Art. domowe");
+        operationsStrings.add("Sport");
+        operationsStrings.add("Transport");
+        operationsStrings.add("Inne");
+
+        operationsStrings.add("Inwestycje");
+        operationsStrings.add("Pensja");
+        operationsStrings.add("Oszczędności");
     }
 
     public ArrayList<String> getOutcomesStrings() {
@@ -57,6 +73,14 @@ public class CategoriesConverter {
 
     public void setIncomesStrings(ArrayList<String> incomesStrings) {
         this.incomesStrings = incomesStrings;
+    }
+
+    public ArrayList<String> getOperationsStrings() {
+        return operationsStrings;
+    }
+
+    public void setOperationsStrings(ArrayList<String> operationsStrings) {
+        this.operationsStrings = operationsStrings;
     }
 
     public String enumToString(TransactionCategory category) {
