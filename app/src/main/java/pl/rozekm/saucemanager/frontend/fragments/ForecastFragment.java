@@ -33,17 +33,17 @@ import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
+import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 import pl.rozekm.saucemanager.databinding.ForecastFragmentBinding;
 import pl.rozekm.saucemanager.frontend.utils.CategoriesConverter;
 import pl.rozekm.saucemanager.frontend.utils.Forecast;
-import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
-import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
 
 public class ForecastFragment extends Fragment {
 
     private TableLayout tableLayout;
     private TransactionsViewModel transactionsViewModel;
-    private CategoriesConverter categoriesConverter= new CategoriesConverter();
+    private CategoriesConverter categoriesConverter = new CategoriesConverter();
 
     @BindView(R.id.textViewNOW)
     TextView textViewNOW;
@@ -101,10 +101,10 @@ public class ForecastFragment extends Fragment {
         t2.setGravity(Gravity.CENTER_HORIZONTAL);
         t3.setGravity(Gravity.CENTER_HORIZONTAL);
         t4.setGravity(Gravity.CENTER_HORIZONTAL);
-        t1.setTextColor(getResources().getColor(R.color.sauceColor));
-        t2.setTextColor(getResources().getColor(R.color.sauceColor));
-        t3.setTextColor(getResources().getColor(R.color.sauceColor));
-        t4.setTextColor(getResources().getColor(R.color.sauceColor));
+        t1.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        t2.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        t3.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        t4.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         t1.setLayoutParams(params);
         t2.setLayoutParams(params);
         t3.setLayoutParams(params);
@@ -137,10 +137,10 @@ public class ForecastFragment extends Fragment {
             t2.setPadding(4, 4, 4, 4);
             t3.setPadding(4, 4, 4, 4);
             t4.setPadding(4, 4, 10, 4);
-            t1.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-            t2.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-            t3.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
-            t4.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
+            t1.setBackgroundColor(getResources().getColor(R.color.colorButtonBackground));
+            t2.setBackgroundColor(getResources().getColor(R.color.colorButtonBackground));
+            t3.setBackgroundColor(getResources().getColor(R.color.colorButtonBackground));
+            t4.setBackgroundColor(getResources().getColor(R.color.colorButtonBackground));
             t1.setGravity(Gravity.START);
             t2.setGravity(Gravity.END);
             t3.setGravity(Gravity.END);
@@ -163,13 +163,12 @@ public class ForecastFragment extends Fragment {
 
     private void styleHeader(TableRow row) {
         row.setPadding(5, 5, 5, 5);
-        row.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        row.setBackgroundColor(getResources().getColor(R.color.colorPrimaryLight));
     }
 
     private void styleRow(TableRow row) {
         row.setPadding(5, 5, 5, 5);
         row.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-
     }
 
     private ArrayList<Forecast> processTransactions(List<Transaction> transactions) {
@@ -240,17 +239,10 @@ public class ForecastFragment extends Fragment {
         textViewNOW.setText(convertFloatToCash(StatisticsFragment.INITIAL_VALUE));
 
         ArrayList<String> spinnerArray = new ArrayList<>(Arrays.asList("1 miesiąc", "2 miesiące", "3 miesiące", "4 miesiące"));
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, spinnerArray);
         forecastSpinner.setAdapter(spinnerArrayAdapter);
 
-        forecastButton.setOnClickListener(v -> {
-
-            char c = (forecastSpinner.getSelectedItem().toString().charAt(0));
-            int val = Integer.parseInt(String.valueOf(c));
-            float month = (float) val;
-            calculateFutureAccount(allTransactions, month);
-        });
+        forecastButton.setOnClickListener(v -> calculateFutureAccount(allTransactions, getMonthOfForecast()));
 
         transactionsViewModel.getAllTransactions().observe(
                 ForecastFragment.this,
@@ -260,41 +252,55 @@ public class ForecastFragment extends Fragment {
                             .filter(t -> t.getType() == TransactionType.OUTCOME)
                             .forEach(outcomeTransactions::add);
                     fillTableLayout(outcomeTransactions);
-                    calculateFutureAccount(allTransactions, 1);
+                    calculateFutureAccount(allTransactions, getMonthOfForecast());
                 });
         return view;
     }
 
-    private void calculateFutureAccount(List<Transaction> transactions, float month) {
+    private float getMonthOfForecast() {
+        char c = (forecastSpinner.getSelectedItem().toString().charAt(0));
+        int val = Integer.parseInt(String.valueOf(c));
+        return (float) val;
+    }
 
-        float sum = 0.0f;
-        float value = 0.0f;
+    private void calculateFutureAccount(List<Transaction> transactions, float month) {
         float init = StatisticsFragment.INITIAL_VALUE;
-        LocalDateTime now = LocalDateTime.now();
+
         Map<Month, List<Transaction>> groupedByMonth = transactions.stream().collect(Collectors.groupingBy(t -> t.getDate().getMonth()));
         int months = groupedByMonth.size();
-        ArrayList<Transaction> transes = new ArrayList<>();
-        transactions.stream().filter(t -> t.getDate().getMonth() != now.getMonth()).forEach(transes::add);
 
-        for (Transaction transaction : transes) {
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<Transaction> transesWithoutCurrentMonth = new ArrayList<>();
+        ArrayList<Transaction> transesCurrentMonth = new ArrayList<>();
+        transactions.stream().filter(t -> t.getDate().getMonth() != now.getMonth()).forEach(transesWithoutCurrentMonth::add);
+        transactions.stream().filter(t -> t.getDate().getMonth() == now.getMonth()).forEach(transesCurrentMonth::add);
 
+        float sumWithoutCurrentMonth = getSum(init, transesWithoutCurrentMonth);
+        float averageWithoutCurrentMonth = sumWithoutCurrentMonth / months - 1;
+        float sumCurrentMonth = getSum(sumWithoutCurrentMonth, transesCurrentMonth);
+        float stateCurrentMonth = sumWithoutCurrentMonth + sumCurrentMonth;
+
+        textViewNOW.setText(convertFloatToCash(stateCurrentMonth));
+        textViewFUT.setText(convertFloatToCash(stateCurrentMonth + (averageWithoutCurrentMonth * month)));
+    }
+
+    private float getSum(float startValue, ArrayList<Transaction> transactions) {
+
+        float sum = 0.0f;
+
+        for (Transaction transaction : transactions) {
             if (transaction.getType() == TransactionType.OUTCOME) {
                 sum = sum - (float) ((double) transaction.getAmount());
             } else {
                 sum = sum + (float) ((double) transaction.getAmount());
             }
         }
-        value = sum / months - 1;
-
-        textViewNOW.setText(convertFloatToCash(sum));
-        textViewFUT.setText(convertFloatToCash(sum + (value * month)));
+        return sum;
     }
 
     private String convertFloatToCash(float value) {
-
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
-
         return df.format(value) + " " + "zł";
     }
 

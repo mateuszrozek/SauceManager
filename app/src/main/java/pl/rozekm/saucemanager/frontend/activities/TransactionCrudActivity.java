@@ -16,7 +16,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Transaction;
-import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionType;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModel;
 import pl.rozekm.saucemanager.backend.database.viewmodels.TransactionsViewModelFactory;
@@ -58,8 +56,8 @@ public class TransactionCrudActivity extends AppCompatActivity {
     Switch switchOperationType;
 
     private CategoriesConverter categoriesConverter = new CategoriesConverter();
-    ArrayAdapter<String> outcomesArrayAdapter;
-    ArrayAdapter<String> incomesArrayAdapter;
+    private ArrayAdapter<String> outcomesArrayAdapter;
+    private ArrayAdapter<String> incomesArrayAdapter;
 
     private Transaction transaction;
     private TransactionsViewModel transactionsViewModel;
@@ -72,27 +70,10 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
         transactionsViewModel = ViewModelProviders.of(this, new TransactionsViewModelFactory(getApplication(), new Transaction())).get(TransactionsViewModel.class);
 
-        ArrayList<TransactionCategory> outcomes = new ArrayList<>();
-        outcomes.add(TransactionCategory.CLOTHES);
-        outcomes.add(TransactionCategory.ENTERTAINMENT);
-        outcomes.add(TransactionCategory.FOOD);
-        outcomes.add(TransactionCategory.HEALTH);
-        outcomes.add(TransactionCategory.HOUSE);
-        outcomes.add(TransactionCategory.SPORT);
-        outcomes.add(TransactionCategory.TRANSPORT);
-        outcomes.add(TransactionCategory.OTHER);
-
-        ArrayList<TransactionCategory> incomes = new ArrayList<>();
-        incomes.add(TransactionCategory.INVESTMENT);
-        incomes.add(TransactionCategory.SALARY);
-        incomes.add(TransactionCategory.SAVINGS);
-
         incomesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoriesConverter.getIncomesStrings());
         outcomesArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categoriesConverter.getOutcomesStrings());
 
-
         transaction = (Transaction) getIntent().getSerializableExtra("trans");
-
         if (transaction != null) {
             prepareLayoutForUpdate();
         } else {
