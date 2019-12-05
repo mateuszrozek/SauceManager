@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.DataBindingUtil;
@@ -34,5 +35,16 @@ public class MainActivity extends AppCompatActivity {
     @BindingAdapter({"bind:pager"})
     public static void bindViewPagerTabs(final TabLayout view, final ViewPager pagerView) {
         view.setupWithViewPager(pagerView, true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Wyjście")
+                .setMessage("Czy na pewno chcesz opuścić program?")
+                .setPositiveButton("Tak", (dialog, which) -> finish())
+                .setNegativeButton("Nie", null)
+                .show();
     }
 }
