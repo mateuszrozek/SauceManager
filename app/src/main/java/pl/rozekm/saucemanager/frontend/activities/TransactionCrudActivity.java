@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
@@ -119,11 +120,17 @@ public class TransactionCrudActivity extends AppCompatActivity {
             Toast.makeText(TransactionCrudActivity.this, "Operacja zaktualizowana", Toast.LENGTH_SHORT).show();
         });
 
-        buttonDelete.setOnClickListener(v -> {
-            transactionsViewModel.delete(transaction);
-            onBackPressed();
-            Toast.makeText(TransactionCrudActivity.this, "Operacja usunięta", Toast.LENGTH_SHORT).show();
-        });
+        buttonDelete.setOnClickListener(v -> new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Usunięcie operacji")
+                .setMessage("Czy na pewno chcesz usunąć operację?")
+                .setPositiveButton("Tak", (dialog, which) -> {
+                    transactionsViewModel.delete(transaction);
+                    onBackPressed();
+                    Toast.makeText(TransactionCrudActivity.this, "Operacja usunięta", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Nie", null)
+                .show());
 
         TransactionType type = transaction.getType();
         String category = categoriesConverter.enumToString(transaction.getCategory());
@@ -161,7 +168,6 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
         buttonDelete.setText(getString(R.string.back_to_main));
         buttonDelete.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.ic_menu_revert, 0);
-
         buttonDelete.setOnClickListener(v -> {
             onBackPressed();
             Toast.makeText(TransactionCrudActivity.this, "Powrót do menu głównego", Toast.LENGTH_SHORT).show();
