@@ -76,7 +76,11 @@ public class TransactionCrudActivity extends AppCompatActivity {
 
         transaction = (Transaction) getIntent().getSerializableExtra("trans");
         if (transaction != null) {
-            prepareLayoutForUpdate();
+            if (transaction.getAmount() == null) {
+                prepareLayoutForAdditionWithInitialCategory();
+            } else {
+                prepareLayoutForUpdate();
+            }
         } else {
             transaction = new Transaction();
             prepareLayoutForAddition();
@@ -157,6 +161,31 @@ public class TransactionCrudActivity extends AppCompatActivity {
         textViewOperationCrud.setText(getString(R.string.operation_s_crud_screen_add));
 
         spinnerCategory.setAdapter(outcomesArrayAdapter);
+
+        buttonUpdate.setOnClickListener(v -> {
+            transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());
+            transaction.setAmount(getDoubleFromString(textInputLayoutAmount.getEditText().getText().toString()));
+            transactionsViewModel.insert(transaction);
+            onBackPressed();
+            Toast.makeText(TransactionCrudActivity.this, "Operacja dodana", Toast.LENGTH_SHORT).show();
+        });
+
+        buttonDelete.setText(getString(R.string.back_to_main));
+        buttonDelete.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.ic_menu_revert, 0);
+        buttonDelete.setOnClickListener(v -> {
+            onBackPressed();
+            Toast.makeText(TransactionCrudActivity.this, "Powrót do menu głównego", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void prepareLayoutForAdditionWithInitialCategory() {
+        buttonUpdate.setText(getString(R.string.add_button));
+        textViewOperationDate.setText(LocalDateTime.now().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
+        textViewOperationCrud.setText(getString(R.string.operation_s_crud_screen_add));
+
+        spinnerCategory.setAdapter(outcomesArrayAdapter);
+        int spinnerCatPosition = outcomesArrayAdapter.getPosition(categoriesConverter.enumToString(transaction.getCategory()));
+        spinnerCategory.setSelection(spinnerCatPosition, true);
 
         buttonUpdate.setOnClickListener(v -> {
             transaction.setTitle(textInputLayoutTitle.getEditText().getText().toString());

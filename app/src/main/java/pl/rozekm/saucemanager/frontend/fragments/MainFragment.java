@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -95,6 +96,9 @@ public class MainFragment extends Fragment {
     @BindView(R.id.radioYear)
     RadioButton radioYear;
 
+    @BindView(R.id.linearLayoutClothes)
+    LinearLayout linearLayoutClothes;
+
     private RecyclerView transactionsRecyclerView;
 
     private TransactionsAdapter transactionsAdapter;
@@ -141,6 +145,15 @@ public class MainFragment extends Fragment {
         radioMonth.setOnClickListener(this::onRadioButtonClickedTransactions);
         radioYear.setOnClickListener(this::onRadioButtonClickedTransactions);
 
+        imageViewClothes.setOnClickListener(this::createNewOperation);
+        imageViewEntertainment.setOnClickListener(this::createNewOperation);
+        imageViewFood.setOnClickListener(this::createNewOperation);
+        imageViewHealth.setOnClickListener(this::createNewOperation);
+        imageViewHouse.setOnClickListener(this::createNewOperation);
+        imageViewSport.setOnClickListener(this::createNewOperation);
+        imageViewTransport.setOnClickListener(this::createNewOperation);
+        imageViewOther.setOnClickListener(this::createNewOperation);
+
         transactionsRecyclerView = view.findViewById(R.id.transactionsRecyclerView);
         transactionsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transactionsRecyclerView.setHasFixedSize(true);
@@ -148,6 +161,14 @@ public class MainFragment extends Fragment {
         transactionsRecyclerView.setAdapter(transactionsAdapter);
 
         return view;
+    }
+
+    private void createNewOperation(View view) {
+        Intent intent = new Intent(getContext(), TransactionCrudActivity.class);
+        Transaction transaction = new Transaction();
+        transaction.setCategory(translateImageViewToTransactionCategory(view.getId()));
+        intent.putExtra("trans", transaction);
+        startActivity(intent);
     }
 
     private void getRecentTransactions() {
@@ -166,7 +187,7 @@ public class MainFragment extends Fragment {
     }
 
     private void applyChartSettings(BarChart chart) {
-        chart.setNoDataText("No data available yet");
+        chart.setNoDataText("Brak danych");
         chart.animateY(850, Easing.Linear);
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
@@ -304,4 +325,45 @@ public class MainFragment extends Fragment {
                 break;
         }
     }
+
+    private TransactionCategory translateImageViewToTransactionCategory(int imageView) {
+
+        TransactionCategory transactionCategory = null;
+
+        switch (imageView) {
+            case R.id.imageViewClothes:
+                transactionCategory = TransactionCategory.CLOTHES;
+                break;
+
+            case R.id.imageViewEntertainment:
+                transactionCategory = TransactionCategory.ENTERTAINMENT;
+                break;
+
+            case R.id.imageViewFood:
+                transactionCategory = TransactionCategory.FOOD;
+                break;
+
+            case R.id.imageViewHealth:
+                transactionCategory = TransactionCategory.HEALTH;
+                break;
+
+            case R.id.imageViewHouse:
+                transactionCategory = TransactionCategory.HOUSE;
+                break;
+
+            case R.id.imageViewSport:
+                transactionCategory = TransactionCategory.SPORT;
+                break;
+
+            case R.id.imageViewTransport:
+                transactionCategory = TransactionCategory.TRANSPORT;
+                break;
+
+            case R.id.imageViewOther:
+                transactionCategory = TransactionCategory.OTHER;
+                break;
+        }
+        return transactionCategory;
+    }
+
 }
