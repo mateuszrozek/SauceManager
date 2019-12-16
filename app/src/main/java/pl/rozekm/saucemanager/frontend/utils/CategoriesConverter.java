@@ -1,13 +1,7 @@
 package pl.rozekm.saucemanager.frontend.utils;
 
-import android.content.res.Resources;
-
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
 
-import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 
 import static pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory.ALL;
@@ -29,7 +23,7 @@ public class CategoriesConverter {
     ArrayList<String> incomesStrings = new ArrayList<>();
     ArrayList<String> operationsStrings = new ArrayList<>();
 
-    public CategoriesConverter(){
+    public CategoriesConverter() {
         outcomesStrings.add("Ubrania");
         outcomesStrings.add("Rozrywka");
         outcomesStrings.add("Jedzenie");

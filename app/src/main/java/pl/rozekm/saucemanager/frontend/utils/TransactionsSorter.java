@@ -22,23 +22,26 @@ public class TransactionsSorter {
 
     private List<Transaction> allTransactions;
 
+    private CategoriesConverter categoriesConverter = new CategoriesConverter();
+
     public TransactionsSorter(List<Transaction> allTransactions) {
         this.allTransactions = allTransactions;
     }
 
     public List<Transaction> sortByType(List<Transaction> allTransactions, TransactionType type) {
         ArrayList<Transaction> sortedTransactions = new ArrayList<>();
-        allTransactions.stream().filter(t -> t.getType().equals(type)).forEach(sortedTransactions::add);
+        allTransactions.stream()
+                .filter(t -> t.getType().equals(type))
+                .forEach(sortedTransactions::add);
         return sortedTransactions;
     }
 
-    public Map<TransactionCategory, Float> valuesOfEachCategory(List<Transaction> transactions) {
-        Map<TransactionCategory, Float> result = new HashMap<>();
+    public Map<String, Float> valuesOfEachCategory(List<Transaction> transactions) {
+        Map<String, Float> result = new HashMap<>();
+        Map<String, List<Transaction>> groupedByCategoryTransactions = transactions.stream()
+                .collect(Collectors.groupingBy(transaction -> categoriesConverter.enumToString(transaction.getCategory())));
 
-        Map<TransactionCategory, List<Transaction>> groupedByCategoryTransactions = transactions.stream().collect(Collectors.groupingBy(Transaction::getCategory));
-
-
-        for (TransactionCategory category : groupedByCategoryTransactions.keySet()) {
+        for (String category : groupedByCategoryTransactions.keySet()) {
             List<Transaction> transactionsOfCategory = groupedByCategoryTransactions.get(category);
             float sum = 0.0f;
             for (Transaction transaction : transactionsOfCategory) {

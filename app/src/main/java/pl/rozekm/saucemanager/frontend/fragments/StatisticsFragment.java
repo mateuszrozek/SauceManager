@@ -3,6 +3,7 @@ package pl.rozekm.saucemanager.frontend.fragments;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.drawable.Drawable;
+import android.icu.text.DateFormatSymbols;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -37,7 +38,6 @@ import com.github.mikephil.charting.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -214,10 +214,10 @@ public class StatisticsFragment extends Fragment {
             public String getFormattedValue(float value) {
 
                 int size = cashFlowByMonths.size();
-
                 float monthValue = value + (float) (size - 1);
-
-                return Month.of((int) monthValue).toString();
+                DateFormatSymbols dfs = new DateFormatSymbols(Locale.forLanguageTag("pl-PL"));
+                String[] months = dfs.getShortMonths();
+                return months[(int) monthValue];
             }
         });
 
@@ -253,11 +253,10 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void setLineChart(LineChart chart) {
-        chart.setBackgroundColor(getResources().getColor(R.color.colorScreenBackground));
+        chart.setBackgroundColor(getResources().getColor(R.color.colorButtonBackground));
         chart.getDescription().setEnabled(false);
         chart.setTouchEnabled(true);
         chart.setDrawGridBackground(false);
-
         chart.setDragEnabled(true);
         chart.setScaleEnabled(true);
         chart.setPinchZoom(true);
@@ -266,7 +265,7 @@ public class StatisticsFragment extends Fragment {
         xAxis = chart.getXAxis();
         xAxis.enableGridDashedLine(10f, 10f, 0f);
         xAxis.setValueFormatter(new ValueFormatter() {
-            private final SimpleDateFormat mFormat = new SimpleDateFormat("dd-MMM", Locale.ENGLISH);
+            private final SimpleDateFormat mFormat = new SimpleDateFormat("dd-MMM", Locale.forLanguageTag("pl-PL"));
 
             @Override
             public String getFormattedValue(float value) {
@@ -364,12 +363,21 @@ public class StatisticsFragment extends Fragment {
     }
 
     private void setPolylinePieChartData(PieChart chart, TransactionType type, Frequency frequency) {
+//        List<Transaction> transactions = transactionsSorter.sortByType(allTransactions, type);
+//        ArrayList<PieEntry> entries = new ArrayList<>();
+//        List<Transaction> transactionsByFrequency = transactionsSorter.sortByFrequency(transactions, frequency);
+//        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactionsByFrequency);
+//        for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
+//            entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
+//        }
+
+
         List<Transaction> transactions = transactionsSorter.sortByType(allTransactions, type);
         ArrayList<PieEntry> entries = new ArrayList<>();
         List<Transaction> transactionsByFrequency = transactionsSorter.sortByFrequency(transactions, frequency);
-        Map<TransactionCategory, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactionsByFrequency);
-        for (Map.Entry<TransactionCategory, Float> entry : valueOfEachCategory.entrySet()) {
-            entries.add(new PieEntry(entry.getValue(), entry.getKey().toString()));
+        Map<String, Float> valueOfEachCategory = transactionsSorter.valuesOfEachCategory(transactionsByFrequency);
+        for (Map.Entry<String, Float> entry : valueOfEachCategory.entrySet()) {
+            entries.add(new PieEntry(entry.getValue(), entry.getKey()));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Lista operacji");
@@ -426,6 +434,7 @@ public class StatisticsFragment extends Fragment {
         chart.setDrawHoleEnabled(true);
         chart.setHoleColor(getResources().getColor(R.color.colorButtonBackground));
         chart.setEntryLabelColor(getResources().getColor(R.color.colorPrimaryDark));
+        chart.setEntryLabelColor(Color.WHITE);
         chart.setEntryLabelTextSize(13f);
         chart.setTransparentCircleColor(Color.WHITE);
         chart.setTransparentCircleAlpha(110);

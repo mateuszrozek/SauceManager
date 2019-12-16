@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorScreenBackground"
+    android:background="@color/colorButtonBackground"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -56,21 +56,21 @@
 
     <TextView
         android:id="@+id/textViewReminderCrud"
-        android:background="@color/colorPrimaryLight"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:padding="12dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/reminder_s_crud_screen"
         android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textFontWeight="100"
         android:textSize="26sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorScreenBackground">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/type_in_new_title_to_update"
                     android:inputType="text"
-                    android:textSize="26sp" />
+                    android:textSize="22sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Spinner
@@ -127,6 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:background="@color/colorScreenBackground"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:datePickerMode="spinner"
