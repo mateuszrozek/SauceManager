@@ -8,14 +8,12 @@ import org.junit.Test;
 import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 import pl.rozekm.saucemanager.backend.utils.converters.TransactionCategoryConverter;
 
-import static org.junit.Assert.*;
-
 public class TransactionCategoryConverterTest {
 
     private final static TransactionCategory TRANSACTION_CATEGORY_ENUM = TransactionCategory.CLOTHES;
     private final static int TRANSACTION_CATEGORY_INT = 1;
 
-    private TransactionCategoryConverter converter = null;
+    private static TransactionCategoryConverter converter = null;
 
     @Before
     public void setUp() throws Exception {
@@ -23,17 +21,17 @@ public class TransactionCategoryConverterTest {
     }
 
     @Test
-    public void toTransactionCategory() {
+    public void integerToTransactionCategory() {
         TransactionCategory result = converter.toTransactionCategory(TRANSACTION_CATEGORY_INT);
 
-        Assert.assertEquals(result, TRANSACTION_CATEGORY_ENUM);
+        Assert.assertEquals(TRANSACTION_CATEGORY_ENUM, result);
     }
 
     @Test
-    public void toInteger() {
+    public void transactionCategoryToInteger() {
         int result = converter.toInteger(TRANSACTION_CATEGORY_ENUM);
 
-        Assert.assertEquals(result, TRANSACTION_CATEGORY_INT);
+        Assert.assertEquals(TRANSACTION_CATEGORY_INT, result);
     }
 
     @After
