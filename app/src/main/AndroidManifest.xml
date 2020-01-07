@@ -25,6 +25,7 @@
             android:name=".frontend.utils.AlarmService"
             android:enabled="true"
             android:exported="true" />
+
         <receiver
             android:name=".frontend.utils.AlarmReceiver"
             android:enabled="true"

@@ -33,6 +33,7 @@ public class TransactionsGenerator {
         LocalDateTime today = LocalDateTime.now();
         Month thisMonth = today.getMonth();
         int thisMonthValue = thisMonth.getValue();
+        thisMonthValue = 12;
 
         ArrayList<Integer> months = new ArrayList<>();
         for (int i = thisMonthValue; i > thisMonthValue - generationPeriod; i--) {
