@@ -29,68 +29,92 @@ public class TransactionsGenerator {
     }
 
     private void generateTransactions(int generationPeriod) {
+        List<int[]> monthYears = generateMonthYears(generationPeriod);
+
+        for (int[] monthYear : monthYears) {
+            generateAndAdd(TransactionCategory.OTHER, monthYear);
+            generateAndAdd(TransactionCategory.TRANSPORT, monthYear);
+            generateAndAdd(TransactionCategory.SPORT, monthYear);
+            generateAndAdd(TransactionCategory.HOUSE, monthYear);
+            generateAndAdd(TransactionCategory.HEALTH, monthYear);
+            generateAndAdd(TransactionCategory.FOOD, monthYear);
+            generateAndAdd(TransactionCategory.ENTERTAINMENT, monthYear);
+            generateAndAdd(TransactionCategory.CLOTHES, monthYear);
+
+            generateAndAdd(TransactionCategory.SAVINGS, monthYear);
+            generateAndAdd(TransactionCategory.SALARY, monthYear);
+            generateAndAdd(TransactionCategory.INVESTMENT, monthYear);
+        }
+    }
+
+    private List<int[]> generateMonthYears(int generationPeriod) {
+        ArrayList<int[]> result = new ArrayList<>();
 
         LocalDateTime today = LocalDateTime.now();
         Month thisMonth = today.getMonth();
         int thisMonthValue = thisMonth.getValue();
-        thisMonthValue = 12;
 
-        ArrayList<Integer> months = new ArrayList<>();
-        for (int i = thisMonthValue; i > thisMonthValue - generationPeriod; i--) {
-            months.add(i);
+        int[] firstMonthYear = new int[]{thisMonthValue, today.getYear()};
+        result.add(firstMonthYear);
+
+        for (int i = 0; i < generationPeriod - 1; i++) {
+            result.add(nextMonthYear(result.get(i)));
         }
-
-        for (int month : months) {
-            generateAndAdd(TransactionCategory.OTHER, month);
-            generateAndAdd(TransactionCategory.TRANSPORT, month);
-            generateAndAdd(TransactionCategory.SPORT, month);
-            generateAndAdd(TransactionCategory.HOUSE, month);
-            generateAndAdd(TransactionCategory.HEALTH, month);
-            generateAndAdd(TransactionCategory.FOOD, month);
-            generateAndAdd(TransactionCategory.ENTERTAINMENT, month);
-            generateAndAdd(TransactionCategory.CLOTHES, month);
-
-            generateAndAdd(TransactionCategory.SAVINGS, month);
-            generateAndAdd(TransactionCategory.SALARY, month);
-            generateAndAdd(TransactionCategory.INVESTMENT, month);
-        }
+        return result;
     }
 
-    private void generateAndAdd(TransactionCategory category, int month) {
+    private int[] nextMonthYear(int[] monthYear) {
+        int[] result = {0, 0};
+
+        int month = monthYear[0];
+        int year = monthYear[1];
+
+        if (month == 1) {
+            month = 12;
+            year = year - 1;
+        }
+
+        result[0] = month - 1;
+        result[1] = year - 1;
+
+        return result;
+    }
+
+    private void generateAndAdd(TransactionCategory category, int[] monthYear) {
         switch (category) {
             case OTHER:
-                randomTransactions(0.5, 10, 2, 300, category, month, TransactionType.OUTCOME);
+                randomTransactions(0.5, 10, 2, 300, category, monthYear, TransactionType.OUTCOME);
                 break;
             case TRANSPORT:
-                randomTransactions(0.2, 2, 70, 200, category, month, TransactionType.OUTCOME);
+                randomTransactions(0.2, 2, 70, 200, category, monthYear, TransactionType.OUTCOME);
                 break;
             case SPORT:
-                randomTransactions(0.3, 2, 30, 250, category, month, TransactionType.OUTCOME);
+                randomTransactions(0.3, 2, 30, 250, category, monthYear, TransactionType.OUTCOME);
                 break;
             case HOUSE:
-                randomTransactions(0.15, 2, 350, 700, category, month, TransactionType.OUTCOME);
+                randomTransactions(0.15, 2, 350, 700, category, monthYear, TransactionType.OUTCOME);
                 break;
             case HEALTH:
-                randomTransactions(0.2, 2, 250, 450, category, month, TransactionType.OUTCOME);
+                randomTransactions(0.2, 2, 250, 450, category, monthYear, TransactionType.OUTCOME);
                 break;
             case FOOD:
-                randomTransactions(0.97, 12, 10, 35, category, month, TransactionType.OUTCOME);
+                randomTransactions(1, 12, 10, 35, category, monthYear, TransactionType.OUTCOME);
                 break;
             case ENTERTAINMENT:
-                randomTransactions(0.7, 5, 35, 100, category, month, TransactionType.OUTCOME);
+                randomTransactions(1, 5, 35, 100, category, monthYear, TransactionType.OUTCOME);
                 break;
             case CLOTHES:
-                randomTransactions(0.2, 2, 120, 650, category, month, TransactionType.OUTCOME);
+                randomTransactions(0.2, 2, 120, 650, category, monthYear, TransactionType.OUTCOME);
                 break;
 
             case SAVINGS:
-                randomTransactions(1, 1, 3, 7, category, month, TransactionType.INCOME);
+                randomTransactions(1, 1, 3, 7, category, monthYear, TransactionType.INCOME);
                 break;
             case SALARY:
-                randomTransactions(1, 1, 4000, 4500, category, month, TransactionType.INCOME);
+                randomTransactions(1, 1, 4000, 4500, category, monthYear, TransactionType.INCOME);
                 break;
             case INVESTMENT:
-                randomTransactions(0.1, 2, 200, 1000, category, month, TransactionType.INCOME);
+                randomTransactions(0.1, 2, 200, 1000, category, monthYear, TransactionType.INCOME);
                 break;
         }
     }
@@ -101,14 +125,14 @@ public class TransactionsGenerator {
             double amountMin,
             double amountMax,
             TransactionCategory category,
-            int month,
+            int[] monthYear,
             TransactionType type) {
         for (int i = 0; i < frequency; i++) {
             if (random.nextDouble() < probability) {
                 Double amount = amountMin + (amountMax - amountMin) * random.nextDouble();
                 LocalDateTime date = LocalDateTime.of(
-                        2019,
-                        month,
+                        monthYear[1],
+                        monthYear[0],
                         random.nextInt(27) + 1,
                         random.nextInt(23),
                         random.nextInt(55));
@@ -127,7 +151,7 @@ public class TransactionsGenerator {
         int rightLimit = 90; // letter 'Z'
         StringBuilder buffer = new StringBuilder(lengthOfWords);
         for (int i = 0; i < 1; i++) {
-            int randomLimitedInt = leftLimit + (int)(random.nextFloat() * (rightLimit - leftLimit + 1));
+            int randomLimitedInt = leftLimit + (int) (random.nextFloat() * (rightLimit - leftLimit + 1));
             buffer.append((char) randomLimitedInt);
         }
         result = new StringBuilder(buffer.toString());
@@ -136,7 +160,7 @@ public class TransactionsGenerator {
         int rightLimit3 = 122; // letter 'z'
         StringBuilder buffer3 = new StringBuilder(lengthOfWords);
         for (int i = 0; i < lengthOfWords; i++) {
-            int randomLimitedInt = leftLimit3 + (int)(random.nextFloat() * (rightLimit3 - leftLimit3 + 1));
+            int randomLimitedInt = leftLimit3 + (int) (random.nextFloat() * (rightLimit3 - leftLimit3 + 1));
             buffer3.append((char) randomLimitedInt);
         }
         String generatedString3 = buffer3.toString();
@@ -147,7 +171,7 @@ public class TransactionsGenerator {
             int rightLimit2 = 122; // letter 'z'
             StringBuilder buffer2 = new StringBuilder(lengthOfWords);
             for (int i = 0; i < lengthOfWords; i++) {
-                int randomLimitedInt = leftLimit2 + (int)(random.nextFloat() * (rightLimit2 - leftLimit2 + 1));
+                int randomLimitedInt = leftLimit2 + (int) (random.nextFloat() * (rightLimit2 - leftLimit2 + 1));
                 buffer2.append((char) randomLimitedInt);
             }
             String generatedString2 = buffer2.toString();
