@@ -59,12 +59,12 @@ public abstract class SauceManagerRoomDatabase extends RoomDatabase {
         TransactionsGenerator generator = new TransactionsGenerator(6);
         List<Transaction> transactions = generator.getTransactions();
 
-        List<Reminder> reminders = Arrays.asList(
-                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 11, 12, 15, 0), true),
-                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019, 11, 11, 21, 37, 0), false),
-                new Reminder("PODATKI za 30 sekund", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 12, 21, 37, 0), true),
-                new Reminder("Nowe przypomnienie", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 21, 20, 20, 0), true)
-        );
+//        List<Reminder> reminders = Arrays.asList(
+//                new Reminder("Gaz co minutę", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 11, 12, 15, 0), true),
+//                new Reminder("WODA", Frequency.DAILY, LocalDateTime.of(2019, 11, 11, 21, 37, 0), false),
+//                new Reminder("PODATKI za 30 sekund", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 12, 21, 37, 0), true),
+//                new Reminder("Nowe przypomnienie", Frequency.MONTHLY, LocalDateTime.of(2019, 11, 21, 20, 20, 0), true)
+//        );
 
         PopulateDatabaseAsync(SauceManagerRoomDatabase database) {
             transactionDao = database.transactionDao();
@@ -76,7 +76,7 @@ public abstract class SauceManagerRoomDatabase extends RoomDatabase {
             transactionDao.deleteAllTransactions();
             reminderDao.deleteAllReminders();
             transactions.forEach(transactionDao::insertTransaction);
-            reminders.forEach(reminderDao::insertReminder);
+//            reminders.forEach(reminderDao::insertReminder);
             return null;
         }
     }

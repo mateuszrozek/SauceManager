@@ -3,6 +3,7 @@ package pl.rozekm.saucemanager.frontend.activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
@@ -21,8 +22,9 @@ import butterknife.ButterKnife;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
 import pl.rozekm.saucemanager.backend.database.model.enums.Frequency;
-import pl.rozekm.saucemanager.frontend.utils.adapters.FrequenciesAdapter;
 import pl.rozekm.saucemanager.backend.database.viewmodels.RemindersViewModel;
+import pl.rozekm.saucemanager.frontend.utils.FrequenciesConverter;
+import pl.rozekm.saucemanager.frontend.utils.adapters.FrequenciesAdapter;
 
 public class ReminderCrudActivity extends AppCompatActivity {
 
@@ -45,11 +47,13 @@ public class ReminderCrudActivity extends AppCompatActivity {
     @BindView(R.id.spinnerFrequency)
     Spinner spinnerFrequency;
 
-    FrequenciesAdapter frequenciesAdapter;
+    private ArrayAdapter<String> frequenciesAdapter;
 
     RemindersViewModel remindersViewModel;
 
     private Reminder reminder;
+
+    FrequenciesConverter frequenciesConverter;
 
 
     @Override
@@ -57,6 +61,8 @@ public class ReminderCrudActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder_crud);
         ButterKnife.bind(this);
+
+        frequenciesConverter = new FrequenciesConverter();
 
         remindersViewModel = ViewModelProviders.of(this).get(RemindersViewModel.class);
 
@@ -66,15 +72,14 @@ public class ReminderCrudActivity extends AppCompatActivity {
         frequencies.add(Frequency.MONTHLY);
         frequencies.add(Frequency.YEARLY);
         frequencies.add(Frequency.MINUTELY);
-        frequenciesAdapter = new FrequenciesAdapter(ReminderCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, frequencies);
+        frequenciesAdapter = new ArrayAdapter<>(ReminderCrudActivity.this, android.R.layout.simple_spinner_dropdown_item, frequenciesConverter.getFrequencies());
 
         spinnerFrequency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                reminder.setFrequency(frequenciesAdapter.getItem(position));
-                Toast.makeText(ReminderCrudActivity.this, "frequency: " + reminder.getFrequency().toString(),
-                        Toast.LENGTH_SHORT).show();
+                reminder.setFrequency(frequenciesConverter.stringToEnum(frequenciesAdapter.getItem(position)));
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -99,7 +104,7 @@ public class ReminderCrudActivity extends AppCompatActivity {
         alarmTimePicker.setHour(reminder.getDate().getHour());
         alarmTimePicker.setMinute(reminder.getDate().getMinute());
 
-        int spinnerFrequencyPosition = frequenciesAdapter.getPosition(reminder.getFrequency());
+        int spinnerFrequencyPosition = frequenciesAdapter.getPosition(frequenciesConverter.enumToString(reminder.getFrequency()));
         spinnerFrequency.setSelection(spinnerFrequencyPosition);
 
         buttonUpdateAddReminder.setOnClickListener(v -> {
@@ -129,9 +134,10 @@ public class ReminderCrudActivity extends AppCompatActivity {
 
         buttonUpdateAddReminder.setOnClickListener(v -> {
             reminder.setTitle(textInputLayoutTitleReminder.getEditText().getText().toString());
+
             reminder.setDate(LocalDateTime.of(
                     alarmDatePicker.getYear(),
-                    alarmDatePicker.getMonth(),
+                    alarmDatePicker.getMonth() + 1,
                     alarmDatePicker.getDayOfMonth(),
                     alarmTimePicker.getHour(),
                     alarmTimePicker.getMinute()

@@ -16,15 +16,18 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import pl.rozekm.saucemanager.R;
 import pl.rozekm.saucemanager.backend.database.model.Reminder;
+import pl.rozekm.saucemanager.backend.database.viewmodels.RemindersViewModel;
 import pl.rozekm.saucemanager.frontend.activities.MainActivity;
 import pl.rozekm.saucemanager.frontend.activities.ReminderCrudActivity;
-import pl.rozekm.saucemanager.backend.database.viewmodels.RemindersViewModel;
+import pl.rozekm.saucemanager.frontend.utils.FrequenciesConverter;
 
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.RemindersViewHolder> {
     private List<Reminder> reminders;
     Context context;
 
     RemindersViewModel remindersViewModel;
+
+    FrequenciesConverter converter;
 
     public static class RemindersViewHolder extends RecyclerView.ViewHolder {
 
@@ -69,10 +72,13 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
 
     @Override
     public void onBindViewHolder(RemindersViewHolder holder, int position) {
+
+        converter = new FrequenciesConverter();
+
         Reminder reminder = reminders.get(position);
         holder.title.setText(reminder.getTitle());
         holder.date.setText(reminder.getDate().format(DateTimeFormatter.ofPattern("d-MMM-uuuu HH:mm:ss")));
-        holder.frequency.setText(reminder.getFrequency().toString());
+        holder.frequency.setText(converter.enumToString(reminder.getFrequency()));
         holder.enabled.setChecked(reminder.getEnabled());
 
         remindersViewModel = ViewModelProviders.of((MainActivity) holder.getContext()).get(RemindersViewModel.class);
