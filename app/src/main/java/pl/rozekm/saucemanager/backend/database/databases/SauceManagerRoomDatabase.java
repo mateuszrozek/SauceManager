@@ -40,7 +40,7 @@ public abstract class SauceManagerRoomDatabase extends RoomDatabase {
     private static RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
-            new PopulateDatabaseAsync(instance).execute();
+//            new PopulateDatabaseAsync(instance).execute();
             super.onOpen(db);
         }
 

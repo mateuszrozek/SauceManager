@@ -90,6 +90,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewOperationCrud">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextOperations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/type_in_new_title_to_update"
@@ -120,6 +121,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewOperationDate">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditTextOperationsAmount"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/type_in_new_amount_to_update"

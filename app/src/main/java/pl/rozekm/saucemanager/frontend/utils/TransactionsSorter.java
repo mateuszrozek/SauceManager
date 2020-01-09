@@ -165,7 +165,9 @@ public class TransactionsSorter {
 
     private List<Transaction> filterYear(List<Transaction> transactions, LocalDateTime now) {
         List<Transaction> result = new ArrayList<>();
-        transactions.stream().filter(t -> t.getDate().getYear() == now.getYear()).forEach(result::add);
+        if (transactions != null) {
+            transactions.stream().filter(t -> t.getDate().getYear() == now.getYear()).forEach(result::add);
+        }
         return result;
     }
 

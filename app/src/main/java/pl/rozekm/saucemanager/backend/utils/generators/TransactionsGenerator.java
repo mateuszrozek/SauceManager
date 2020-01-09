@@ -133,7 +133,7 @@ public class TransactionsGenerator {
                 LocalDateTime date = LocalDateTime.of(
                         monthYear[1],
                         monthYear[0],
-                        random.nextInt(27) + 1,
+                        maxDay(monthYear[0]),
                         random.nextInt(23),
                         random.nextInt(55));
                 String title = generateTitles(
@@ -142,6 +142,16 @@ public class TransactionsGenerator {
                 transactions.add(new Transaction(date, amount, title, category, type));
             }
         }
+    }
+
+    private int maxDay(int i) {
+        LocalDateTime now = LocalDateTime.now();
+        int result = random.nextInt(27) + 1;
+
+        if (i == now.getMonthValue() && result != 1) {
+            return now.getDayOfMonth() - 1;
+        }
+        return result;
     }
 
     private String generateTitles(int numOfWords, int lengthOfWords) {

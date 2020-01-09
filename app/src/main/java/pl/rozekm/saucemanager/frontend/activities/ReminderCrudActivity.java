@@ -114,13 +114,13 @@ public class ReminderCrudActivity extends AppCompatActivity {
 
             remindersViewModel.update(reminder);
             onBackPressed();
-            Toast.makeText(ReminderCrudActivity.this, "rem updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReminderCrudActivity.this, "Przypomnienie zaktualizowane", Toast.LENGTH_SHORT).show();
         });
 
         buttonDeleteReminder.setOnClickListener(v -> {
             remindersViewModel.delete(reminder);
             onBackPressed();
-            Toast.makeText(ReminderCrudActivity.this, "rem deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReminderCrudActivity.this, "Przypomnienie usunięte", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -139,12 +139,12 @@ public class ReminderCrudActivity extends AppCompatActivity {
 
             remindersViewModel.insert(reminder);
             onBackPressed();
-            Toast.makeText(ReminderCrudActivity.this, "reminder inserted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReminderCrudActivity.this, "Przypomnienie dodane", Toast.LENGTH_SHORT).show();
         });
 
         buttonDeleteReminder.setOnClickListener(v -> {
             onBackPressed();
-            Toast.makeText(ReminderCrudActivity.this, "no reminder to delete", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReminderCrudActivity.this, "Powrót", Toast.LENGTH_SHORT).show();
         });
     }
 }
