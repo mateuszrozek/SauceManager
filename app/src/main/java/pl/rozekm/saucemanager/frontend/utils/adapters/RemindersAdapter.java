@@ -23,16 +23,15 @@ import pl.rozekm.saucemanager.frontend.utils.FrequenciesConverter;
 
 public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.RemindersViewHolder> {
     private List<Reminder> reminders;
-    Context context;
+    private Context context;
 
-    RemindersViewModel remindersViewModel;
+    private RemindersViewModel remindersViewModel;
 
-    FrequenciesConverter converter;
+    private FrequenciesConverter converter;
 
     public static class RemindersViewHolder extends RecyclerView.ViewHolder {
 
         private final Context context;
-        RemindersViewModel remindersViewModel;
 
         public CardView cardView;
         public TextView title;
@@ -86,8 +85,7 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
         holder.enabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
             reminder.setEnabled(!reminder.getEnabled());
             remindersViewModel.update(reminder);
-
-            Toast.makeText(context, reminder.getEnabled().toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, setToastText(reminder.getEnabled()), Toast.LENGTH_SHORT).show();
         });
 
         holder.cardView.setOnClickListener(v -> {
@@ -95,6 +93,11 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Remi
             intent.putExtra("reminder", reminder);
             context.startActivity(intent);
         });
+    }
+
+    private String setToastText(boolean enabled) {
+        if (enabled) return "Przypomnienie aktywne";
+        else return "Przypomnienie wyłączone";
     }
 
     @Override

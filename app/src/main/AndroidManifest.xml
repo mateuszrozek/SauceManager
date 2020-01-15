@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/logosvg"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".frontend.utils.ScreenActivity"></activity>
         <activity android:name=".frontend.activities.TransactionCrudActivity" />
         <activity android:name=".frontend.activities.ReminderCrudActivity" />
         <activity android:name=".frontend.activities.MainActivity">

@@ -4,10 +4,10 @@ import pl.rozekm.saucemanager.backend.database.model.enums.TransactionCategory;
 
 public class Forecast {
 
-    TransactionCategory category;
-    Double typically;
-    Double soFar;
-    Double remaining;
+    private TransactionCategory category;
+    private Double typically;
+    private Double soFar;
+    private Double remaining;
 
     public Forecast(TransactionCategory category, Double typically, Double soFar, Double remaining) {
         this.category = category;
